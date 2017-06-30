@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+  ~  @license
+  ~    Copyright 2017 Brigham Young University
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>byu-calendar Demo</title>
+
+  <script src="//cdn.byu.edu/byu-calendar-tile/latest/byu-calendar-tile.min.js"></script>
+  <script src="//cdn.byu.edu/byu-calendar-row/latest/byu-calendar-row.min.js"></script>
+  <link rel="stylesheet" href="dist/byu-calendar.min.css">
+  <script defer src="dist/byu-calendar.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="//cloud.typography.com/75214/6517752/css/fonts.css" media="all" />
+  <link rel="stylesheet" href="https://cdn.byu.edu/byu-theme-components/latest/byu-theme-components.min.css" />
+  <script async src="https://cdn.byu.edu/byu-theme-components/latest/byu-theme-components.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .page-content {
+      flex: 1;
+      margin: 0 auto;
+      max-width: 1200px;
+      width: 100%;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+  </style>
+
+</head>
+
+<body>
+  <byu-header>
+    <h1 slot="site-title">Calendar Component Demo</h1>
+  </byu-header>
+  <div class="page-content">
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="5"
+      limit="4">
+    </byu-calendar>
+  </div>
+  <byu-footer></byu-footer>
+</body>
+
+</html>

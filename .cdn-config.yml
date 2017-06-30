@@ -1,0 +1,12 @@
+---
+name: byu-calendar
+description: byu-calendar
+resources:
+  - src: dist/**
+    dest: ./
+entrypoints:
+  "byu-calendar.js": 'Examines browser support and downloads the appropriate component bundle'
+  "byu-calendar.min.js": 'Minified - Examines browser support and downloads the appropriate component bundle'
+  "byu-calendar.css": 'Main CSS file'
+  "byu-calendar.min.css": 'Main CSS file'
+docs: https://github.com/byuweb/byu-calendar
