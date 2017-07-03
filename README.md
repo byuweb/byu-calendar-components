@@ -4,7 +4,14 @@ This is a simple Web Component to act as a wrapper for the other calendar compon
 
 # Getting Started
 
-Add the component to your page:
+To add the component to your page, you'll need to include the following script and style references in your &lt;head&gt;:
+
+    <script src="//cdn.byu.edu/byu-calendar-tile/latest/byu-calendar-tile.min.js"></script>
+    <script src="//cdn.byu.edu/byu-calendar-row/latest/byu-calendar-row.min.js"></script>
+    <link rel="stylesheet" href="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.css">
+    <script src="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.js"></script>
+
+Then insert a byu-calendar tag in your page's html:
 
     <byu-calendar
         title="Upcoming Events"
