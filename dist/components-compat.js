@@ -725,7 +725,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /* 10 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"root\" id=\"calendar-root\"> Loading Calendar Items </div>";
+  module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
 
   /***/
 }]
