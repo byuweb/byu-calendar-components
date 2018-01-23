@@ -17,4 +17,5 @@
 "use strict";
 
 import './byu-calendar/byu-calendar.js';
-
+import './byu-calendar-row/byu-calendar-row.js';
+import './byu-calendar-tile/byu-calendar-tile.js';

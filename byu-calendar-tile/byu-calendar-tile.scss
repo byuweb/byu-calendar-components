@@ -1,0 +1,225 @@
+$weight: bold;
+
+// colors
+$navy: #002E5D;
+$medblue: #869DB5;
+$medgray: #767676;
+
+// general, regardless of layout
+:host {
+	padding: 0px;
+	-moz-box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.section-first {
+	background: $navy;
+	color: #fff;
+}
+
+.section-second {
+	padding: 15px;
+}
+
+:host .content {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-family: "Gotham A", "Gotham B";
+}
+
+:host ::slotted(*){
+	font-family: "Gotham A", "Gotham B";
+}
+
+// general sections styling
+#title ::slotted(*) {
+	color: $navy!important;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#location ::slotted(*) {
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+#time ::slotted(*) {
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+.section-second ::slotted(*) {
+	width: 100%;
+}
+
+#title ::slotted(*), #description ::slotted(*) {
+	font-family: "Sentinel A", "Sentinel B";
+	line-height: 1.2;
+}
+
+#weekday {
+	text-transform: uppercase;
+	font-size: 14px;
+	padding-bottom: 10px;
+}
+
+#location ::slotted(*) {
+	color: $medgray;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+// always hide simple date inputted slot
+#date, #date ::slotted(*) {
+	display: none;
+}
+
+// layout specific styling
+:host([layout='vertical']) {
+	max-width: 170px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+    margin: 15px 8px;
+    
+	.section-first {
+		height: 160px;
+		width: 170px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+    }
+    
+	.section-second{
+		height: 190px;
+		padding: 15px 0px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-content: space-between;
+		align-self: flex-start;
+
+    }
+    
+	.section-second ::slotted(*) {
+		justify-content: center;
+    }
+    
+	#month-name {
+		padding: 10px;
+		font-size: 22px;
+		text-transform: uppercase;
+		margin-bottom: 0px;
+    }
+    
+	#day-number {
+		font-size: 60px;
+		margin-bottom: 10px;
+		font-weight: bold;
+    }
+    
+	#title ::slotted(*) {
+		color: $navy!important;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+		padding: 5px 0px 10px;
+		height: 120px;
+		width: 150px;
+	}
+	#time ::slotted(*) {
+		font-size: 14px;
+		padding: 8px 0px!important;
+    }
+    
+	#location ::slotted(*){
+		color: $medgray;
+		text-align: center;
+		font-weight: 500;
+	}
+}
+
+:host([layout='horizontal'])  {
+	width: 430px;
+	margin: 10px 15px;
+    display: flex;
+    
+	.section-first {
+		width: 130px;
+		min-height: 130px!important;
+    }
+    
+	.section-second {
+		width: 300px;
+		align-items: space-between;
+	}
+	.section-second ::slotted(*) {
+		width: 290px;
+    }
+    
+	&.extra-wide .section-second ::slotted(*) {
+		width: 360px;
+    }
+    
+	#month-abb {
+		padding: 10px 0px;
+		font-size: 22px;
+		text-transform: uppercase;
+		margin-bottom: 0px;
+    }
+    
+	#day-number {
+		font-size: 48px;
+		font-weight: bold;
+    }
+    
+	#time {
+		padding: 10px 0px 10px;
+    }
+    
+	#time ::slotted(*){
+		color: #fff;
+		padding: 5px 0px 10px;
+		display: flex;
+		justify-content: center;
+	}
+
+	#title ::slotted(*) {
+		padding: 5px 0px 10px;
+		width: 100%;
+		overflow: hidden;
+    }
+    
+	#location ::slotted(*) {
+		padding-top: 8px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis!important;
+	}
+}
+
+.section-second ::slotted(*) {
+	color: $medgray;
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+
+}
+
+:host ::slotted(img) {
+	display: none;
+}
+
+p, div, a {
+	font-family: "Gotham A", "Gotham B";
+}
+
+h1, h2, h3, h4 {
+	font-family: "Sentinel A", "Sentinel B";
+}

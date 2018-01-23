@@ -45,7 +45,7 @@ gulp.task('watch', ['build'], function (done) {
     notify: false
   }, done);
 
-  gulp.watch(['demo.html', './byu-calendar/**'], ['build']);
+  gulp.watch(['demo.html', './byu-calendar/**', './byu-calendar-row/**', './byu-calendar-tile/**'], ['build']);
 });
 
 gulp.task('default', ['watch']);

@@ -18,6 +18,8 @@
 
 import template from './byu-calendar.html';
 import * as util from 'byu-web-component-utils';
+// Why do we need this? This breaks the code
+// import { currentId } from 'async_hooks';
 
 const ATTR_TITLE = 'title';
 const ATTR_CATEGORIES = 'categories';
@@ -30,10 +32,12 @@ const DEFAULT_TITLE = 'Calendar Events';
 const DEFAULT_CATEGORIES = 'all';
 const DEFAULT_DAYS = '14';
 const DEFAULT_DISPLAY = 4;
+
 class ByuCalendar extends HTMLElement {
+
   constructor() {
     super();
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -52,20 +56,20 @@ class ByuCalendar extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    switch(attr) {
+    // This just makes unnecessary calls after connectedCallback inits the calendar data
+    switch (attr) {
       case ATTR_TITLE:
       case ATTR_CATEGORIES:
       case ATTR_DAYS:
       case ATTR_PRICE:
       case ATTR_DISPLAY:
       case ATTR_LIMIT:
-        getCalendarData(this);
+        //getCalendarData(this);
         break;
     }
   }
 
   // Attributes
-
   set title(value) {
     this.setAttribute(ATTR_TITLE, value);
   }
@@ -131,9 +135,7 @@ class ByuCalendar extends HTMLElement {
     }
     return null;
   }
-
   // end Attributes
-
 }
 
 window.customElements.define('byu-calendar', ByuCalendar);
@@ -143,18 +145,16 @@ window.ByuCalendar = ByuCalendar;
 
 function applyFancy(component) {
   let output = component.shadowRoot.querySelector('.output');
-
   let count = component.fancy;
 
   //Remove all current children
-  while(output.firstChild) {
+  while (output.firstChild) {
     output.removeChild(output.firstChild);
   }
 
   if (count === 0) return;
 
   let slot = component.shadowRoot.querySelector('#fancy-template');
-
   let template = util.querySelectorSlot(slot, 'template');
 
   if (!template) {
@@ -167,8 +167,6 @@ function applyFancy(component) {
   }
 }
 
-
-
 function setupSlotListeners(component) {
   // let slot = component.shadowRoot.querySelector('#fancy-template');
 
@@ -180,43 +178,261 @@ function setupSlotListeners(component) {
 
 function getCalendarData(component) {
   var data = {
-            /* STEP 1. REQUIRED. Set Categories Here: --- */
-            title: component.title,
-            /* STEP 2. REQUIRED. Set Categories Here: ---
-             See https://calendar.byu.edu/subscribe to find what category ids you want. Separate them by +'s. i.e. 10+4+151  ----- */
-            categories: component.categories,
-            /* -- If you want to allow ALL BYU Calendar events for this time period, set categories to all instead: */
-            //categories:  "all",
-            /* STEP 3. REQUIRED. Enter the number of days going forward from today -- */
-            days: component.days,
-            /* STEP 4. OPTIONAL. IF you want to filter values to only those equal to or below a certain price, add a price filter in decimal or integer format -- */
-//            price: '5',
-            //price: '4.5',
-            price: component.price ? component.price : '',
-            /* -- Display Type Options:
-            1: list type, grouped by date
-            2: Vertical tiles.
-            3: Horizontal tiles.4
-            4: Full Page calendar list with tile rows, including pricing/ticket info.
-            5: Full Page calendar list with image rows (grouped by date), including pricing/ticket info.
-            */
-            display: component.display,
-            /* -- this limit is optional. It is for the purpose of putting a max limit on how many events are returned.
-            * The display type you choose will also determine the limit.I.e. for the list format you may want a limit of 10 or 20.
-            * For the vertical tile display you may want a limit of 3 or 4. For horizontal you may want a limit of 2 or 4.
-            * Note that tile displays will wrap to the next line if the number of events returned can't all fit in one row. */
-            limit: component.limit,  // no limit is the default. This will show however many events there are for the above criteria.
-        };
-        console.log(data);
-        
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var response = xhttp.responseText;
-                component.shadowRoot.getElementById('calendar-root').innerHTML = response;
-            }
-        };
-        xhttp.open("POST", "https://calendar.byu.edu/calendar-widget/calendar-widget.php");
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(data));
+    /* STEP 1. REQUIRED. Set Categories Here: --- */
+    title: component.title,
+    /* STEP 2. REQUIRED. Set Categories Here: ---
+      See https://calendar.byu.edu/subscribe to find what category ids you want. Separate them by +'s. i.e. 10+4+151  ----- */
+    categories: component.categories,
+    /* -- If you want to allow ALL BYU Calendar events for this time period, set categories to all instead: */
+    //categories:  "all",
+    /* STEP 3. REQUIRED. Enter the number of days going forward from today -- */
+    days: component.days,
+    /* STEP 4. OPTIONAL. IF you want to filter values to only those equal to or below a certain price, add a price filter in decimal or integer format -- */
+    //price: '5',
+    //price: '4.5',
+    price: component.price ? component.price : '',
+    /* -- Display Type Options:
+    1: list type, grouped by date
+    2: Vertical tiles.
+    3: Horizontal tiles.4
+    4: Full Page calendar list with tile rows, including pricing/ticket info.
+    5: Full Page calendar list with image rows (grouped by date), including pricing/ticket info.
+    */
+    display: component.display,
+    /* -- this limit is optional. It is for the purpose of putting a max limit on how many events are returned.
+    * The display type you choose will also determine the limit.I.e. for the list format you may want a limit of 10 or 20.
+    * For the vertical tile display you may want a limit of 3 or 4. For horizontal you may want a limit of 2 or 4.
+    * Note that tile displays will wrap to the next line if the number of events returned can't all fit in one row. */
+    limit: component.limit,  // no limit is the default. This will show however many events there are for the above criteria.
+  };
+  
+  // if no limit is specified, limit to 3
+  if (!data.limit) data.limit = 3;
+
+  let today = new Date();
+  // Date formatted as yyyy-mm-dd
+  let startDate = today.toISOString().split('T')[0];
+  let endDate = new Date(today.setDate(today.getDate() + data.days)).toISOString().split('T')[0];
+
+  var url = 'https://calendar.byu.edu/api/Events.json?event[min][date]=' + startDate + '&event[max][date]=' + endDate + '&categories=' + data.categories + '&price=' + data.price;
+
+  if (!('fetch' in window)) {
+    // IE11 doesn't support fetch, use XMLHttpRequest instead
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        var response = xhttp.responseText;
+        let html = response.length === 0 ? '<h3>No events.</h3>' : formatCalendarData(response, data);
+        component.shadowRoot.getElementById('calendar-root').innerHTML = html;
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.send();
+    return;
+  }
+
+  fetch(url).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      // trim the response to the requested limit
+      response = response.slice(0, data.limit);
+      // format calendar data
+      let html = response.length === 0 ? '<h3>No events.</h3>' : formatCalendarData(response, data);
+      component.shadowRoot.getElementById('calendar-root').innerHTML = html;
+    });
+}
+
+function formatCalendarData(jsonArr, data) {
+  switch (data.display) {
+    case 2:
+      return vertical_tiles(jsonArr);
+      break;
+    case 3:
+      return horizontal_tiles(jsonArr);
+      break;
+    case 4:
+      return fullpage_rows(jsonArr);
+      break;
+    case 5:
+      return fullpage_imgrows(jsonArr);
+      break;
+    case 1:
+    default:
+      return list_format(jsonArr);
+      break;
+  }
+}
+
+var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var months = ["January","February","March","April","May","June","July",'August','September','October','November','December'];
+var shortMonths = ["Jan","Feb","Mar","Apr","May","June","July",'Aug','Sept','Oct','Nov','Dec'];
+
+function vertical_tiles(jsonArr) {
+  let html = '<div class="tile-container" style="display: flex; flex-wrap: wrap; margin: 20px 0px;">';
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    html += '<byu-calendar-tile layout="vertical">';
+    let start = new Date(item.StartDateTime);
+    html += '<p slot="date">' + start + '</p>';
+    html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
+    if (item.AllDay === 'false'){
+      html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+    } else {
+      html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
+    }
+    html += '</byu-calendar-tile>';
+  }
+  html += '</div>'
+  return html;
+}
+
+function horizontal_tiles(jsonArr) {
+  let html = '<div class="tile-container" style="display: flex; flex-wrap: wrap; margin: 20px 0px;">';
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    html += '<byu-calendar-tile layout="horizontal">';
+    let start = new Date(item.StartDateTime);
+    html += '<p slot="date">' + start + '</p>';
+    html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
+    if (item.AllDay === 'false'){
+      html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+    } else {
+      html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.ShortDescription) {
+      html += '<p slot="description">' + item.ShortDescription + '</p>';
+    }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
+    }
+    html += '</byu-calendar-tile>';
+  }  
+  html += '</div>'
+  return html;
+}
+
+function fullpage_rows(jsonArr) {
+  let html = '<div class="tile-container">';
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    html += '<byu-calendar-row type="tile">';
+    let start = new Date(item.StartDateTime);
+    html += '<p slot="date">' + start + '</p>';
+    html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
+    if (item.AllDay === 'false'){
+      html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+    } else {
+      html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.TicketsExist === 'Yes') {
+      if (item.IsFree === 'true') {
+        html += '<p slot="price">Free</p>';
+        if (item.TicketsUrl) {
+          html += '<a slot="tickets-link" target="_blank" href="' + item.TicketsUrl + '">FREE TICKETS</a>';
+        }
+      } else {
+        if (item.HighPrice) {
+          html += '<p slot="price">Tickets: $' + item.LowPrice + ' - $' + item.HighPrice + '</p>';
+        } else {
+          html += '<p slot="price">Tickets: $' + item.LowPrice + '</p>';
+        }
+        if (item.TicketsUrl) {
+          html += '<a slot="tickets-link" target="_blank" href="' + item.TicketsUrl + '">TICKETS</a>';
+        }
+      }
+    }
+    html += '<a href="' + item.FullUrl + '" slot="link" target="_blank">SEE FULL EVENT</a></byu-calendar-row>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function fullpage_imgrows(jsonArr) {
+  let html = '<div class="tile-container">';
+  let current = new Date();
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    let start = new Date(item.StartDateTime);
+    let diff = dateDiff(current, start);
+    if (i === 0 || diff !== 0) {
+      html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
+      current = start;
+    }
+    html += '<byu-calendar-row type="image">';
+    html += '<img slot="image" src="' + item.ImgUrl + '">';
+    html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank">' + item.Title + '</a>';
+    if (item.AllDay === 'false') {
+      html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+    } else {
+      html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
+    }
+    if(item.TicketsExist === 'Yes') {
+      if(item.IsFree === 'true') {
+        html += '<p slot="price">Free</p>';
+        if (item.TicketsUrl) {
+          html += '<a slot="tickets-link" target="_blank" href="' + item.TicketsUrl + '">FREE TICKETS</a>';
+        }
+      } else {
+        if (item.HighPrice) {
+          html += '<p slot="price">Tickets: $' + item.LowPrice + '</p>';
+        } else {
+          html += '<p slot="price">Tickets: $' + item.LowPrice + ' - $' + item.HighPrice + '</p>';
+        }
+        if (item.TicketsUrl) {
+          html += '<a slot="tickets-link" target="_blank" href="' + item.TicketsUrl + '">TICKETS</a>';
+        }
+      }
+    }
+    html += '<a href="' + item.FullUrl + '" slot="link" target="_blank">SEE FULL EVENT</a></byu-calendar-row>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function list_format(jsonArr) {
+  let html = '<div class="calendar-widget-block display-list">';
+  let current = new Date();
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    let start = new Date(item.StartDateTime);
+    let diff = dateDiff(current, start);
+    if (i === 0 || diff !== 0) {
+      html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';
+      current = start;
+    }
+    html += '<div class="event"><div class="event-content">';
+    html += '<div class="event-title"><a href="' + item.FullUrl + ' " target="_blank"><div class="title">' + item.Title + '</div></a></div>';
+    if (item.AllDay === 'false') {
+      html += '<div class="event-time">' + formatTime(start) + '</div>';
+    } else {
+      html += '<div class="event-time">All Day</div>';
+    }
+    html += '</div></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiff(a, b) {
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+function formatTime(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
 }
