@@ -222,7 +222,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
   // module
-  exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-wrap:wrap;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([type=image]) .section-first{height:100px;width:100px}:host([type=image]) ::slotted(img){height:100px;width:100px;object-fit:cover}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
+  exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
 
   // exports
 
@@ -253,6 +253,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var tileTemplate = __webpack_require__(15);
   var imageTemplate = __webpack_require__(14);
 
+  var ATTR_IMAGE_ROW = 'image-row';
+
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -273,9 +275,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       value: function connectedCallback() {
         var _this2 = this;
 
-        var template = this.type === 'image' ? imageTemplate : tileTemplate;
+        var template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, function () {
-          if (_this2.type !== 'image') {
+          if (!_this2.imageRow) {
             var dateOb = _this2.date;
             var day = dateOb.getDate();
             var weekday = weekdays[dateOb.getDay()];
@@ -289,15 +291,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
       }
     }, {
-      key: 'type',
+      key: 'imageRow',
       get: function get() {
-        return this.getAttribute('type');
+        return this.hasAttribute(ATTR_IMAGE_ROW);
       },
-      set: function set(value) {
-        if (value) {
-          this.setAttribute('type', value);
+      set: function set(val) {
+        if (val) {
+          this.setAttribute(ATTR_IMAGE_ROW, '');
         } else {
-          this.removeAttribute('type');
+          this.removeAttribute(ATTR_IMAGE_ROW);
         }
       }
     }, {
@@ -697,7 +699,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     for (var i = 0; i < jsonArr.length; i++) {
       var item = jsonArr[i];
       html += '<byu-calendar-tile layout="vertical">';
-      var start = new Date(item.StartDateTime);
+      var start = new Date(item.StartDateTime.trim());
       html += '<p slot="date">' + start + '</p>';
       html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
       if (item.AllDay === 'false') {
@@ -719,7 +721,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     for (var i = 0; i < jsonArr.length; i++) {
       var item = jsonArr[i];
       html += '<byu-calendar-tile layout="horizontal">';
-      var start = new Date(item.StartDateTime);
+      var start = new Date(item.StartDateTime.trim());
       html += '<p slot="date">' + start + '</p>';
       html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
       if (item.AllDay === 'false') {
@@ -743,8 +745,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var html = '<div class="tile-container">';
     for (var i = 0; i < jsonArr.length; i++) {
       var item = jsonArr[i];
-      html += '<byu-calendar-row type="tile">';
-      var start = new Date(item.StartDateTime);
+      html += '<byu-calendar-row>';
+      var start = new Date(item.StartDateTime.trim());
       html += '<p slot="date">' + start + '</p>';
       html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
       if (item.AllDay === 'false') {
@@ -780,14 +782,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var current = new Date();
     for (var i = 0; i < jsonArr.length; i++) {
       var item = jsonArr[i];
-      var start = new Date(item.StartDateTime);
+      var start = new Date(item.StartDateTime.trim());
       var diff = dateDiff(current, start);
       if (i === 0 || diff !== 0) {
         html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
         current = start;
       }
-      html += '<byu-calendar-row type="image">';
-      html += '<img slot="image" src="' + item.ImgUrl + '">';
+      html += '<byu-calendar-row image-row>';
+      html += '<img slot="image" src="' + item.ImgUrl + '" />';
       html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank">' + item.Title + '</a>';
       if (item.AllDay === 'false') {
         html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -825,7 +827,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var current = new Date();
     for (var i = 0; i < jsonArr.length; i++) {
       var item = jsonArr[i];
-      var start = new Date(item.StartDateTime);
+      var start = new Date(item.StartDateTime.trim());
       var diff = dateDiff(current, start);
       if (i === 0 || diff !== 0) {
         html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';
@@ -1142,7 +1144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /* 14 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(3) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"> </slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+  module.exports = "<style>" + __webpack_require__(3) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
   /***/
 },

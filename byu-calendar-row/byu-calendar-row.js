@@ -3,6 +3,8 @@ const util = require('byu-web-component-utils');
 const tileTemplate = require('./byu-calendar-tile-row.html');
 const imageTemplate = require('./byu-calendar-image-row.html');
 
+const ATTR_IMAGE_ROW = 'image-row';
+
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -13,15 +15,15 @@ class ByuCalendarRow extends HTMLElement {
         this.attachShadow({ mode: 'open' });
     }
 
-    get type() {
-        return this.getAttribute('type');
+    get imageRow() {
+        return this.hasAttribute(ATTR_IMAGE_ROW);
     }
 
-    set type(value) {
-        if (value) {
-            this.setAttribute('type', value);
+    set imageRow(val) {
+        if (val) {
+            this.setAttribute(ATTR_IMAGE_ROW, '');
         } else {
-            this.removeAttribute('type');
+            this.removeAttribute(ATTR_IMAGE_ROW);
         }
     }
 
@@ -36,9 +38,9 @@ class ByuCalendarRow extends HTMLElement {
     }
     
     connectedCallback(){
-        let template = this.type === 'image' ? imageTemplate : tileTemplate;
+        let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
-            if (this.type !== 'image') {
+            if (!this.imageRow) {
                 var dateOb = this.date;
                 var day = dateOb.getDate();
                 var weekday = weekdays[dateOb.getDay()];

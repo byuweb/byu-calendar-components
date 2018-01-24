@@ -127,7 +127,8 @@ $ticket-region-width: 250px;
 
 :host {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: row;
+	// flex-wrap: wrap;
 	justify-content: flex-start;
 	margin: 10px 8px;
 	width: 100%;
@@ -140,6 +141,7 @@ $ticket-region-width: 250px;
         margin-bottom: 15px;
         
 		.content {
+			width: 120px;
 			display: flex;
 			justify-content: center;
 		}
@@ -164,10 +166,10 @@ $ticket-region-width: 250px;
     }
     
 	#title ::slotted(*) {
-		color: $navy!important;
+		color: $navy !important;
 		font-size: 18px;
 		font-weight: bold;
-		text-align: center;
+		// text-align: center;
 		padding: 0px 0px 5px;
     }
     
@@ -188,16 +190,16 @@ $ticket-region-width: 250px;
 	}
 }
 
-:host([type='image'])  {
+:host([image-row])  {
 	.section-first {
-		height: 100px;
+		height: auto;
 		width: 100px;
-	}
+		background: none;
 
-	::slotted(img) {
-		height: 100px;
-		width: 100px;
-		object-fit: cover;
+		::slotted(img) {
+			height: auto;
+			width: 100px;
+		}
 	}
 }
 

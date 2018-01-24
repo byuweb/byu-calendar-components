@@ -272,7 +272,7 @@ function vertical_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
-    let start = new Date(item.StartDateTime);
+    let start = new Date(item.StartDateTime.trim());
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -294,7 +294,7 @@ function horizontal_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="horizontal">';
-    let start = new Date(item.StartDateTime);
+    let start = new Date(item.StartDateTime.trim());
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -318,8 +318,8 @@ function fullpage_rows(jsonArr) {
   let html = '<div class="tile-container">';
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    html += '<byu-calendar-row type="tile">';
-    let start = new Date(item.StartDateTime);
+    html += '<byu-calendar-row>';
+    let start = new Date(item.StartDateTime.trim());
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -355,14 +355,14 @@ function fullpage_imgrows(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime);
+    let start = new Date(item.StartDateTime.trim());
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
       current = start;
     }
-    html += '<byu-calendar-row type="image">';
-    html += '<img slot="image" src="' + item.ImgUrl + '">';
+    html += '<byu-calendar-row image-row>';
+    html += '<img slot="image" src="' + item.ImgUrl + '" />';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank">' + item.Title + '</a>';
     if (item.AllDay === 'false') {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -400,7 +400,7 @@ function list_format(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime);
+    let start = new Date(item.StartDateTime.trim());
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';
