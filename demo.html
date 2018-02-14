@@ -23,8 +23,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>byu-calendar Demo</title>
 
-  <script src="//cdn.byu.edu/byu-calendar-tile/latest/byu-calendar-tile.min.js"></script>
-  <script src="//cdn.byu.edu/byu-calendar-row/latest/byu-calendar-row.min.js"></script>
   <link rel="stylesheet" href="dist/byu-calendar.min.css">
   <script defer src="dist/byu-calendar.min.js"></script>
 
@@ -52,6 +50,14 @@
       padding: 16px;
       box-sizing: border-box;
     }
+
+    .subheader {
+      font-family: "Sentinel A", "Sentinel B";
+      background-color: #666666;
+      color: #ffffff;
+      padding: 16px;
+      margin-bottom: 45px;
+    }
   </style>
 
 </head>
@@ -61,6 +67,51 @@
     <h1 slot="site-title">Calendar Component Demo</h1>
   </byu-header>
   <div class="page-content">
+    
+    <h1 class="subheader">List View</h1>
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="1"
+      limit="4">
+    </byu-calendar>
+    <hr>
+
+    <h1 class="subheader">Vertical Tiles</h1>
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="2"
+      limit="4">
+    </byu-calendar>
+    <hr>
+
+    <h1 class="subheader">Horizontal Tiles</h1>
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="3"
+      limit="4">
+    </byu-calendar>
+    <hr>
+    
+    <h1 class="subheader">Horizontal Tiles (No limit)</h1>
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="3">
+    </byu-calendar>
+    <hr>
+
+    <h1 class="subheader">Full Page Rows</h1>
     <byu-calendar 
       title="Upcoming Events"
       categories="3+4+5"
@@ -69,6 +120,18 @@
       display="4"
       limit="4">
     </byu-calendar>
+    <hr>
+
+    <h1 class="subheader">Full Page Image Rows</h1>
+    <byu-calendar 
+      title="Upcoming Events"
+      categories="3+4+5"
+      days="7"
+      price="4.5"
+      display="5"
+      limit="4">
+    </byu-calendar>
+
   </div>
   <byu-footer></byu-footer>
 </body>

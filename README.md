@@ -6,8 +6,6 @@ This is a simple Web Component to act as a wrapper for the other calendar compon
 
 To add the component to your page, you'll need to include the following script and style references in your &lt;head&gt;:
 
-    <script src="//cdn.byu.edu/byu-calendar-tile/latest/byu-calendar-tile.min.js"></script>
-    <script src="//cdn.byu.edu/byu-calendar-row/latest/byu-calendar-row.min.js"></script>
     <link rel="stylesheet" href="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.css">
     <script src="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.js"></script>
 

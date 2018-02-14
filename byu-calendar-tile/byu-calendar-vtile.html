@@ -1,0 +1,13 @@
+<style>${require ('./byu-calendar-tile.scss')}</style>
+<link type="text/css" rel="stylesheet" href="https://cloud.typography.com/75214/6517752/css/fonts.css" media="all" />
+<div class="section-first">
+    <div id="date"><slot id="date-val" name="date"></slot></div>
+    <div id="month-name" class="content" ></div>
+    <div id="day-number" class="content" ></div>
+    <div id="weekday" class="content" ></div>
+</div>
+<div class="section-second">
+    <div id="title" class="content"><slot name="title"></slot></div>
+    <div id="time" class="content"><slot name="time"></slot></div>
+    <div id="location" class="content"><slot name="location"></slot></div>
+</div>

@@ -1,0 +1,212 @@
+//import fonts
+//@import "https://cloud.typography.com/75214/6517752/css/fonts.css";
+$weight: bold;
+
+// colors
+$navy: #002E5D;
+$lightgray: #e5e5e5;
+$medblue: #869DB5;
+$medgray: #767676;
+$green: #4d8501;
+
+$tile-width: 120px;
+$ticket-region-width: 250px;
+
+:host {
+	padding: 10px 0px;
+	border-bottom: 1px solid $lightgray;
+	margin-bottom: 10px;
+ }
+
+.section-first {
+	background: $lightgray;
+	color: $navy;
+}
+
+.section-second {
+	padding: 15px;
+	color: $medgray;
+}
+
+:host .content {
+	width: 100%;
+	font-family: "Gotham A", "Gotham B";
+}
+
+:host ::slotted(*){
+	font-family: "Gotham A", "Gotham B";
+}
+
+// general sections styling
+#title ::slotted(*) {
+	color: $navy!important;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.price-label, #price ::slotted(*) {
+	font-weight: bold !important;
+	color: $green;
+}
+
+#time {
+	padding: 6px 0px;
+	margin: 0px;
+}
+
+#time ::slotted(*) {
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+	text-transform: uppercase;
+}
+
+#location {
+	padding: 0px 0px 6px;
+}
+
+#location ::slotted(*) {
+	font-size: 14px !important;
+	padding: 0px;
+	margin: 0px;
+	text-transform: uppercase;
+}
+
+#tickets-link ::slotted(*) {
+	text-align: center;
+	background-color: $green!important;
+	padding: 9px 15px !important;
+	width: 120px;
+	font-size: 12px;
+	color:#fff!important;
+	text-decoration: none;
+}
+
+#tickets-link ::slotted(:before) {
+	content: "Price: ";
+	display: inline;
+}
+
+.section-second{
+	min-height: 100px;
+	padding: 0px 15px 15px;
+	display: block;
+}
+
+#title ::slotted(*) {
+	line-height: 1.2;
+}
+
+#weekday {
+	text-transform: uppercase;
+	font-size: 14px;
+	padding-bottom: 10px;
+}
+
+#location ::slotted(*) {
+	color: $medgray;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+// always hide simple date inputted slot
+#date, #date ::slotted(*) {
+	display: none;
+}
+
+#year {
+	letter-spacing: 3px;
+}
+
+.section-third {
+	padding-top: 8px;
+	width: auto;
+	margin-left: auto;
+}
+
+:host {
+	display: flex;
+	flex-direction: row;
+	// flex-wrap: wrap;
+	justify-content: flex-start;
+	margin: 10px 8px;
+	width: 100%;
+
+	.section-first {
+		height: 120px;
+		width: 120px;
+		display: block;
+		background: $lightgray;
+        margin-bottom: 15px;
+        
+		.content {
+			width: 120px;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	.section-second ::slotted(*) {
+		justify-content: flex-start;
+	}
+
+	#month-name {
+		padding: 10px 0px;
+		font-size: 13px;
+		text-transform: uppercase;
+		margin-bottom: 0px;
+		font-weight: 500;
+    }
+    
+	#day-number {
+		font-size: 48px;
+		margin-bottom: 5px;
+		font-weight: bold;
+    }
+    
+	#title ::slotted(*) {
+		color: $navy !important;
+		font-size: 18px;
+		font-weight: bold;
+		// text-align: center;
+		padding: 0px 0px 5px;
+    }
+    
+	#time ::slotted(*) {
+		font-size: 14px;
+    }
+    
+	#location ::slotted(*){
+		color: $medgray;
+		font-weight: 500;
+		padding:  4px 0px;
+    }
+    
+	#link ::slotted(*) {
+		color: $navy;
+		padding: 4px 0px;
+		text-decoration: none;
+	}
+}
+
+:host([image-row])  {
+	.section-first {
+		height: auto;
+		width: 100px;
+		background: none;
+
+		::slotted(img) {
+			height: auto;
+			width: 100px;
+		}
+	}
+}
+
+p, div, a {
+	font-family: "Gotham A", "Gotham B";
+}
+
+h1, h2, h3, h4 {
+	font-family: "Sentinel A", "Sentinel B";
+}
