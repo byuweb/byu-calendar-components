@@ -10,8 +10,8 @@ To view a working demo of this component visit https://cdn.byu.edu/byu-calendar-
 
 To add the component to your page, you'll need to include the following script and style references in your &lt;head&gt;:
 
-    <link rel="stylesheet" href="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.css">
-    <script src="//cdn.byu.edu/byu-calendar/latest/byu-calendar.min.js"></script>
+    <link rel="stylesheet" href="//cdn.byu.edu/byu-calendar-components/latest/byu-calendar.min.css">
+    <script src="//cdn.byu.edu/byu-calendar-components/latest/byu-calendar.min.js"></script>
 
 Then insert a byu-calendar tag in your page's html:
 
