@@ -2,6 +2,10 @@
 
 This is a simple Web Component to act as a wrapper for the other calendar components.
 
+# Demo Page
+
+To view a working demo of this component visit https://cdn.byu.edu/byu-calendar-components/latest/demo/index.html
+
 # Getting Started
 
 To add the component to your page, you'll need to include the following script and style references in your &lt;head&gt;:
