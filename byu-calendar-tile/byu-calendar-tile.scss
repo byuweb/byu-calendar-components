@@ -64,6 +64,7 @@ $medgray: #767676;
 	text-transform: uppercase;
 	font-size: 14px;
 	padding-bottom: 10px;
+	height: 32px;
 }
 
 #location ::slotted(*) {
@@ -114,12 +115,16 @@ $medgray: #767676;
 		font-size: 22px;
 		text-transform: uppercase;
 		margin-bottom: 0px;
+		height: 50px;
     }
     
 	#day-number {
 		font-size: 60px;
 		margin-bottom: 10px;
 		font-weight: bold;
+		height: 68px;
+		text-align: center;
+		line-height: 68px;
     }
     
 	#title ::slotted(*) {
@@ -134,12 +139,14 @@ $medgray: #767676;
 	#time ::slotted(*) {
 		font-size: 14px;
 		padding: 8px 0px!important;
+		height: 30px;
     }
     
 	#location ::slotted(*){
 		color: $medgray;
 		text-align: center;
 		font-weight: 500;
+		line-height: 12px;
 	}
 }
 
