@@ -131,6 +131,8 @@ $medgray: #767676;
 		font-size: 18px;
 		font-weight: bold;
 		text-align: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		padding: 5px 0px 10px;
 		height: 120px;
 		width: 150px;
