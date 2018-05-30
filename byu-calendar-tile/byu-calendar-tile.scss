@@ -39,6 +39,8 @@ $medgray: #767676;
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
+	font-family: "Gotham A", "Gotham B";
+	line-height: 1.2;
 }
 
 #location ::slotted(*) {
@@ -55,7 +57,7 @@ $medgray: #767676;
 	width: 100%;
 }
 
-#title ::slotted(*), #description ::slotted(*) {
+#description ::slotted(*) {
 	font-family: "Sentinel A", "Sentinel B";
 	line-height: 1.2;
 }
