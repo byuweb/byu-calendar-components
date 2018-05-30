@@ -153,10 +153,9 @@ $ticket-region-width: 250px;
 	}
 
 	#month-name {
-		padding: 10px 0px;
+		margin: 10px 0px;
 		font-size: 13px;
 		text-transform: uppercase;
-		margin-bottom: 0px;
 		font-weight: 500;
 		height: 13px;
     }
@@ -180,14 +179,12 @@ $ticket-region-width: 250px;
     
 	#time ::slotted(*) {
 		font-size: 14px;
-		height: 26px;
     }
     
 	#location ::slotted(*){
 		color: $medgray;
 		font-weight: 500;
 		padding:  4px 0px;
-		height: 28px;
     }
     
 	#link ::slotted(*) {

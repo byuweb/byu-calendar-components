@@ -327,6 +327,9 @@ function fullpage_rows(jsonArr) {
     } else {
       html += '<div class="time" slot="time">All Day</div>';
     }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
+    }
     if (item.TicketsExist === 'Yes') {
       if (item.IsFree === 'true') {
         html += '<p slot="price">Free</p>';
