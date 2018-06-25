@@ -941,15 +941,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return html;
           }
         }
-        if (item.Title) {
-          columnCount++;
-          html += '<byu-calendar-feature-column class="column-' + columnCount + '">';
-          html += '<p slot="date">' + start + '</p>';
-          current = start;
-        }
+        columnCount++;
+        html += '<byu-calendar-feature-column class="column-' + columnCount + '">';
+        html += '<p slot="date">' + start + '</p>';
+        current = start;
       }
 
-      if (diff === 0 && eventCount < 2) {
+      if (eventCount < 2) {
         html += '<h4 slot="title-' + eventCount + '"><a href="' + item.FullUrl + ' " target="_blank">' + item.Title + '</a></h4>';
         if (item.AllDay === 'false') {
           html += '<div class="time" slot="time-' + eventCount + '">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -962,6 +960,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         eventCount++;
       }
     }
+    html += '</byu-calendar-feature-column>';
+    html += '<byu-calendar-feature-links></byu-calendar-feature-links>';
     html += '</div>';
     return html;
   }
