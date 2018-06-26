@@ -62,6 +62,14 @@ $white: #fff;
     text-decoration: none;
   }
 
+  .full-link:hover .events-button {
+    background-color: $navy;
+  }
+
+  .academic-link:hover .events-button {
+    background-color: $teal;
+  }
+
 }
 
 @media screen and (min-width: 769px) {

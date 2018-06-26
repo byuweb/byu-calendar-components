@@ -41,12 +41,18 @@ $gray: #666;
     margin-bottom: 25px;
   }
 
+  #title-0,
+  #title-1 {
+    font-family: "Vitesse A", "Vitesse B", Georgia, sans-serif;
+  }
+
   #time-0,
   #time-1,
   #location-0,
   #location-1 {
     font-size: 14px;
     color: $gray;
+    font-family: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
   }
 
   .section-third {
