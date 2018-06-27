@@ -15,18 +15,6 @@
  *    limitations under the License.
  */
 
-.fullpage-date-wrapper {
-    color: #002e5d;
-    font-weight: bold;
-    font-size: 32px;
-    margin-bottom: 25px;
-    display: flex;
-}
-.fullpage-date-weekday {
-    text-transform: uppercase;
-    font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
-}
-.fullpage-date-text {
-    padding-left: 10px;
-    font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
-}
+// This file should contain only mixins
+
+// however the byu-calendar component doesn't really have component styling right now.

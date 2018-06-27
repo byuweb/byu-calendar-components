@@ -17,6 +17,8 @@
 
 @import 'byu-calendar-common';
 
+// This component is unique, we could keep this scss here or put it in byu-calendar-extras.scss. let's keep it here for now but we'll improve comments
+
 a {
     text-decoration: none;
     color: #003da5; // royal blue
@@ -27,9 +29,10 @@ a:hover, a:focus {
     color: #002c5c; // dark royal
 }
 
-.calendar-block-title {
-    font-family: "Sentinel A", "Sentinel B";
-}
+// this is not used anywhere in here anymore
+//.calendar-block-title {
+//    font-family: "Sentinel A", "Sentinel B";
+//}
 
 /* ----------- List format -------- */
 .block-calendar-widget-block {
