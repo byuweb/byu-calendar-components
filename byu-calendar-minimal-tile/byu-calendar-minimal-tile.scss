@@ -1,32 +1,53 @@
 $royal: #0057B8;
 $white: #FFFFFF;
 $medgray: #C5C5C5;
+$darkgray: #666;
 
 :host {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
 
   .section-first {
     background-color: $royal;
     color: $white;
-    height: 140px;
-    width: 225px;
-    margin-right: 5px;
+    height: 120px;
+    width: 200px;
+    margin-right: 10px;
     text-align: center;
   }
 
   .section-second {
     background-color: $medgray;
-    width: auto;
+    width: 100%;
+    padding: 10px;
   }
 
   #month-and-day {
     font-size: 36px;
     font-family: "Vitesse A", "Vitesse B", Arial, sans-serif;
-    padding-top: 10px;
+    padding: 10px;
   }
 
   #time {
     font-size: 20px;
     font-family: "Vitesse A", "Vitesse B", Arial, sans-serif;
   }
+
+  //This is just for now.
+  #title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  #location {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $darkgray;
+  }
+}
+
+#date, #date ::slotted(*) {
+  display: none;
 }

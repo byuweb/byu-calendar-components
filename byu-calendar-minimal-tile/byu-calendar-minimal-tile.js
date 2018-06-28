@@ -4,7 +4,7 @@ const minimalTemplate = require('./byu-calendar-minimal-tile.html');
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-class ByuCalendarMinimalTile extends HTMLelement {
+class ByuCalendarMinimalTile extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' })

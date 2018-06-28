@@ -404,7 +404,18 @@ function minimal_tiles(jsonArr) {
     let item = jsonArr[i];
     html += '<byu-calendar-minimal-tile>';
     let start = new Date(item.StartDateTime.trim());
-    html += '<p slot="date">' + start + '</p></byu-calendar-minimal-tile>';
+    html += '<p slot="date">' + start + '</p>';
+    if (item.AllDay === 'false') {
+      html += '<div slot="time">' + formatTime(start) + '</div>';
+    }
+    else {
+      html += '<div slot="time">ALL DAY</div>';
+    }
+    if (item.LocationName) {
+      html += '<div slot="location">' + item.LocationName + '</div>';
+    }
+    html += '<a slot="title" href="'+ item.FullUrl + '">' + item.Title + '</a>';
+    html+= '</byu-calendar-minimal-tile>';
   }
   html += '</div>';
   return html;

@@ -1,9 +1,10 @@
 <style>${require('./byu-calendar-minimal-tile.scss')}</style>
-<div id="section-first">
-  <div id="date-val" class="content"><slot name="date"></slot></div>
+<div class="section-first">
+  <div id="date"><slot id="date-val" name="date"></slot></div>
   <div id="month-and-day" class="content"></div>
-  <div id="time" class="content"></div>
+  <div id="time" class="content"><slot name="time"></slot></div>
 </div>
-<div id="section-second">
-  <!--Put event info here. Get more info in the meeting on Thursday-->
+<div class="section-second">
+  <div id="title" class="content"><slot name="title"></slot></div>
+  <div id="location" class="content"><slot name="location"></slot></div>
 </div>

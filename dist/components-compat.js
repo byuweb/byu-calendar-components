@@ -254,8 +254,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  var ByuCalendarMinimalTile = function (_HTMLelement) {
-    _inherits(ByuCalendarMinimalTile, _HTMLelement);
+  var ByuCalendarMinimalTile = function (_HTMLElement) {
+    _inherits(ByuCalendarMinimalTile, _HTMLElement);
 
     function ByuCalendarMinimalTile() {
       _classCallCheck(this, ByuCalendarMinimalTile);
@@ -293,7 +293,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }]);
 
     return ByuCalendarMinimalTile;
-  }(HTMLelement);
+  }(HTMLElement);
 
   window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
   window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
@@ -314,8 +314,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-  var ByuCalendarRow = function (_HTMLElement) {
-    _inherits(ByuCalendarRow, _HTMLElement);
+  var ByuCalendarRow = function (_HTMLElement2) {
+    _inherits(ByuCalendarRow, _HTMLElement2);
 
     function ByuCalendarRow() {
       _classCallCheck(this, ByuCalendarRow);
@@ -392,8 +392,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
   var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  var ByuCalendarTile = function (_HTMLElement2) {
-    _inherits(ByuCalendarTile, _HTMLElement2);
+  var ByuCalendarTile = function (_HTMLElement3) {
+    _inherits(ByuCalendarTile, _HTMLElement3);
 
     function ByuCalendarTile() {
       _classCallCheck(this, ByuCalendarTile);
@@ -498,8 +498,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   var DEFAULT_DAYS = '14';
   var DEFAULT_DISPLAY = 4;
 
-  var ByuCalendar = function (_HTMLElement3) {
-    _inherits(ByuCalendar, _HTMLElement3);
+  var ByuCalendar = function (_HTMLElement4) {
+    _inherits(ByuCalendar, _HTMLElement4);
 
     function ByuCalendar() {
       _classCallCheck(this, ByuCalendar);
@@ -887,7 +887,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var item = jsonArr[i];
       html += '<byu-calendar-minimal-tile>';
       var start = new Date(item.StartDateTime.trim());
-      html += '<p slot="date">' + start + '</p></byu-calendar-minimal-tile>';
+      html += '<p slot="date">' + start + '</p>';
+      if (item.AllDay === 'false') {
+        html += '<div slot="time">' + formatTime(start) + '</div>';
+      } else {
+        html += '<div slot="time">ALL DAY</div>';
+      }
+      if (item.LocationName) {
+        html += '<div slot="location">' + item.LocationName + '</div>';
+      }
+      html += '<a slot="title" href="' + item.FullUrl + '">' + item.Title + '</a>';
+      html += '</byu-calendar-minimal-tile>';
     }
     html += '</div>';
     return html;
@@ -1143,7 +1153,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
   // module
-  exports.push([module.i, ":host{margin-bottom:10px}:host .section-first{background-color:#0057b8;color:#fff;height:140px;width:225px;margin-right:5px;text-align:center}:host .section-second{background-color:#c5c5c5;width:auto}:host #month-and-day{font-size:36px;padding-top:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}", ""]);
+  exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:row}:host .section-first{background-color:#0057b8;color:#fff;height:120px;width:200px;margin-right:10px;text-align:center}:host .section-second{background-color:#c5c5c5;width:100%;padding:10px}:host #month-and-day{font-size:36px;padding:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}:host #title{font-size:24px;margin-bottom:10px}:host #location{font-size:12px;text-transform:uppercase;font-weight:700;color:#666}#date,#date ::slotted(*){display:none}", ""]);
 
   // exports
 
@@ -1232,7 +1242,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /* 16 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(13) + "</style> <div id=\"section-first\"> <div id=\"date-val\" class=\"content\"><slot name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"></div> </div> <div id=\"section-second\"> </div>";
+  module.exports = "<style>" + __webpack_require__(13) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
   /***/
 },
