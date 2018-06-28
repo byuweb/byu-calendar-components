@@ -1,0 +1,17 @@
+<style>${require ('./byu-calendar-feature-column.scss') }</style>
+<div class="section-first">
+  <div id="date"><slot id="date-val" name="date"></slot></div>
+  <div id="weekday" class="content"></div>
+  <div id="month-and-day" class="content"></div>
+</div>
+<div class="section-second">
+    <div id="title-0" class="content"><slot name="title-0"></slot></div>
+    <div id="location-0" class="content"><slot name="location-0"></slot></div>
+    <div id="time-0" class="content"><slot name="time-0"></slot></div>
+</div>
+<div id="divider" class="content"><slot name="divider"></slot></div>
+<div class="section-third">
+    <div id="title-1" class="content"><slot name="title-1"></slot></div>
+    <div id="location-1" class="content"><slot name="location-1"></slot></div>
+    <div id="time-1" class="content"><slot name="time-1"></slot></div>
+</div>
