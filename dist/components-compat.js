@@ -92,7 +92,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   /******/__webpack_require__.p = "";
   /******/
   /******/ // Load entry module and return exports
-  /******/return __webpack_require__(__webpack_require__.s = 8);
+  /******/return __webpack_require__(__webpack_require__.s = 9);
   /******/
 })(
 /************************************************************************/
@@ -103,10 +103,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   "use strict";
 
   Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(11);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(12);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(2);
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(10);
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(9);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(11);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(10);
   /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
     return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
   });
@@ -250,8 +250,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   "use strict";
 
   var util = __webpack_require__(0);
-  var tileTemplate = __webpack_require__(15);
-  var imageTemplate = __webpack_require__(14);
+  var minimalTemplate = __webpack_require__(16);
+
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  var ByuCalendarMinimalTile = function (_HTMLelement) {
+    _inherits(ByuCalendarMinimalTile, _HTMLelement);
+
+    function ByuCalendarMinimalTile() {
+      _classCallCheck(this, ByuCalendarMinimalTile);
+
+      var _this = _possibleConstructorReturn(this, (ByuCalendarMinimalTile.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile)).call(this));
+
+      _this.attachShadow({ mode: 'open' });
+      return _this;
+    }
+
+    _createClass(ByuCalendarMinimalTile, [{
+      key: 'connectedCallback',
+      value: function connectedCallback() {
+        var _this2 = this;
+
+        util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
+          var dateOb = _this2.date;
+          var day = dateOb.getDate();
+          var monthName = months[dateOb.getMonth()];
+
+          _this2.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+        });
+      }
+    }, {
+      key: 'date',
+      get: function get() {
+        var dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
+        if (dates.length) {
+          var date = this.shadowRoot.querySelector('#date-val').assignedNodes()[0];
+          return new Date(date.innerText.trim());
+        } else {
+          return null;
+        }
+      }
+    }]);
+
+    return ByuCalendarMinimalTile;
+  }(HTMLelement);
+
+  window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
+  window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
+
+  /***/
+},
+/* 6 */
+/***/function (module, exports, __webpack_require__) {
+
+  "use strict";
+
+  var util = __webpack_require__(0);
+  var tileTemplate = __webpack_require__(18);
+  var imageTemplate = __webpack_require__(17);
 
   var ATTR_IMAGE_ROW = 'image-row';
 
@@ -264,29 +320,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     function ByuCalendarRow() {
       _classCallCheck(this, ByuCalendarRow);
 
-      var _this = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
+      var _this3 = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
 
-      _this.attachShadow({ mode: 'open' });
-      return _this;
+      _this3.attachShadow({ mode: 'open' });
+      return _this3;
     }
 
     _createClass(ByuCalendarRow, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this2 = this;
+        var _this4 = this;
 
         var template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, function () {
-          if (!_this2.imageRow) {
-            var dateOb = _this2.date;
+          if (!_this4.imageRow) {
+            var dateOb = _this4.date;
             var day = dateOb.getDate();
             var weekday = weekdays[dateOb.getDay()];
             var monthName = months[dateOb.getMonth()];
             var year = dateOb.getFullYear();
 
-            _this2.shadowRoot.querySelector('#day-number').innerHTML = day;
-            _this2.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-            _this2.shadowRoot.querySelector('#year').innerHTML = year;
+            _this4.shadowRoot.querySelector('#day-number').innerHTML = day;
+            _this4.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+            _this4.shadowRoot.querySelector('#year').innerHTML = year;
           }
         });
       }
@@ -323,14 +379,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 6 */
+/* 7 */
 /***/function (module, exports, __webpack_require__) {
 
   "use strict";
 
   var util = __webpack_require__(0);
-  var verticalTemplate = __webpack_require__(17);
-  var horizontalTemplate = __webpack_require__(16);
+  var verticalTemplate = __webpack_require__(20);
+  var horizontalTemplate = __webpack_require__(19);
 
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -342,31 +398,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     function ByuCalendarTile() {
       _classCallCheck(this, ByuCalendarTile);
 
-      var _this3 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
+      var _this5 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
 
-      _this3.attachShadow({ mode: 'open' });
-      return _this3;
+      _this5.attachShadow({ mode: 'open' });
+      return _this5;
     }
 
     _createClass(ByuCalendarTile, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this4 = this;
+        var _this6 = this;
 
         var template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, function () {
-          var dateOb = _this4.date;
+          var dateOb = _this6.date;
           var monthName = months[dateOb.getMonth()];
           var monthAbb = monthAbbs[dateOb.getMonth()];
           var day = dateOb.getDate();
           var weekday = weekdays[dateOb.getDay()];
-          if (_this4.layout == 'horizontal') {
-            _this4.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+          if (_this6.layout == 'horizontal') {
+            _this6.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
           } else {
-            _this4.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-            _this4.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+            _this6.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+            _this6.shadowRoot.querySelector('#weekday').innerHTML = weekday;
           }
-          _this4.shadowRoot.querySelector('#day-number').innerHTML = day;
+          _this6.shadowRoot.querySelector('#day-number').innerHTML = day;
         });
       }
     }, {
@@ -402,12 +458,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 7 */
+/* 8 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
   /* harmony import */
-  var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(18);
+  var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(21);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(0);
   /**
@@ -448,20 +504,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     function ByuCalendar() {
       _classCallCheck(this, ByuCalendar);
 
-      var _this5 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
+      var _this7 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
 
-      _this5.attachShadow({ mode: 'open' });
-      return _this5;
+      _this7.attachShadow({ mode: 'open' });
+      return _this7;
     }
 
     _createClass(ByuCalendar, [{
       key: 'connectedCallback',
       value: function connectedCallback() {
-        var _this6 = this;
+        var _this8 = this;
 
         //This will stamp our template for us, then let us perform actions on the stamped DOM.
         __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
-          getCalendarData(_this6);
+          getCalendarData(_this8);
         });
       }
     }, {
@@ -683,6 +739,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       case 5:
         return fullpage_imgrows(jsonArr);
         break;
+      case 7:
+        return minimal_tiles(jsonArr);
+        break;
       case 1:
       default:
         return list_format(jsonArr);
@@ -822,6 +881,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     return html;
   }
 
+  function minimal_tiles(jsonArr) {
+    var html = '<div class="tile-container">';
+    for (var i = 0; i < jsonArr.length; i++) {
+      var item = jsonArr[i];
+      html += '<byu-calendar-minimal-tile>';
+      var start = new Date(item.StartDateTime.trim());
+      html += '<p slot="date">' + start + '</p></byu-calendar-minimal-tile>';
+    }
+    html += '</div>';
+    return html;
+  }
+
   function list_format(jsonArr) {
     var html = '<div class="calendar-widget-block display-list">';
     var current = new Date();
@@ -866,17 +937,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 8 */
+/* 9 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
 
   Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(7);
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(5);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(8);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(6);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__);
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(6);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(7);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(5);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__);
   /**
    *  @license
    *    Copyright 2017 Brigham Young University
@@ -896,7 +969,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 9 */
+/* 10 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
@@ -930,7 +1003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 10 */
+/* 11 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
@@ -974,13 +1047,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 11 */
+/* 12 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
   "use strict";
   /* harmony export (immutable) */
   __webpack_exports__["a"] = applyTemplate;
-  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(13);
+  /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(15);
   /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hash_sum__);
   /*
    *  @license
@@ -1062,7 +1135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 12 */
+/* 13 */
 /***/function (module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(1)();
@@ -1070,14 +1143,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
   // module
-  exports.push([module.i, "/*!\r\n *  @license\r\n *    Copyright 2017 Brigham Young University\r\n *\r\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\r\n *    you may not use this file except in compliance with the License.\r\n *    You may obtain a copy of the License at\r\n *\r\n *        http://www.apache.org/licenses/LICENSE-2.0\r\n *\r\n *    Unless required by applicable law or agreed to in writing, software\r\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\r\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\r\n *    See the License for the specific language governing permissions and\r\n *    limitations under the License.\r\n */\n/*!\r\n *  @license\r\n *    Copyright 2017 Brigham Young University\r\n *\r\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\r\n *    you may not use this file except in compliance with the License.\r\n *    You may obtain a copy of the License at\r\n *\r\n *        http://www.apache.org/licenses/LICENSE-2.0\r\n *\r\n *    Unless required by applicable law or agreed to in writing, software\r\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\r\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\r\n *    See the License for the specific language governing permissions and\r\n *    limitations under the License.\r\n */.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Sentinel A,Sentinel B,Vitesse A,Vitesse B,sans-serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Sentinel A,Sentinel B;font-weight:700;font-size:26px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+  exports.push([module.i, ":host{margin-bottom:10px}:host .section-first{background-color:#0057b8;color:#fff;height:140px;width:225px;margin-right:5px;text-align:center}:host .section-second{background-color:#c5c5c5;width:auto}:host #month-and-day{font-size:36px;padding-top:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}", ""]);
 
   // exports
 
 
   /***/
 },
-/* 13 */
+/* 14 */
+/***/function (module, exports, __webpack_require__) {
+
+  exports = module.exports = __webpack_require__(1)();
+  // imports
+
+
+  // module
+  exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Sentinel A,Sentinel B,Vitesse A,Vitesse B,sans-serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Sentinel A,Sentinel B;font-weight:700;font-size:26px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+
+  // exports
+
+
+  /***/
+},
+/* 15 */
 /***/function (module, exports, __webpack_require__) {
 
   "use strict";
@@ -1141,38 +1229,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
   /***/
 },
-/* 14 */
-/***/function (module, exports, __webpack_require__) {
-
-  module.exports = "<style>" + __webpack_require__(3) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-  /***/
-},
-/* 15 */
-/***/function (module, exports, __webpack_require__) {
-
-  module.exports = "<style>" + __webpack_require__(3) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-  /***/
-},
 /* 16 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(4) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+  module.exports = "<style>" + __webpack_require__(13) + "</style> <div id=\"section-first\"> <div id=\"date-val\" class=\"content\"><slot name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"></div> </div> <div id=\"section-second\"> </div>";
 
   /***/
 },
 /* 17 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(4) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+  module.exports = "<style>" + __webpack_require__(3) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
   /***/
 },
 /* 18 */
 /***/function (module, exports, __webpack_require__) {
 
-  module.exports = "<style>" + __webpack_require__(12) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
+  module.exports = "<style>" + __webpack_require__(3) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+
+  /***/
+},
+/* 19 */
+/***/function (module, exports, __webpack_require__) {
+
+  module.exports = "<style>" + __webpack_require__(4) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+
+  /***/
+},
+/* 20 */
+/***/function (module, exports, __webpack_require__) {
+
+  module.exports = "<style>" + __webpack_require__(4) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+  /***/
+},
+/* 21 */
+/***/function (module, exports, __webpack_require__) {
+
+  module.exports = "<style>" + __webpack_require__(14) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
 
   /***/
 }]

@@ -50,7 +50,7 @@ gulp.task('watch', ['build'], function (done) {
     notify: false
   }, done);
 
-  gulp.watch(['./demo/**', './byu-calendar/**', './byu-calendar-row/**', './byu-calendar-tile/**'], ['build']);
+  gulp.watch(['./demo/**', './byu-calendar/**', './byu-calendar-row/**', './byu-calendar-tile/**', './byu-calendar-minimal-tile/**'], ['build']);
 });
 
 gulp.task('default', ['watch']);
