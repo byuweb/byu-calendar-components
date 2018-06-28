@@ -152,9 +152,10 @@ $ticket-region-width: 250px;
 	}
 
 	#month-name {
-		margin: 10px 0 0;
+		padding: 10px 0px;
 		font-size: 13px;
 		text-transform: uppercase;
+		margin-bottom: 0px;
 		font-weight: 500;
     }
     
@@ -162,8 +163,6 @@ $ticket-region-width: 250px;
 		font-size: 48px;
 		margin-bottom: 5px;
 		font-weight: bold;
-		line-height: 48px;
-		text-align: center;
     }
     
 	#title ::slotted(*) {

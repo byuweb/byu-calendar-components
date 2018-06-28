@@ -39,8 +39,6 @@ $medgray: #767676;
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
-	font-family: "Gotham A", "Gotham B";
-	line-height: 1.2;
 }
 
 #location ::slotted(*) {
@@ -57,7 +55,7 @@ $medgray: #767676;
 	width: 100%;
 }
 
-#description ::slotted(*) {
+#title ::slotted(*), #description ::slotted(*) {
 	font-family: "Sentinel A", "Sentinel B";
 	line-height: 1.2;
 }
@@ -112,17 +110,16 @@ $medgray: #767676;
     }
     
 	#month-name {
-		padding: 10px 0 0;
+		padding: 10px;
 		font-size: 22px;
 		text-transform: uppercase;
+		margin-bottom: 0px;
     }
     
 	#day-number {
 		font-size: 60px;
 		margin-bottom: 10px;
 		font-weight: bold;
-		text-align: center;
-		line-height: 68px;
     }
     
 	#title ::slotted(*) {
@@ -130,21 +127,19 @@ $medgray: #767676;
 		font-size: 18px;
 		font-weight: bold;
 		text-align: center;
-		overflow: hidden;
-		padding: 5px 0 10px;
+		padding: 5px 0px 10px;
 		height: 120px;
 		width: 150px;
 	}
 	#time ::slotted(*) {
 		font-size: 14px;
-		padding: 8px 0 0!important;
+		padding: 8px 0px!important;
     }
     
 	#location ::slotted(*){
 		color: $medgray;
 		text-align: center;
 		font-weight: 500;
-		line-height: 12px;
 	}
 }
 
@@ -203,6 +198,7 @@ $medgray: #767676;
 		padding-top: 8px;
 		white-space: nowrap;
 		overflow: hidden;
+		text-overflow: ellipsis!important;
 	}
 }
 
