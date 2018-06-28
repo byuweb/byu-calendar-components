@@ -46,32 +46,5 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-.overall-feature-wrapper {
-  display: flex;
-  justify-content: space-between; }
-
-@media screen and (min-width: 769px) and (max-width: 1223px) {
-  .column-4 {
-    display: none; } }
-
-@media screen and (max-width: 768px) {
-  .overall-feature-wrapper {
-    display: flex;
-    flex-direction: column; } }
-
-.fullpage-date-wrapper {
-  color: #002e5d;
-  font-weight: bold;
-  font-size: 32px;
-  margin-bottom: 25px;
-  display: flex; }
-
-.fullpage-date-weekday {
-  text-transform: uppercase;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif; }
-
-.fullpage-date-text {
-  padding-left: 10px;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif; }
 
 /*# sourceMappingURL=byu-calendar.css.map */

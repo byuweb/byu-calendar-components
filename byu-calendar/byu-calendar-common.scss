@@ -18,3 +18,35 @@
 // This file should contain only mixins
 
 // however the byu-calendar component doesn't really have component styling right now.
+
+@mixin fullpageDateWrapper() {
+  color: #002e5d;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 25px;
+  display: flex;
+}
+
+@mixin fullpageDateWeekday() {
+  text-transform: uppercase;
+  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
+}
+
+@mixin fullpageDateText() {
+  padding-left: 10px;
+  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
+}
+
+@mixin overallFeatureWrapper() {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin column4() {
+  display: none;
+}
+
+@mixin overallFeatureWrapperSmall() {
+  display: flex;
+  flex-direction: column;
+}

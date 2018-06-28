@@ -99,3 +99,31 @@ a:hover, a:focus {
         margin-right: 0px;
     }
 }
+
+.fullpage-date-wrapper {
+    @include fullpageDateWrapper();
+}
+
+.fullpage-date-weekday {
+    @include fullpageDateWeekday();
+}
+
+.fullpage-date-text {
+    @include fullpageDateText();
+}
+
+.overall-feature-wrapper {
+    @include overallFeatureWrapper();
+}
+
+@media screen and (min-width: 769px) and (max-width: 1223px) {
+    .column-4 {
+        @include column4();
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .overall-feature-wrapper {
+        @include overallFeatureWrapperSmall();
+    }
+}
