@@ -9,10 +9,6 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['', ''], ['', '']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -100,7 +96,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /******/__webpack_require__.p = "";
     /******/
     /******/ // Load entry module and return exports
-    /******/return __webpack_require__(__webpack_require__.s = 13);
+    /******/return __webpack_require__(__webpack_require__.s = 12);
     /******/
 })(
 /************************************************************************/
@@ -998,10 +994,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(21);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(20);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(20);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(18);
     /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
         return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
     });
@@ -1195,7 +1191,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     // module
-    exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:row}:host .section-first{background-color:#0057b8;color:#fff;height:120px;width:200px;margin-right:10px;text-align:center}:host .section-second{background-color:#c5c5c5;width:100%;padding:10px}:host #month-and-day{font-size:36px;padding:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}:host #title{font-size:24px;margin-bottom:10px}:host #location{font-size:12px;text-transform:uppercase;font-weight:700;color:#666}#date,#date ::slotted(*){display:none}", ""]);
+    exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
 
     // exports
 
@@ -1210,21 +1206,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     // module
-    exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
-
-    // exports
-
-
-    /***/
-},
-/* 8 */
-/***/function (module, exports, __webpack_require__) {
-
-    exports = module.exports = __webpack_require__(3)();
-    // imports
-
-
-    // module
     exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.2);-webkit-box-shadow:0 8px 12px rgba(0,0,0,.2);box-shadow:0 8px 12px rgba(0,0,0,.2)}.section-first{background:#002e5d;color:#fff}.section-second{padding:15px}:host .content{width:100%;display:flex;justify-content:center}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-decoration:none}#location ::slotted(*){font-size:14px}#time ::slotted(*){font-size:14px;text-transform:uppercase}#description ::slotted(*),#title ::slotted(*){font-family:Sentinel A,Sentinel B;line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;text-transform:uppercase;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}:host([layout=vertical]){max-width:170px;display:flex;flex-wrap:wrap;justify-content:flex-start;margin:15px 8px}:host([layout=vertical]) .section-first{height:160px;width:170px;display:flex;flex-wrap:wrap;justify-content:center}:host([layout=vertical]) .section-second{height:190px;padding:15px 0;display:flex;flex-wrap:wrap;justify-content:center;align-content:space-between;align-self:flex-start}:host([layout=vertical]) .section-second ::slotted(*){justify-content:center}:host([layout=vertical]) #month-name{padding:10px;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=vertical]) #day-number{font-size:60px;margin-bottom:10px;font-weight:700}:host([layout=vertical]) #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:5px 0 10px;height:120px;width:150px}:host([layout=vertical]) #time ::slotted(*){font-size:14px;padding:8px 0!important}:host([layout=vertical]) #location ::slotted(*){color:#767676;text-align:center;font-weight:500}:host([layout=horizontal]){width:430px;margin:10px 15px;display:flex}:host([layout=horizontal]) .section-first{width:130px;min-height:130px!important}:host([layout=horizontal]) .section-second{width:300px;align-items:space-between}:host([layout=horizontal]) .section-second ::slotted(*){width:290px}:host([layout=horizontal]).extra-wide .section-second ::slotted(*){width:360px}:host([layout=horizontal]) #month-abb{padding:10px 0;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=horizontal]) #day-number{font-size:48px;font-weight:700}:host([layout=horizontal]) #time{padding:10px 0}:host([layout=horizontal]) #time ::slotted(*){color:#fff;padding:5px 0 10px;display:flex;justify-content:center}:host([layout=horizontal]) #title ::slotted(*){padding:5px 0 10px;width:100%;overflow:hidden}:host([layout=horizontal]) #location ::slotted(*){padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis!important}.section-second ::slotted(*){color:#767676;padding:0;margin:0;display:flex;flex-wrap:wrap;width:100%}:host ::slotted(img){display:none}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
 
     // exports
@@ -1232,15 +1213,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 9 */
+/* 8 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(14);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(13);
 
     var util = __webpack_require__(2);
-    var style = __webpack_require__(6);
     var minimalTemplate = __webpack_require__(24);
 
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1251,7 +1231,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendarMinimalTile() {
             _classCallCheck(this, ByuCalendarMinimalTile);
 
-            return _possibleConstructorReturn(this, (ByuCalendarMinimalTile.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile)).call(this));
+            return _possibleConstructorReturn(this, (ByuCalendarMinimalTile.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile)).apply(this, arguments));
         }
 
         _createClass(ByuCalendarMinimalTile, [{
@@ -1263,18 +1243,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: '_render',
             value: function _render(_ref) {
                 _objectDestructuringEmpty(_ref);
-
-                return __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["b" /* html */](_templateObject, minimalTemplate);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
+                var _this4 = this;
+
                 _get(ByuCalendarMinimalTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile.prototype), 'connectedCallback', this).call(this);
-                this.shadowRoot.innerHTML = minimalTemplate;
-                var dateOb = this.date;
-                var day = dateOb.getDate();
-                var monthName = months[dateOb.getMonth()];
-                this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
+                    var dateOb = _this4.date;
+                    var day = dateOb.getDate();
+                    var monthName = months[dateOb.getMonth()];
+                    _this4.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                });
             }
         }, {
             key: 'date',
@@ -1297,7 +1278,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 10 */
+/* 9 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
@@ -1317,29 +1298,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendarRow() {
             _classCallCheck(this, ByuCalendarRow);
 
-            var _this4 = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
+            var _this5 = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
 
-            _this4.attachShadow({ mode: 'open' });
-            return _this4;
+            _this5.attachShadow({ mode: 'open' });
+            return _this5;
         }
 
         _createClass(ByuCalendarRow, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this5 = this;
+                var _this6 = this;
 
                 var template = this.imageRow ? imageTemplate : tileTemplate;
                 util.applyTemplate(this, 'byu-calendar-row', template, function () {
-                    if (!_this5.imageRow) {
-                        var dateOb = _this5.date;
+                    if (!_this6.imageRow) {
+                        var dateOb = _this6.date;
                         var day = dateOb.getDate();
                         var weekday = weekdays[dateOb.getDay()];
                         var monthName = months[dateOb.getMonth()];
                         var year = dateOb.getFullYear();
 
-                        _this5.shadowRoot.querySelector('#day-number').innerHTML = day;
-                        _this5.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this5.shadowRoot.querySelector('#year').innerHTML = year;
+                        _this6.shadowRoot.querySelector('#day-number').innerHTML = day;
+                        _this6.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this6.shadowRoot.querySelector('#year').innerHTML = year;
                     }
                 });
             }
@@ -1376,7 +1357,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 11 */
+/* 10 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
@@ -1395,31 +1376,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendarTile() {
             _classCallCheck(this, ByuCalendarTile);
 
-            var _this6 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
+            var _this7 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
 
-            _this6.attachShadow({ mode: 'open' });
-            return _this6;
+            _this7.attachShadow({ mode: 'open' });
+            return _this7;
         }
 
         _createClass(ByuCalendarTile, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this7 = this;
+                var _this8 = this;
 
                 var template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
                 util.applyTemplate(this, 'byu-calendar-tile', template, function () {
-                    var dateOb = _this7.date;
+                    var dateOb = _this8.date;
                     var monthName = months[dateOb.getMonth()];
                     var monthAbb = monthAbbs[dateOb.getMonth()];
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
-                    if (_this7.layout == 'horizontal') {
-                        _this7.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+                    if (_this8.layout == 'horizontal') {
+                        _this8.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
                     } else {
-                        _this7.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this7.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+                        _this8.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this8.shadowRoot.querySelector('#weekday').innerHTML = weekday;
                     }
-                    _this7.shadowRoot.querySelector('#day-number').innerHTML = day;
+                    _this8.shadowRoot.querySelector('#day-number').innerHTML = day;
                 });
             }
         }, {
@@ -1455,7 +1436,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 12 */
+/* 11 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -1501,20 +1482,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendar() {
             _classCallCheck(this, ByuCalendar);
 
-            var _this8 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
+            var _this9 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
 
-            _this8.attachShadow({ mode: 'open' });
-            return _this8;
+            _this9.attachShadow({ mode: 'open' });
+            return _this9;
         }
 
         _createClass(ByuCalendar, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this9 = this;
+                var _this10 = this;
 
                 //This will stamp our template for us, then let us perform actions on the stamped DOM.
                 __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
-                    getCalendarData(_this9);
+                    getCalendarData(_this10);
                 });
             }
         }, {
@@ -1944,18 +1925,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 13 */
+/* 12 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(12);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(10);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(11);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(9);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(11);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(10);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(9);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(8);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -1975,7 +1956,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 14 */
+/* 13 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -1983,13 +1964,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* unused harmony export classString */
     /* unused harmony export styleString */
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(16);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(18);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(17);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(32);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(30);
-    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "b", function () {
-        return __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__["a"];
-    });
+    /* unused harmony reexport html */
     /* unused harmony reexport svg */
 
     /**
@@ -2049,13 +2028,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function LitElement() {
             _classCallCheck(this, LitElement);
 
-            var _this10 = _possibleConstructorReturn(this, (LitElement.__proto__ || Object.getPrototypeOf(LitElement)).apply(this, arguments));
+            var _this11 = _possibleConstructorReturn(this, (LitElement.__proto__ || Object.getPrototypeOf(LitElement)).apply(this, arguments));
 
-            _this10.__renderComplete = null;
-            _this10.__resolveRenderComplete = null;
-            _this10.__isInvalid = false;
-            _this10.__isChanging = false;
-            return _this10;
+            _this11.__renderComplete = null;
+            _this11.__resolveRenderComplete = null;
+            _this11.__isInvalid = false;
+            _this11.__isChanging = false;
+            return _this11;
         }
         /**
          * Override which sets up element rendering by calling* `_createRoot`
@@ -2263,18 +2242,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'renderComplete',
             get: function get() {
-                var _this11 = this;
+                var _this12 = this;
 
                 if (!this.__renderComplete) {
                     this.__renderComplete = new Promise(function (resolve) {
-                        _this11.__resolveRenderComplete = function (value) {
-                            _this11.__resolveRenderComplete = _this11.__renderComplete = null;
+                        _this12.__resolveRenderComplete = function (value) {
+                            _this12.__resolveRenderComplete = _this12.__renderComplete = null;
                             resolve(value);
                         };
                     });
                     if (!this.__isInvalid && this.__resolveRenderComplete) {
                         Promise.resolve().then(function () {
-                            return _this11.__resolveRenderComplete(false);
+                            return _this12.__resolveRenderComplete(false);
                         });
                     }
                 }
@@ -2292,7 +2271,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 15 */
+/* 14 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -2300,7 +2279,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(4);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(16);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2471,18 +2450,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             function PropertiesChanged() {
                 _classCallCheck(this, PropertiesChanged);
 
-                var _this12 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
+                var _this13 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
 
-                _this12.__dataEnabled = false;
-                _this12.__dataReady = false;
-                _this12.__dataInvalid = false;
-                _this12.__data = {};
-                _this12.__dataPending = null;
-                _this12.__dataOld = null;
-                _this12.__dataInstanceProps = null;
-                _this12.__serializing = false;
-                _this12._initializeProperties();
-                return _this12;
+                _this13.__dataEnabled = false;
+                _this13.__dataReady = false;
+                _this13.__dataInvalid = false;
+                _this13.__data = {};
+                _this13.__dataPending = null;
+                _this13.__dataOld = null;
+                _this13.__dataInstanceProps = null;
+                _this13.__serializing = false;
+                _this13._initializeProperties();
+                return _this13;
             }
 
             /**
@@ -2630,14 +2609,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: '_invalidateProperties',
                 value: function _invalidateProperties() {
-                    var _this13 = this;
+                    var _this14 = this;
 
                     if (!this.__dataInvalid && this.__dataReady) {
                         this.__dataInvalid = true;
                         microtask.run(function () {
-                            if (_this13.__dataInvalid) {
-                                _this13.__dataInvalid = false;
-                                _this13._flushProperties();
+                            if (_this14.__dataInvalid) {
+                                _this14.__dataInvalid = false;
+                                _this14._flushProperties();
                             }
                         });
                     }
@@ -2909,7 +2888,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 16 */
+/* 15 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -2917,7 +2896,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(4);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(14);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -3147,11 +3126,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @suppress {missingProperties} Interfaces in closure do not inherit statics, but classes do
                  */
                 get: function get() {
-                    var _this15 = this;
+                    var _this16 = this;
 
                     var props = this._properties;
                     return props ? Object.keys(props).map(function (p) {
-                        return _this15.attributeNameForProperty(p);
+                        return _this16.attributeNameForProperty(p);
                     }) : [];
                 }
             }, {
@@ -3174,7 +3153,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 17 */
+/* 16 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3395,7 +3374,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 18 */
+/* 17 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3453,7 +3432,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 19 */
+/* 18 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3487,7 +3466,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 20 */
+/* 19 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3531,7 +3510,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 21 */
+/* 20 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3619,6 +3598,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
+/* 21 */
+/***/function (module, exports, __webpack_require__) {
+
+    exports = module.exports = __webpack_require__(3)();
+    // imports
+
+
+    // module
+    exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:row}:host .section-first{background-color:#0057b8;color:#fff;height:120px;width:200px;margin-right:10px;text-align:center}:host .section-second{background-color:#c5c5c5;width:100%;padding:10px}:host #month-and-day{font-size:36px;padding:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}:host #title{font-size:24px;margin-bottom:10px}:host #location{font-size:12px;text-transform:uppercase;font-weight:700;color:#666}#date,#date ::slotted(*){display:none}", ""]);
+
+    // exports
+
+
+    /***/
+},
 /* 22 */
 /***/function (module, exports, __webpack_require__) {
 
@@ -3701,35 +3695,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 24 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(6) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(21) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
     /***/
 },
 /* 25 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(6) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 26 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(6) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 27 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
 
     /***/
 },
 /* 28 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
     /***/
 },
@@ -3771,7 +3765,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
     };
-    /* harmony export (immutable) */__webpack_exports__["a"] = html;
+    /* unused harmony export html */
 
     /**
      * Interprets a template literal as a lit-extended SVG template.
