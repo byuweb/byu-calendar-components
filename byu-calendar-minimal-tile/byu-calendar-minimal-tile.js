@@ -2,10 +2,15 @@
 import {LitElement, html} from '@polymer/lit-element';
 const util = require('byu-web-component-utils');
 const style = require('./byu-calendar-minimal-tile.scss');
+const minimalTemplate = require('./byu-calendar-minimal-tile.html');
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 class ByuCalendarMinimalTile extends LitElement {
+
+  constructor() {
+    super();
+  }
 
   _createRoot() {
     return this.attachShadow({ mode: 'open' });
@@ -22,21 +27,12 @@ class ByuCalendarMinimalTile extends LitElement {
   }
 
   _render({}) {
-    return html`
-<style>${style}</style>
-<div class="section-first">
-  <div id="date"><slot id="date-val" name="date"></slot></div>
-  <div id="month-and-day" class="content"></div>
-  <div id="time" class="content"><slot name="time"></slot></div>
-</div>
-<div class="section-second">
-  <div id="title" class="content"><slot name="title"></slot></div>
-  <div id="location" class="content"><slot name="location"></slot></div>
-</div>`;
+    return html``;
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.shadowRoot.innerHTML = minimalTemplate;
     let dateOb = this.date;
     let day = dateOb.getDate();
     let monthName = months[dateOb.getMonth()];
