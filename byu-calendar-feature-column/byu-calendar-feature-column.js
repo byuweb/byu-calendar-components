@@ -1,15 +1,19 @@
 'use strict';
+import {LitElement} from '@polymer/lit-element';
 const util = require('byu-web-component-utils');
 const featureTemplate = require('./byu-calendar-feature-column.html');
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-class ByuCalendarFeatureColumn extends HTMLElement {
+class ByuCalendarFeatureColumn extends LitElement {
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+  _createRoot() {
+    return this.attachShadow({ mode: 'open' });
+  }
+
+  _render({}) {
+
   }
 
   get date() {
@@ -23,6 +27,7 @@ class ByuCalendarFeatureColumn extends HTMLElement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
     util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
       var dateOb = this.date;
       var day = dateOb.getDate();
