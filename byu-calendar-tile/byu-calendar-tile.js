@@ -1,4 +1,5 @@
 'use strict';
+import {LitElement} from '@polymer/lit-element';
 const util = require('byu-web-component-utils');
 const verticalTemplate = require('./byu-calendar-vtile.html');
 const horizontalTemplate = require('./byu-calendar-htile.html');
@@ -7,11 +8,10 @@ var months =["January", "February", "March", "April", "May", "June", "July", "Au
 var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"];
 
-class ByuCalendarTile extends HTMLElement {
+class ByuCalendarTile extends LitElement {
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
     }
 
     get layout() {
@@ -36,7 +36,12 @@ class ByuCalendarTile extends HTMLElement {
         }
     }
 
+    _render({}) {
+
+    }
+
     connectedCallback() {
+        super.connectedCallback();
         let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
