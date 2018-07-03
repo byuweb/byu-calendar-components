@@ -46,6 +46,13 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+a[slot="title"] {
+  color: #002E5D;
+  font-weight: 500; }
+
+a[slot="title"]:hover {
+  color: #0057B8; }
+
 .fullpage-date-wrapper {
   color: #002e5d;
   font-weight: bold;
