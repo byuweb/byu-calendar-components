@@ -992,88 +992,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
-
-    Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(19);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(18);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(17);
-    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
-        return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
-    });
-    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "matchesSelector", function () {
-        return __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__["a"];
-    });
-    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "querySelectorSlot", function () {
-        return __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__["a"];
-    });
-    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "createEvent", function () {
-        return __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__["a"];
-    });
-    /**
-     * Created by ThatJoeMoore on 2/14/17
-     */
-
-    /***/
-},
-/* 3 */
-/***/function (module, exports) {
-
-    /*
-    	MIT License http://www.opensource.org/licenses/mit-license.php
-    	Author Tobias Koppers @sokra
-    */
-    // css base code, injected by the css-loader
-    module.exports = function () {
-        var list = [];
-
-        // return the list of modules as css string
-        list.toString = function toString() {
-            var result = [];
-            for (var i = 0; i < this.length; i++) {
-                var item = this[i];
-                if (item[2]) {
-                    result.push("@media " + item[2] + "{" + item[1] + "}");
-                } else {
-                    result.push(item[1]);
-                }
-            }
-            return result.join("");
-        };
-
-        // import a list of modules into the list
-        list.i = function (modules, mediaQuery) {
-            if (typeof modules === "string") modules = [[null, modules, ""]];
-            var alreadyImportedModules = {};
-            for (var i = 0; i < this.length; i++) {
-                var id = this[i][0];
-                if (typeof id === "number") alreadyImportedModules[id] = true;
-            }
-            for (i = 0; i < modules.length; i++) {
-                var item = modules[i];
-                // skip already imported module
-                // this implementation is not 100% perfect for weird media query combinations
-                //  when a module is imported multiple times with different media queries.
-                //  I hope this will never occur (Hey this way we have smaller bundles)
-                if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-                    if (mediaQuery && !item[2]) {
-                        item[2] = mediaQuery;
-                    } else if (mediaQuery) {
-                        item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-                    }
-                    list.push(item);
-                }
-            }
-        };
-        return list;
-    };
-
-    /***/
-},
-/* 4 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
     /* unused harmony export renderAttributes */
     /* unused harmony export classString */
     /* unused harmony export styleString */
@@ -1385,6 +1303,88 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
+/* 3 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+
+    Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(18);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(17);
+    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
+        return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
+    });
+    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "matchesSelector", function () {
+        return __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__["a"];
+    });
+    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "querySelectorSlot", function () {
+        return __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__["a"];
+    });
+    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "createEvent", function () {
+        return __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__["a"];
+    });
+    /**
+     * Created by ThatJoeMoore on 2/14/17
+     */
+
+    /***/
+},
+/* 4 */
+/***/function (module, exports) {
+
+    /*
+    	MIT License http://www.opensource.org/licenses/mit-license.php
+    	Author Tobias Koppers @sokra
+    */
+    // css base code, injected by the css-loader
+    module.exports = function () {
+        var list = [];
+
+        // return the list of modules as css string
+        list.toString = function toString() {
+            var result = [];
+            for (var i = 0; i < this.length; i++) {
+                var item = this[i];
+                if (item[2]) {
+                    result.push("@media " + item[2] + "{" + item[1] + "}");
+                } else {
+                    result.push(item[1]);
+                }
+            }
+            return result.join("");
+        };
+
+        // import a list of modules into the list
+        list.i = function (modules, mediaQuery) {
+            if (typeof modules === "string") modules = [[null, modules, ""]];
+            var alreadyImportedModules = {};
+            for (var i = 0; i < this.length; i++) {
+                var id = this[i][0];
+                if (typeof id === "number") alreadyImportedModules[id] = true;
+            }
+            for (i = 0; i < modules.length; i++) {
+                var item = modules[i];
+                // skip already imported module
+                // this implementation is not 100% perfect for weird media query combinations
+                //  when a module is imported multiple times with different media queries.
+                //  I hope this will never occur (Hey this way we have smaller bundles)
+                if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+                    if (mediaQuery && !item[2]) {
+                        item[2] = mediaQuery;
+                    } else if (mediaQuery) {
+                        item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+                    }
+                    list.push(item);
+                }
+            }
+        };
+        return list;
+    };
+
+    /***/
+},
 /* 5 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
@@ -1501,7 +1501,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 7 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(3)();
+    exports = module.exports = __webpack_require__(4)();
     // imports
 
 
@@ -1516,7 +1516,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 8 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(3)();
+    exports = module.exports = __webpack_require__(4)();
     // imports
 
 
@@ -1533,9 +1533,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(4);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
-    var util = __webpack_require__(2);
+    var util = __webpack_require__(3);
     var tileTemplate = __webpack_require__(23);
     var imageTemplate = __webpack_require__(22);
 
@@ -1622,9 +1622,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(4);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
-    var util = __webpack_require__(2);
+    var util = __webpack_require__(3);
     var verticalTemplate = __webpack_require__(25);
     var horizontalTemplate = __webpack_require__(24);
 
@@ -1713,7 +1713,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
     var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(26);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(2);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(3);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(2);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -1746,23 +1747,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var DEFAULT_DAYS = '14';
     var DEFAULT_DISPLAY = 4;
 
-    var ByuCalendar = function (_HTMLElement) {
-        _inherits(ByuCalendar, _HTMLElement);
+    var ByuCalendar = function (_WEBPACK_IMPORTED_MO3) {
+        _inherits(ByuCalendar, _WEBPACK_IMPORTED_MO3);
 
         function ByuCalendar() {
             _classCallCheck(this, ByuCalendar);
 
-            var _this9 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
-
-            _this9.attachShadow({ mode: 'open' });
-            return _this9;
+            return _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).apply(this, arguments));
         }
 
         _createClass(ByuCalendar, [{
+            key: '_createRoot',
+            value: function _createRoot() {
+                return this.attachShadow({ mode: 'open' });
+            }
+        }, {
+            key: '_render',
+            value: function _render(_ref3) {
+                _objectDestructuringEmpty(_ref3);
+            }
+        }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
                 var _this10 = this;
 
+                _get(ByuCalendar.prototype.__proto__ || Object.getPrototypeOf(ByuCalendar.prototype), 'connectedCallback', this).call(this);
                 //This will stamp our template for us, then let us perform actions on the stamped DOM.
                 __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
                     getCalendarData(_this10);
@@ -1865,7 +1874,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]);
 
         return ByuCalendar;
-    }(HTMLElement);
+    }(__WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar', ByuCalendar);
     window.ByuCalendar = ByuCalendar;
@@ -3528,7 +3537,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 20 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(3)();
+    exports = module.exports = __webpack_require__(4)();
     // imports
 
 
@@ -3738,8 +3747,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * ''. If the value is falsey, the attribute is removed.
      */
 
-    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO3) {
-        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO3);
+    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO4) {
+        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO4);
 
         function BooleanAttributePart() {
             _classCallCheck(this, BooleanAttributePart);
@@ -3771,8 +3780,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */]);
     /* unused harmony export BooleanAttributePart */
 
-    var PropertyPart = function (_WEBPACK_IMPORTED_MO4) {
-        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO4);
+    var PropertyPart = function (_WEBPACK_IMPORTED_MO5) {
+        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO5);
 
         function PropertyPart() {
             _classCallCheck(this, PropertyPart);
