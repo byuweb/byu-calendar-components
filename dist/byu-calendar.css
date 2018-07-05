@@ -62,10 +62,10 @@ a[slot="title"]:hover {
 
 .fullpage-date-weekday {
   text-transform: uppercase;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif; }
+  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif; }
 
 .fullpage-date-text {
   padding-left: 10px;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif; }
+  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif; }
 
 /*# sourceMappingURL=byu-calendar.css.map */
