@@ -18,6 +18,7 @@
 // This file should contain only mixins
 
 // however the byu-calendar component doesn't really have component styling right now.
+@import '../byu-calendar-minimal-tile/byu-calendar-minimal-tile-extras';
 
 @mixin fullpageDateWrapper() {
   color: #002e5d;
