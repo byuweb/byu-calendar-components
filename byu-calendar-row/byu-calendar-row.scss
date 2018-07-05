@@ -3,191 +3,124 @@
 @import 'byu-calendar-row-common';
 
 :host {
-	@include byuCalendarTile();
+	@include byuCalendarRow();
  }
 
 .section-first {
-	@include tileSectionFirst();
+	@include rowSectionFirst();
 }
 
 .section-second {
-	@include tileSectionSecond();
+	@include rowSectionSecond();
 }
 
 :host .content {
-	@include tileContent();
+	@include rowContent();
 }
 
 :host ::slotted(*){
-	@include tileSlotted();
+	@include rowSlotted();
 }
 
 // general sections styling
 #title ::slotted(*) {
-	@include tileTitle();
+	@include rowTitle();
 }
 
 .price-label, #price ::slotted(*) {
-	@include tilePriceLabel();
+	@include rowPriceLabel();
 }
 
 #time {
-	padding: 6px 0px;
-	margin: 0px;
+	@include rowTime();
 }
 
 #time ::slotted(*) {
-	font-size: 14px;
-	padding: 0px;
-	margin: 0px;
-	text-transform: uppercase;
+	@include rowTimeSlotted();
 }
 
 #location {
-	padding: 0px 0px 6px;
+	@include rowLocation();
 }
 
 #location ::slotted(*) {
-	font-size: 14px !important;
-	padding: 0px;
-	margin: 0px;
-	text-transform: uppercase;
+	@include rowLocationSlotted();
 }
 
 #tickets-link ::slotted(*) {
-	text-align: center;
-	background-color: $green!important;
-	padding: 9px 15px !important;
-	width: 120px;
-	font-size: 12px;
-	color:$white!important;
-	text-decoration: none;
+	@include rowTicketsLink();
 }
 
 #tickets-link ::slotted(:before) {
-	content: "Price: ";
-	display: inline;
+	@include rowTicketsLinkBefore();
 }
 
 .section-second{
-	min-height: 100px;
-	padding: 0px 15px 15px;
-	display: block;
+	@include rowSectionSecond();
 }
 
 #title ::slotted(*) {
-	line-height: 1.2;
+	@include rowTitleSlotted();
 }
 
 #weekday {
-	text-transform: uppercase;
-	font-size: 14px;
-	padding-bottom: 10px;
-}
-
-#location ::slotted(*) {
-	color: $medgray;
-	font-size: 12px;
-	font-weight: 500;
+	@include rowWeekday();
 }
 
 // always hide simple date inputted slot
 #date, #date ::slotted(*) {
-	display: none;
+	@include hiddenDate();
 }
 
 #year {
-	letter-spacing: 3px;
+	@include rowYear();
 }
 
 .section-third {
-	padding-top: 8px;
-	width: auto;
-	margin-left: auto;
+	@include rowSectionThird();
 }
 
 :host {
-	display: flex;
-	flex-direction: row;
-	// flex-wrap: wrap;
-	justify-content: flex-start;
-	margin: 10px 8px;
-	width: 100%;
 
 	.section-first {
-		height: 120px;
-		width: 120px;
-		display: block;
-		background: $lightgray;
-        margin-bottom: 15px;
         
 		.content {
-			width: 120px;
-			display: flex;
-			justify-content: center;
+			@include rowSectionFirstContent();
 		}
+
 	}
 
 	.section-second ::slotted(*) {
-		justify-content: flex-start;
+		@include rowSectionSecondSlotted();
 	}
 
 	#month-name {
-		padding: 10px 0px;
-		font-size: 13px;
-		text-transform: uppercase;
-		margin-bottom: 0px;
-		font-weight: 500;
-    }
+		@include rowMonthName();
+	}
     
 	#day-number {
-		font-size: 48px;
-		margin-bottom: 5px;
-		font-weight: bold;
-    }
-    
-	#title ::slotted(*) {
-		color: $navy !important;
-		font-size: 18px;
-		font-weight: bold;
-		// text-align: center;
-		padding: 0px 0px 5px;
-    }
-    
-	#time ::slotted(*) {
-		font-size: 14px;
-    }
-    
-	#location ::slotted(*){
-		color: $medgray;
-		font-weight: 500;
-		padding:  4px 0px;
-    }
+		@include rowDayNumber();
+	}
     
 	#link ::slotted(*) {
-		color: $navy;
-		padding: 4px 0px;
-		text-decoration: none;
+		@include rowLink();
 	}
 }
 
 :host([image-row])  {
 	.section-first {
-		height: auto;
-		width: 100px;
-		background: none;
+		@include imageRowSectionFirst();
 
 		::slotted(img) {
-			height: auto;
-			width: 100px;
+			@include imageRowImage();
 		}
 	}
 }
 
 p, div, a {
-	font-family: $gotham;
+	@include gothamFont();
 }
 
 h1, h2, h3, h4 {
-	font-family: $sentinel;
+	@include sentinelFont();
 }

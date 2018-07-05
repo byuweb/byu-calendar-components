@@ -1,3 +1,13 @@
+@import 'fonts';
+
 @mixin hiddenDate() {
   display: none;
+}
+
+@mixin gothamFont() {
+  font-family: $gotham;
+}
+
+@mixin sentinelFont() {
+  font-family: $sentinel;
 }
