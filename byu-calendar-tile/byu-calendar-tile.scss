@@ -1,4 +1,5 @@
 @import '../shared-styles/colors';
+@import '../shared-styles/fonts';
 $weight: bold;
 
 // general, regardless of layout
@@ -22,11 +23,11 @@ $weight: bold;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 :host ::slotted(*){
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 // general sections styling
@@ -52,7 +53,7 @@ $weight: bold;
 }
 
 #title ::slotted(*), #description ::slotted(*) {
-	font-family: Domine, "Sentinel A", "Sentinel B", serif;
+	font-family: $sentinel;
 	line-height: 1.2;
 }
 
@@ -213,9 +214,9 @@ $weight: bold;
 }
 
 p, div, a {
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 h1, h2, h3, h4 {
-	font-family: Domine, "Sentinel A", "Sentinel B", serif;
+	font-family: $sentinel;
 }

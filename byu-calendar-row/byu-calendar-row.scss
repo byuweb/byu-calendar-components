@@ -1,6 +1,7 @@
 //import fonts
 //@import "https://cloud.typography.com/75214/6517752/css/fonts.css";
 @import '../shared-styles/colors';
+@import '../shared-styles/fonts';
 
 $weight: bold;
 
@@ -25,11 +26,11 @@ $ticket-region-width: 250px;
 
 :host .content {
 	width: 100%;
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 :host ::slotted(*){
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 // general sections styling
@@ -199,9 +200,9 @@ $ticket-region-width: 250px;
 }
 
 p, div, a {
-	font-family: "Gotham A", "Gotham B";
+	font-family: $gotham;
 }
 
 h1, h2, h3, h4 {
-	font-family: Domine, "Sentinel A", "Sentinel B", serif;
+	font-family: $sentinel;
 }
