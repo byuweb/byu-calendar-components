@@ -16,9 +16,10 @@
  */
 
 @import '../byu-calendar-minimal-tile/byu-calendar-minimal-tile-extras';
+@import '../shared-styles/colors';
 
 .fullpage-date-wrapper {
-    color: #002e5d;
+    color: $navy;
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 25px;

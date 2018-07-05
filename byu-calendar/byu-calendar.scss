@@ -19,12 +19,12 @@
 
 a {
     text-decoration: none;
-    color: #003da5; // royal blue
+    color: $royal;
 }
 
 a:hover, a:focus {
     text-decoration: none;
-    color: #002c5c; // dark royal
+    color: $darkroyal;
 }
 
 .calendar-block-title {
@@ -40,8 +40,8 @@ a:hover, a:focus {
     }
     
     h2 {
-        color: #002e5d; // navy
-        border-bottom: 1px solid #e5e5e5;
+        color: $navy;
+        border-bottom: 1px solid $lightgray;
         font-size: 28px;
         padding-bottom: 6px;
     }
@@ -76,7 +76,7 @@ a:hover, a:focus {
     .event-time {
         min-width: 60px;
         margin-left: 12px;
-        color: #767676;
+        color: $medgray;
         font-size: 16px;
         display: flex;
         justify-content: flex-end;
