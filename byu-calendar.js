@@ -19,3 +19,4 @@
 import './byu-calendar/byu-calendar.js';
 import './byu-calendar-row/byu-calendar-row.js';
 import './byu-calendar-tile/byu-calendar-tile.js';
+import './byu-calendar-minimal-tile/byu-calendar-minimal-tile.js';

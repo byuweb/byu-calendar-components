@@ -256,6 +256,9 @@ function formatCalendarData(jsonArr, data) {
     case 5:
       return fullpage_imgrows(jsonArr);
       break;
+    case 7:
+      return minimal_tiles(jsonArr);
+      break;
     case 1:
     default:
       return list_format(jsonArr);
@@ -390,6 +393,29 @@ function fullpage_imgrows(jsonArr) {
       }
     }
     html += '<a href="' + item.FullUrl + '" slot="link" target="_blank">SEE FULL EVENT</a></byu-calendar-row>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function minimal_tiles(jsonArr) {
+  let html = '<div class="tile-container">';
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    html += '<byu-calendar-minimal-tile>';
+    let start = new Date(item.StartDateTime.trim());
+    html += '<p slot="date">' + start + '</p>';
+    if (item.AllDay === 'false') {
+      html += '<div slot="time">' + formatTime(start) + '</div>';
+    }
+    else {
+      html += '<div slot="time">ALL DAY</div>';
+    }
+    if (item.LocationName) {
+      html += '<div slot="location">' + item.LocationName + '</div>';
+    }
+    html += '<a slot="title" href="'+ item.FullUrl + '">' + item.Title + '</a>';
+    html+= '</byu-calendar-minimal-tile>';
   }
   html += '</div>';
   return html;
