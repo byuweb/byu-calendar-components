@@ -56,7 +56,7 @@ $medgray: #767676;
 }
 
 #title ::slotted(*), #description ::slotted(*) {
-	font-family: Domine, "Sentinel A", "Sentinel B";
+	font-family: Domine, "Sentinel A", "Sentinel B", serif;
 	line-height: 1.2;
 }
 
@@ -221,5 +221,5 @@ p, div, a {
 }
 
 h1, h2, h3, h4 {
-	font-family: Domine, "Sentinel A", "Sentinel B";
+	font-family: Domine, "Sentinel A", "Sentinel B", serif;
 }
