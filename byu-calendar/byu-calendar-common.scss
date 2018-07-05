@@ -29,12 +29,12 @@
 
 @mixin fullpageDateWeekday() {
   text-transform: uppercase;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
+  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
 }
 
 @mixin fullpageDateText() {
   padding-left: 10px;
-  font-family: "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", sans-serif;
+  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
 }
 
 @mixin overallFeatureWrapper() {
