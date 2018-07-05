@@ -1,0 +1,11 @@
+$royal: #0057B8;
+$navy: #002E5D;
+
+a[slot="title"] {
+  color: $navy;
+  font-weight: 500;
+}
+
+a[slot="title"]:hover {
+  color: $royal;
+}

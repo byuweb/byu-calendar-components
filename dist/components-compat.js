@@ -96,40 +96,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /******/__webpack_require__.p = "";
     /******/
     /******/ // Load entry module and return exports
-    /******/return __webpack_require__(__webpack_require__.s = 14);
+    /******/return __webpack_require__(__webpack_require__.s = 15);
     /******/
 })(
 /************************************************************************/
 /******/[
 /* 0 */
-/***/function (module, exports) {
-
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    window.JSCompiler_renameProperty = function (prop) {
-        return prop;
-    };
-
-    /***/
-},
-/* 1 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(21);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(22);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(20);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(21);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(20);
     /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
         return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
     });
@@ -148,7 +129,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 2 */
+/* 1 */
 /***/function (module, exports) {
 
     /*
@@ -198,6 +179,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         };
         return list;
+    };
+
+    /***/
+},
+/* 2 */
+/***/function (module, exports) {
+
+    /**
+    @license
+    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+    */
+
+    window.JSCompiler_renameProperty = function (prop) {
+        return prop;
     };
 
     /***/
@@ -1078,10 +1078,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* unused harmony export classString */
     /* unused harmony export styleString */
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(16);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(18);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(35);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(33);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(38);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(36);
     /* unused harmony reexport html */
     /* unused harmony reexport svg */
 
@@ -1390,7 +1390,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(2);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
     /**
     @license
@@ -1501,7 +1501,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 7 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(2)();
+    exports = module.exports = __webpack_require__(1)();
     // imports
 
 
@@ -1516,7 +1516,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 8 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(2)();
+    exports = module.exports = __webpack_require__(1)();
     // imports
 
 
@@ -1535,8 +1535,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
     var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(4);
 
-    var util = __webpack_require__(1);
-    var featureTemplate = __webpack_require__(26);
+    var util = __webpack_require__(0);
+    var featureTemplate = __webpack_require__(28);
 
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -1604,8 +1604,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
     var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(4);
 
-    var util = __webpack_require__(1);
-    var linksTemplate = __webpack_require__(27);
+    var util = __webpack_require__(0);
+    var linksTemplate = __webpack_require__(29);
 
     var ByuCalendarFeatureLinks = function (_WEBPACK_IMPORTED_MO2) {
         _inherits(ByuCalendarFeatureLinks, _WEBPACK_IMPORTED_MO2);
@@ -1643,13 +1643,78 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /***/
 },
 /* 11 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(4);
+
+    var util = __webpack_require__(0);
+    var minimalTemplate = __webpack_require__(30);
+
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var ByuCalendarMinimalTile = function (_WEBPACK_IMPORTED_MO3) {
+        _inherits(ByuCalendarMinimalTile, _WEBPACK_IMPORTED_MO3);
+
+        function ByuCalendarMinimalTile() {
+            _classCallCheck(this, ByuCalendarMinimalTile);
+
+            return _possibleConstructorReturn(this, (ByuCalendarMinimalTile.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile)).apply(this, arguments));
+        }
+
+        _createClass(ByuCalendarMinimalTile, [{
+            key: '_createRoot',
+            value: function _createRoot() {
+                return this.attachShadow({ mode: 'open' });
+            }
+        }, {
+            key: '_render',
+            value: function _render(_ref3) {
+                _objectDestructuringEmpty(_ref3);
+            }
+        }, {
+            key: 'connectedCallback',
+            value: function connectedCallback() {
+                var _this9 = this;
+
+                _get(ByuCalendarMinimalTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile.prototype), 'connectedCallback', this).call(this);
+                util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
+                    var dateOb = _this9.date;
+                    var day = dateOb.getDate();
+                    var monthName = months[dateOb.getMonth()];
+                    _this9.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                });
+            }
+        }, {
+            key: 'date',
+            get: function get() {
+                var dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
+                if (dates.length) {
+                    var date = this.shadowRoot.querySelector('#date-val').assignedNodes()[0];
+                    return new Date(date.innerText.trim());
+                } else {
+                    return null;
+                }
+            }
+        }]);
+
+        return ByuCalendarMinimalTile;
+    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+
+    window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
+    window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
+
+    /***/
+},
+/* 12 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
 
-    var util = __webpack_require__(1);
-    var tileTemplate = __webpack_require__(29);
-    var imageTemplate = __webpack_require__(28);
+    var util = __webpack_require__(0);
+    var tileTemplate = __webpack_require__(32);
+    var imageTemplate = __webpack_require__(31);
 
     var ATTR_IMAGE_ROW = 'image-row';
 
@@ -1662,29 +1727,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendarRow() {
             _classCallCheck(this, ByuCalendarRow);
 
-            var _this8 = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
+            var _this10 = _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).call(this));
 
-            _this8.attachShadow({ mode: 'open' });
-            return _this8;
+            _this10.attachShadow({ mode: 'open' });
+            return _this10;
         }
 
         _createClass(ByuCalendarRow, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this9 = this;
+                var _this11 = this;
 
                 var template = this.imageRow ? imageTemplate : tileTemplate;
                 util.applyTemplate(this, 'byu-calendar-row', template, function () {
-                    if (!_this9.imageRow) {
-                        var dateOb = _this9.date;
+                    if (!_this11.imageRow) {
+                        var dateOb = _this11.date;
                         var day = dateOb.getDate();
                         var weekday = weekdays[dateOb.getDay()];
                         var monthName = months[dateOb.getMonth()];
                         var year = dateOb.getFullYear();
 
-                        _this9.shadowRoot.querySelector('#day-number').innerHTML = day;
-                        _this9.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this9.shadowRoot.querySelector('#year').innerHTML = year;
+                        _this11.shadowRoot.querySelector('#day-number').innerHTML = day;
+                        _this11.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this11.shadowRoot.querySelector('#year').innerHTML = year;
                     }
                 });
             }
@@ -1721,14 +1786,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 12 */
+/* 13 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
 
-    var util = __webpack_require__(1);
-    var verticalTemplate = __webpack_require__(31);
-    var horizontalTemplate = __webpack_require__(30);
+    var util = __webpack_require__(0);
+    var verticalTemplate = __webpack_require__(34);
+    var horizontalTemplate = __webpack_require__(33);
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -1740,31 +1805,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendarTile() {
             _classCallCheck(this, ByuCalendarTile);
 
-            var _this10 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
+            var _this12 = _possibleConstructorReturn(this, (ByuCalendarTile.__proto__ || Object.getPrototypeOf(ByuCalendarTile)).call(this));
 
-            _this10.attachShadow({ mode: 'open' });
-            return _this10;
+            _this12.attachShadow({ mode: 'open' });
+            return _this12;
         }
 
         _createClass(ByuCalendarTile, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this11 = this;
+                var _this13 = this;
 
                 var template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
                 util.applyTemplate(this, 'byu-calendar-tile', template, function () {
-                    var dateOb = _this11.date;
+                    var dateOb = _this13.date;
                     var monthName = months[dateOb.getMonth()];
                     var monthAbb = monthAbbs[dateOb.getMonth()];
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
-                    if (_this11.layout == 'horizontal') {
-                        _this11.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+                    if (_this13.layout == 'horizontal') {
+                        _this13.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
                     } else {
-                        _this11.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this11.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+                        _this13.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this13.shadowRoot.querySelector('#weekday').innerHTML = weekday;
                     }
-                    _this11.shadowRoot.querySelector('#day-number').innerHTML = day;
+                    _this13.shadowRoot.querySelector('#day-number').innerHTML = day;
                 });
             }
         }, {
@@ -1800,14 +1865,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 13 */
+/* 14 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(32);
+    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(35);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(1);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(0);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -1846,20 +1911,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ByuCalendar() {
             _classCallCheck(this, ByuCalendar);
 
-            var _this12 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
+            var _this14 = _possibleConstructorReturn(this, (ByuCalendar.__proto__ || Object.getPrototypeOf(ByuCalendar)).call(this));
 
-            _this12.attachShadow({ mode: 'open' });
-            return _this12;
+            _this14.attachShadow({ mode: 'open' });
+            return _this14;
         }
 
         _createClass(ByuCalendar, [{
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this13 = this;
+                var _this15 = this;
 
                 //This will stamp our template for us, then let us perform actions on the stamped DOM.
                 __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
-                    getCalendarData(_this13);
+                    getCalendarData(_this15);
                 });
             }
         }, {
@@ -2084,6 +2149,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             case 6:
                 return feature_columns(jsonArr);
                 break;
+            case 7:
+                return minimal_tiles(jsonArr);
+                break;
             case 1:
             default:
                 return list_format(jsonArr);
@@ -2273,6 +2341,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return html;
     }
 
+    function minimal_tiles(jsonArr) {
+        var html = '<div class="tile-container">';
+        for (var i = 0; i < jsonArr.length; i++) {
+            var item = jsonArr[i];
+            html += '<byu-calendar-minimal-tile>';
+            var start = new Date(item.StartDateTime.trim());
+            html += '<p slot="date">' + start + '</p>';
+            if (item.AllDay === 'false') {
+                html += '<div slot="time">' + formatTime(start) + '</div>';
+            } else {
+                html += '<div slot="time">ALL DAY</div>';
+            }
+            if (item.LocationName) {
+                html += '<div slot="location">' + item.LocationName + '</div>';
+            }
+            html += '<a slot="title" href="' + item.FullUrl + '">' + item.Title + '</a>';
+            html += '</byu-calendar-minimal-tile>';
+        }
+        html += '</div>';
+        return html;
+    }
+
     function list_format(jsonArr) {
         var html = '<div class="calendar-widget-block display-list">';
         var current = new Date();
@@ -2317,19 +2407,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 14 */
+/* 15 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(13);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(11);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(14);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(12);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(12);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(13);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_feature_column_byu_calendar_feature_column_js__ = __webpack_require__(9);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__byu_calendar_feature_links_byu_calendar_feature_links_js__ = __webpack_require__(10);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(11);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -2349,15 +2440,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 15 */
+/* 16 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(2);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(18);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2528,18 +2619,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             function PropertiesChanged() {
                 _classCallCheck(this, PropertiesChanged);
 
-                var _this14 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
+                var _this16 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
 
-                _this14.__dataEnabled = false;
-                _this14.__dataReady = false;
-                _this14.__dataInvalid = false;
-                _this14.__data = {};
-                _this14.__dataPending = null;
-                _this14.__dataOld = null;
-                _this14.__dataInstanceProps = null;
-                _this14.__serializing = false;
-                _this14._initializeProperties();
-                return _this14;
+                _this16.__dataEnabled = false;
+                _this16.__dataReady = false;
+                _this16.__dataInvalid = false;
+                _this16.__data = {};
+                _this16.__dataPending = null;
+                _this16.__dataOld = null;
+                _this16.__dataInstanceProps = null;
+                _this16.__serializing = false;
+                _this16._initializeProperties();
+                return _this16;
             }
 
             /**
@@ -2687,14 +2778,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: '_invalidateProperties',
                 value: function _invalidateProperties() {
-                    var _this15 = this;
+                    var _this17 = this;
 
                     if (!this.__dataInvalid && this.__dataReady) {
                         this.__dataInvalid = true;
                         microtask.run(function () {
-                            if (_this15.__dataInvalid) {
-                                _this15.__dataInvalid = false;
-                                _this15._flushProperties();
+                            if (_this17.__dataInvalid) {
+                                _this17.__dataInvalid = false;
+                                _this17._flushProperties();
                             }
                         });
                     }
@@ -2966,15 +3057,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 16 */
+/* 17 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(2);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(16);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -3204,11 +3295,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @suppress {missingProperties} Interfaces in closure do not inherit statics, but classes do
                  */
                 get: function get() {
-                    var _this17 = this;
+                    var _this19 = this;
 
                     var props = this._properties;
                     return props ? Object.keys(props).map(function (p) {
-                        return _this17.attributeNameForProperty(p);
+                        return _this19.attributeNameForProperty(p);
                     }) : [];
                 }
             }, {
@@ -3231,7 +3322,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 17 */
+/* 18 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3242,7 +3333,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     __webpack_require__.d(__webpack_exports__, "a", function () {
         return microTask;
     });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(2);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
     /**
     @license
@@ -3452,14 +3543,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 18 */
+/* 19 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* unused harmony export dashToCamelCase */
     /* harmony export (immutable) */
     __webpack_exports__["a"] = camelToDashCase;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(2);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
     /**
     @license
@@ -3510,7 +3601,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 19 */
+/* 20 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3544,7 +3635,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 20 */
+/* 21 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3588,13 +3679,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 21 */
+/* 22 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = applyTemplate;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(25);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(27);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hash_sum__);
     /*
      *  @license
@@ -3676,10 +3767,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 22 */
+/* 23 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(2)();
+    exports = module.exports = __webpack_require__(1)();
     // imports
 
 
@@ -3691,10 +3782,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 23 */
+/* 24 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(2)();
+    exports = module.exports = __webpack_require__(1)();
     // imports
 
 
@@ -3706,22 +3797,37 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 24 */
+/* 25 */
 /***/function (module, exports, __webpack_require__) {
 
-    exports = module.exports = __webpack_require__(2)();
+    exports = module.exports = __webpack_require__(1)();
     // imports
 
 
     // module
-    exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Domine,Sentinel A,Sentinel B;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Domine,Sentinel A,Sentinel B,Vitesse A,Vitesse B,serif}.fullpage-date-text{padding-left:10px}.overall-feature-wrapper{display:flex;justify-content:space-between}@media screen and (min-width:769px) and (max-width:1223px){.column-4{display:none}}@media screen and (max-width:768px){.overall-feature-wrapper{display:flex;flex-direction:column}}", ""]);
+    exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:row}:host .section-first{background-color:#0057b8;color:#fff;height:120px;width:200px;margin-right:10px;text-align:center}:host .section-second{background-color:#c5c5c5;width:100%;padding:10px}:host #month-and-day{font-size:36px;padding:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}:host #title{font-size:24px;margin-bottom:10px}:host #location{font-size:12px;text-transform:uppercase;font-weight:700;color:#666}#date,#date ::slotted(*){display:none}", ""]);
 
     // exports
 
 
     /***/
 },
-/* 25 */
+/* 26 */
+/***/function (module, exports, __webpack_require__) {
+
+    exports = module.exports = __webpack_require__(1)();
+    // imports
+
+
+    // module
+    exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Domine,Sentinel A,Sentinel B;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Domine,Sentinel A,Sentinel B,Vitesse A,Vitesse B,serif}.fullpage-date-text{padding-left:10px}.overall-feature-wrapper{display:flex;justify-content:space-between}@media screen and (min-width:769px) and (max-width:1223px){.column-4{display:none}}@media screen and (max-width:768px){.overall-feature-wrapper{display:flex;flex-direction:column}}", ""]);
+
+    // exports
+
+
+    /***/
+},
+/* 27 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
@@ -3785,56 +3891,63 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 26 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(22) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"weekday\" class=\"content\"></div> <div id=\"month-and-day\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title-0\" class=\"content\"><slot name=\"title-0\"></slot></div> <div id=\"location-0\" class=\"content\"><slot name=\"location-0\"></slot></div> <div id=\"time-0\" class=\"content\"><slot name=\"time-0\"></slot></div> </div> <div id=\"divider\" class=\"content\"><slot name=\"divider\"></slot></div> <div class=\"section-third\"> <div id=\"title-1\" class=\"content\"><slot name=\"title-1\"></slot></div> <div id=\"location-1\" class=\"content\"><slot name=\"location-1\"></slot></div> <div id=\"time-1\" class=\"content\"><slot name=\"time-1\"></slot></div> </div>";
-
-    /***/
-},
-/* 27 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(23) + "</style> <a href=\"https://calendar.byu.edu\" class=\"full-link\" id=\"full-events-area\"> <div class=\"full-events\"> <div class=\"full-events-text\"> FULL<div class=\"larger\">EVENTS</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a> <a href=\"https://registrar.byu.edu/academic-calendar\" class=\"academic-link\" id=\"academic-area\"> <div class=\"academic-calendar-wrapper\"> <div class=\"academic-calendar-text\"> <div class=\"larger\">ACADEMIC</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a>";
-
-    /***/
-},
 /* 28 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(23) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"weekday\" class=\"content\"></div> <div id=\"month-and-day\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title-0\" class=\"content\"><slot name=\"title-0\"></slot></div> <div id=\"location-0\" class=\"content\"><slot name=\"location-0\"></slot></div> <div id=\"time-0\" class=\"content\"><slot name=\"time-0\"></slot></div> </div> <div id=\"divider\" class=\"content\"><slot name=\"divider\"></slot></div> <div class=\"section-third\"> <div id=\"title-1\" class=\"content\"><slot name=\"title-1\"></slot></div> <div id=\"location-1\" class=\"content\"><slot name=\"location-1\"></slot></div> <div id=\"time-1\" class=\"content\"><slot name=\"time-1\"></slot></div> </div>";
 
     /***/
 },
 /* 29 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(24) + "</style> <a href=\"https://calendar.byu.edu\" class=\"full-link\" id=\"full-events-area\"> <div class=\"full-events\"> <div class=\"full-events-text\"> FULL<div class=\"larger\">EVENTS</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a> <a href=\"https://registrar.byu.edu/academic-calendar\" class=\"academic-link\" id=\"academic-area\"> <div class=\"academic-calendar-wrapper\"> <div class=\"academic-calendar-text\"> <div class=\"larger\">ACADEMIC</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a>";
 
     /***/
 },
 /* 30 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(25) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
     /***/
 },
 /* 31 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 32 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(24) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items... </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 33 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+
+    /***/
+},
+/* 34 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+    /***/
+},
+/* 35 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(26) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items... </div>";
+
+    /***/
+},
+/* 36 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3933,8 +4046,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * ''. If the value is falsey, the attribute is removed.
      */
 
-    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO3) {
-        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO3);
+    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO4) {
+        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO4);
 
         function BooleanAttributePart() {
             _classCallCheck(this, BooleanAttributePart);
@@ -3966,8 +4079,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */]);
     /* unused harmony export BooleanAttributePart */
 
-    var PropertyPart = function (_WEBPACK_IMPORTED_MO4) {
-        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO4);
+    var PropertyPart = function (_WEBPACK_IMPORTED_MO5) {
+        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO5);
 
         function PropertyPart() {
             _classCallCheck(this, PropertyPart);
@@ -4044,7 +4157,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 34 */
+/* 37 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -4186,14 +4299,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 35 */
+/* 38 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = render;
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(34);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(37);
     /* unused harmony reexport html */
     /* unused harmony reexport svg */
     /* unused harmony reexport TemplateResult */
