@@ -1,49 +1,34 @@
 //import fonts
 //@import "https://cloud.typography.com/75214/6517752/css/fonts.css";
-@import '../shared-styles/colors';
-@import '../shared-styles/fonts';
-
-$weight: bold;
-
-$tile-width: 120px;
-$ticket-region-width: 250px;
+@import 'byu-calendar-row-common';
 
 :host {
-	padding: 10px 0px;
-	border-bottom: 1px solid $lightgray;
-	margin-bottom: 10px;
+	@include byuCalendarTile();
  }
 
 .section-first {
-	background: $lightgray;
-	color: $navy;
+	@include tileSectionFirst();
 }
 
 .section-second {
-	padding: 15px;
-	color: $medgray;
+	@include tileSectionSecond();
 }
 
 :host .content {
-	width: 100%;
-	font-family: $gotham;
+	@include tileContent();
 }
 
 :host ::slotted(*){
-	font-family: $gotham;
+	@include tileSlotted();
 }
 
 // general sections styling
 #title ::slotted(*) {
-	color: $navy!important;
-	font-size: 24px;
-	font-weight: bold;
-	text-decoration: none;
+	@include tileTitle();
 }
 
 .price-label, #price ::slotted(*) {
-	font-weight: bold !important;
-	color: $green;
+	@include tilePriceLabel();
 }
 
 #time {

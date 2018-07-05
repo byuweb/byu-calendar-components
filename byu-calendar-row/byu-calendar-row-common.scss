@@ -1,0 +1,44 @@
+@import '../shared-styles/colors';
+@import '../shared-styles/fonts';
+
+$weight: bold;
+
+$tile-width: 120px;
+$ticket-region-width: 250px;
+
+@mixin byuCalendarTile() {
+  padding: 10px 0;
+  border-bottom: 1px solid $lightgray;
+  margin-bottom: 10px;
+}
+
+@mixin tileSectionFirst() {
+  background: $lightgray;
+  color: $navy;
+}
+
+@mixin tileSectionSecond() {
+  padding: 15px;
+  color: $medgray;
+}
+
+@mixin tileContent() {
+  width: 100%;
+  font-family: $gotham;
+}
+
+@mixin tileSlotted() {
+  font-family: $gotham;
+}
+
+@mixin tileTitle() {
+  color: $navy!important;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@mixin tilePriceLabel() {
+  font-weight: bold !important;
+  color: $green;
+}
