@@ -1,0 +1,97 @@
+// Delete variables and use @import statements when shared-styles is merged
+$teal: #5d7998;
+$navy: #002e5d;
+$white: #fff;
+$gray: #666;
+$sentinel: Domine, "Sentinel A", "Sentinel B", serif;
+$vitesse: "Vitesse A", "Vitesse B", Arial, sans-serif;
+$ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+
+// Replace this function with mixins from shared-styles when merged
+
+@mixin hidden() {
+  display: none;
+}
+
+// General styles of the feature column
+
+@mixin byuFeatureColumn() {
+  width: 19%;
+  overflow: hidden;
+}
+
+@mixin featureSectionFirst() {
+  width: 100%;
+  background: $teal;
+  margin-bottom: 10px;
+  color: $white;
+  font-family: $ringside;
+}
+
+@mixin featureWeekday() {
+  text-align: center;
+  padding: 10px 10px 0;
+  text-transform: uppercase;
+  margin-top: 0;
+  font-weight: 500;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+@mixin featureMonthAndDay() {
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+@mixin featureSectionSecond() {
+  margin-bottom: 25px;
+}
+
+@mixin featureTitle() {
+  font-family: $vitesse;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+@mixin featureTimeAndLocation() {
+  font-size: 14px;
+  color: $gray;
+  font-family: $ringside;
+}
+
+@mixin featureSectionThird() {
+  margin-top: 15px;
+}
+
+@mixin featureBigColumn() {
+  height: 350px;
+}
+
+@mixin featureMediumColumn() {
+  width: 24%;
+}
+
+@mixin featureSmallColumn() {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@mixin featureSmallSectionFirst() {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+@mixin featureSmallMonthDay() {
+  padding: 0 29px;
+}
+
+@mixin featureSmallWeekday() {
+  padding: 5px 30px 5px 15px;
+}

@@ -1,99 +1,71 @@
-$teal: #5d7998;
-$navy: #002e5d;
-$white: #fff;
-$gray: #666;
+@import 'byu-calendar-feature-column-common';
 
 #date, #date ::slotted(*) {
-  display: none;
+  @include hidden();
 }
 
 :host {
-  width: 19%;
-  overflow: hidden;
+  @include byuFeatureColumn();
 
   .section-first {
-    width: 100%;
-    background: $teal;
-    margin-bottom: 10px;
-    color: $white;
-    font-family: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+    @include featureSectionFirst();
   }
 
   #weekday {
-    text-align: center;
-    padding: 10px 10px 0;
-    text-transform: uppercase;
-    margin-top: 0;
-    font-weight: 500;
-    font-size: 12px;
-    margin-bottom: 5px;
+    @include featureWeekday();
   }
 
   #month-and-day {
-    font-weight: bold;
-    font-size: 16px;
-    text-transform: uppercase;
-    text-align: center;
-    padding-bottom: 10px;
+    @include featureMonthAndDay();
   }
 
   .section-second {
-    margin-bottom: 25px;
+    @include featureSectionSecond();
   }
 
   #title-0,
   #title-1 {
-    font-family: "Vitesse A", "Vitesse B", Georgia, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 20px;
+    @include featureTitle();
   }
 
   #time-0,
   #time-1,
   #location-0,
   #location-1 {
-    font-size: 14px;
-    color: $gray;
-    font-family: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+    @include featureTimeAndLocation();
   }
 
   .section-third {
-    margin-top: 15px;
+    @include featureSectionThird();
   }
 }
 
 @media screen and (min-width: 769px) {
   :host {
-    height: 350px;
+    @include featureBigColumn();
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1223px) {
   :host {
-    width: 24%;
+    @include featureMediumColumn();
   }
 }
 
 @media screen and (max-width: 768px) {
   :host {
-    width: 100%;
-    margin-bottom: 20px;
+    @include featureSmallColumn();
 
     .section-first {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-      align-items: center;
-      align-content: center;
+      @include featureSmallSectionFirst();
     }
 
     #month-and-day {
-      padding: 0 29px;
+      @include featureSmallMonthDay();
     }
 
     #weekday {
-      padding: 5px 30px 5px 15px;
+      @include featureSmallWeekday();
     }
 
   }
