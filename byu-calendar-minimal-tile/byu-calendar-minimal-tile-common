@@ -45,3 +45,14 @@
   font-weight: bold;
   color: $darkgray;
 }
+
+// Mixins for the extra file
+
+@mixin minimalTitleOverride() {
+  color: $navy;
+  font-weight: 500;
+}
+
+@mixin minimalTitleOverrideHover() {
+  color: $royal;
+}

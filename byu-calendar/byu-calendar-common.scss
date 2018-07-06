@@ -16,21 +16,76 @@
  */
 
 @import '../byu-calendar-minimal-tile/byu-calendar-minimal-tile-extras';
+@import '../byu-calendar-row/byu-calendar-row-extras';
 @import '../shared-styles/colors';
 @import '../shared-styles/fonts';
+@import '../shared-styles/mixins';
 
-.fullpage-date-wrapper {
+@mixin calendarLink() {
+    text-decoration: none;
+    color: $royal;
+}
+
+@mixin calendarLinkHoverFocus() {
+    text-decoration: none;
+    color: $darkroyal;
+}
+
+// List format styles
+
+@mixin listHeader() {
     color: $navy;
-    font-weight: bold;
-    font-size: 32px;
-    margin-bottom: 25px;
+    border-bottom: 1px solid $lightgray;
+    font-size: 28px;
+    padding-bottom: 6px;
+}
+
+@mixin listDateWrapper() {
     display: flex;
+    margin-bottom: 12px;
 }
-.fullpage-date-weekday {
-    text-transform: uppercase;
-    font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
+
+@mixin listDayNumber() {
+    font-family: $sentinel;
+    font-weight: bold;
+    font-size: 23px;
+    padding-top: 4px;
+    margin-right: 7px;
 }
-.fullpage-date-text {
-    padding-left: 10px;
-    font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
+
+@mixin listDateText() {
+    font-weight: 500;
+    font-size: 21px;
+    padding-top: 4px;
+}
+
+@mixin listEventContent() {
+    padding: 0 0 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.3em;
+    font-size: 17px;
+}
+
+@mixin listEventTime() {
+    min-width: 60px;
+    margin-left: 12px;
+    color: $medgray;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@mixin displayListLarge() {
+    width: 100%; // let width be defined by it's parent so it's controlled by the individual website.
+    margin-right: 20px;
+}
+
+@mixin displayListSmall() {
+    width: 100%;
+    margin-right: 0;
+}
+
+@mixin calendarBlockSmall() {
+    width: 100%;
 }

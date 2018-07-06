@@ -1,11 +1,9 @@
-$royal: #0057B8;
-$navy: #002E5D;
+@import 'byu-calendar-minimal-tile-common';
 
 a[slot="title"] {
-  color: $navy;
-  font-weight: 500;
+  @include minimalTitleOverride();
 }
 
 a[slot="title"]:hover {
-  color: $royal;
+  @include minimalTitleOverrideHover();
 }

@@ -1,0 +1,13 @@
+@import 'byu-calendar-row-common';
+
+.fullpage-date-wrapper {
+  @include rowDateWrapper();
+}
+
+.fullpage-date-weekday {
+  @include rowWeekday();
+}
+
+.fullpage-date-text {
+  @include rowDateText();
+}
