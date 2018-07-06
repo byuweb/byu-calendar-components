@@ -29,5 +29,5 @@
 }
 
 #date, #date ::slotted(*) {
-  @include hiddenDate();
+  @include hidden();
 }

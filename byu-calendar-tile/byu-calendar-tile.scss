@@ -1,222 +1,145 @@
-@import '../shared-styles/colors';
-@import '../shared-styles/fonts';
-$weight: bold;
+@import 'byu-calendar-tile-common';
 
 // general, regardless of layout
 :host {
-	padding: 0px;
-	-moz-box-shadow: 0 8px 12px $black20;
-	-webkit-box-shadow: 0 8px 12px $black20;
-	box-shadow: 0 8px 12px $black20;
+	@include byuCalendarTile();
 }
 
 .section-first {
-	background: $navy;
-	color: $white;
+	@include tileSectionFirst();
 }
 
 .section-second {
-	padding: 15px;
+	@include tileSectionSecond();
 }
 
 :host .content {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	font-family: $gotham;
+	@include tileContent();
 }
 
 :host ::slotted(*){
-	font-family: $gotham;
+	@include gothamFont();
 }
 
 // general sections styling
 #title ::slotted(*) {
-	color: $navy!important;
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#location ::slotted(*) {
-	font-size: 14px;
-	text-transform: uppercase;
+	@include tileTitle();
 }
 
 #time ::slotted(*) {
-	font-size: 14px;
-	text-transform: uppercase;
+	@include tileTime();
 }
 
 .section-second ::slotted(*) {
-	width: 100%;
+	@include tileSectionSecondSlotted();
 }
 
 #title ::slotted(*), #description ::slotted(*) {
-	font-family: $sentinel;
-	line-height: 1.2;
+	@include tileTitleAndDescription();
 }
 
 #weekday {
-	text-transform: uppercase;
-	font-size: 14px;
-	padding-bottom: 10px;
+	@include tileWeekday();
 }
 
 #location ::slotted(*) {
-	color: $medgray;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: 500;
+	@include tileLocation();
 }
 
 // always hide simple date inputted slot
 #date, #date ::slotted(*) {
-	display: none;
+	@include hidden();
 }
 
 // layout specific styling
 :host([layout='vertical']) {
-	max-width: 170px;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-    margin: 15px 8px;
+	@include tileVertical();
     
 	.section-first {
-		height: 160px;
-		width: 170px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-    }
+		@include tileVerticalSectionFirst();
+	}
     
-	.section-second{
-		height: 190px;
-		padding: 15px 0px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-content: space-between;
-		align-self: flex-start;
-
-    }
+	.section-second {
+		@include tileVerticalSectionSecond();
+	}
     
 	.section-second ::slotted(*) {
-		justify-content: center;
-    }
+		@include tileVerticalContent();
+	}
     
 	#month-name {
-		padding: 10px;
-		font-size: 22px;
-		text-transform: uppercase;
-		margin-bottom: 0px;
-    }
+		@include tileVerticalMonth();
+	}
     
 	#day-number {
-		font-size: 60px;
-		margin-bottom: 10px;
-		font-weight: bold;
-    }
+		@include tileVerticalDay();
+	}
     
 	#title ::slotted(*) {
-		color: $navy!important;
-		font-size: 18px;
-		font-weight: bold;
-		text-align: center;
-		padding: 5px 0px 10px;
-		height: 120px;
-		width: 150px;
+		@include tileVerticalTitle();
 	}
+
 	#time ::slotted(*) {
-		font-size: 14px;
-		padding: 8px 0px!important;
-    }
+		@include tileVerticalTime();
+	}
     
 	#location ::slotted(*){
-		color: $medgray;
-		text-align: center;
-		font-weight: 500;
+		@include tileVerticalLocation();
 	}
 }
 
 :host([layout='horizontal'])  {
-	width: 430px;
-	margin: 10px 15px;
-    display: flex;
+	@include tileHorizontal();
     
 	.section-first {
-		width: 130px;
-		min-height: 130px!important;
-    }
+		@include tileHorizontalSectionFirst();
+	}
     
 	.section-second {
-		width: 300px;
-		align-items: space-between;
+		@include tileHorizontalSectionSecond();
 	}
+
 	.section-second ::slotted(*) {
-		width: 290px;
-    }
+		@include tileHorizontalContent();
+	}
     
 	&.extra-wide .section-second ::slotted(*) {
-		width: 360px;
-    }
+		@include tileHorizontalExtraWide();
+	}
     
 	#month-abb {
-		padding: 10px 0px;
-		font-size: 22px;
-		text-transform: uppercase;
-		margin-bottom: 0px;
-    }
+		@include tileHorizontalMonth();
+	}
     
 	#day-number {
-		font-size: 48px;
-		font-weight: bold;
-    }
+		@include tileHorizontalDay();
+	}
     
 	#time {
-		padding: 10px 0px 10px;
-    }
+		@include tileHorizontalTime();
+	}
     
 	#time ::slotted(*){
-		color: $white;
-		padding: 5px 0px 10px;
-		display: flex;
-		justify-content: center;
+		@include tileHorizontalTimeSlotted();
 	}
 
 	#title ::slotted(*) {
-		padding: 5px 0px 10px;
-		width: 100%;
-		overflow: hidden;
-    }
+		@include tileHorizontalTitle();
+	}
     
 	#location ::slotted(*) {
-		padding-top: 8px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis!important;
+		@include tileHorizontalLocation();
 	}
 }
 
-.section-second ::slotted(*) {
-	color: $medgray;
-	padding: 0px;
-	margin: 0px;
-	display: flex;
-	flex-wrap: wrap;
-	width: 100%;
-
-}
-
 :host ::slotted(img) {
-	display: none;
+	@include hidden();
 }
 
 p, div, a {
-	font-family: $gotham;
+	@include gothamFont();
 }
 
 h1, h2, h3, h4 {
-	font-family: $sentinel;
+	@include sentinelFont();
 }

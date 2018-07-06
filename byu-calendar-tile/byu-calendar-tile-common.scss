@@ -1,0 +1,189 @@
+@import '../shared-styles/colors';
+@import '../shared-styles/fonts';
+@import '../shared-styles/mixins';
+
+//General Styling
+
+@mixin byuCalendarTile() {
+  padding: 0;
+  -moz-box-shadow: 0 8px 12px $black20;
+  -webkit-box-shadow: 0 8px 12px $black20;
+  box-shadow: 0 8px 12px $black20;
+}
+
+@mixin tileSectionFirst() {
+  background: $navy;
+  color: $white;
+}
+
+@mixin tileSectionSecond() {
+  padding: 15px;
+}
+
+@mixin tileSectionSecondSlotted() {
+  color: $medgray;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin tileContent() {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: $gotham;
+}
+
+@mixin tileTitle() {
+  color: $navy!important;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@mixin tileTitleAndDescription() {
+  font-family: $sentinel;
+  line-height: 1.2;
+}
+
+@mixin tileLocation() {
+  color: $medgray;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@mixin tileTime() {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+@mixin tileWeekday() {
+  text-transform: uppercase;
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+//Vertical Tile Styles
+
+@mixin tileVertical() {
+  max-width: 170px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 15px 8px;
+}
+
+@mixin tileVerticalSectionFirst() {
+  height: 160px;
+  width: 170px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@mixin tileVerticalSectionSecond() {
+  height: 190px;
+  padding: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-between;
+  align-self: flex-start;
+}
+
+@mixin tileVerticalContent() {
+  justify-content: center;
+}
+
+@mixin tileVerticalMonth() {
+  padding: 10px;
+  font-size: 22px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+@mixin tileVerticalDay() {
+  font-size: 60px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+@mixin tileVerticalTitle() {
+  text-align: center;
+  padding: 5px 0 10px;
+  height: 120px;
+  width: 150px;
+}
+
+@mixin tileVerticalTime() {
+  padding: 8px 0!important;
+}
+
+@mixin tileVerticalLocation() {
+  text-align: center;
+}
+
+//Horizontal Tile Styles
+
+@mixin tileHorizontal() {
+  width: 430px;
+  margin: 10px 15px;
+  display: flex;
+}
+
+@mixin tileHorizontalSectionFirst() {
+  width: 130px;
+  min-height: 130px!important;
+}
+
+@mixin tileHorizontalSectionSecond() {
+  width: 300px;
+  align-items: space-between;
+}
+
+@mixin tileHorizontalContent() {
+  width: 290px;
+}
+
+@mixin tileHorizontalExtraWide() {
+  width: 360px;
+}
+
+@mixin tileHorizontalMonth() {
+  padding: 10px 0;
+  font-size: 22px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+@mixin tileHorizontalDay() {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+@mixin tileHorizontalTime() {
+  padding: 10px 0 10px;
+}
+
+@mixin tileHorizontalTimeSlotted() {
+  color: $white;
+  padding: 5px 0 10px;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin tileHorizontalTitle() {
+  padding: 5px 0 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+@mixin tileHorizontalLocation() {
+  padding-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis!important;
+}
