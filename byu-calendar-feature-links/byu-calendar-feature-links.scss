@@ -1,106 +1,62 @@
-$teal: #5d7998;
-$navy: #002e5d;
-$white: #fff;
+@import 'byu-calendar-feature-links-common';
 
 :host {
-  width: 19%;
-  overflow: hidden;
+  @include byuFeatureLinks();
 
   .full-events,
   .academic-calendar-wrapper {
-    color: $white;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+    @include linksWrapper();
   }
 
   .full-link {
-    height: 67%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    background-color: $teal;
-    text-decoration: none;
+    @include fullEventsLink();
   }
 
   .full-events-text,
   .academic-calendar-text {
-    font-size: 12px;
-    text-align: center;
-    font-weight: 500;
+    @include linksText();
 
     .larger {
-      font-size: 16px;
-      margin: -3px 0;
-      font-weight: bold;
+      @include linksLargerText();
     }
   }
 
   .events-button {
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    width: 80px;
-    padding: 5px;
-    border: 3px solid $white;
+    @include linksEventsButton();
   }
 
   .academic-link {
-    height: 33%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: $navy;
-    transform: skewY(0deg);
-    text-decoration: none;
+    @include academicCalendarLink();
   }
 
   .full-link:hover .events-button {
-    background-color: $navy;
+    @include fullEventsLinkHover();
   }
 
   .academic-link:hover .events-button {
-    background-color: $teal;
+    @include academicCalendarLinkHover();
   }
 
 }
 
 @media screen and (min-width: 769px) {
   :host {
-    height: 350px;
+    @include linksBigColumn();
 
     .full-events {
-      position: relative;
-      top: 50px;
+      @include bigFullEventsLink();
     }
 
     .full-events-text {
-      padding-bottom: 15px;
+      @include bigFullEventsText();
     }
 
     .academic-calendar-text {
-      padding-bottom: 5px;
+      @include bigAcademicCalendarText();
     }
 
     .academic-link:after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '';
-      background: inherit;
-      z-index: -1;
-      width: 100%;
-      height: 60%;
-      transform-origin: top left;
-      transform: skewY(-13deg);
-      border-top: 5px solid $white;
+      @include skewMiddleBorder();
     }
 
   }
@@ -108,35 +64,29 @@ $white: #fff;
 
 @media screen and (min-width: 769px) and (max-width: 1223px) {
   :host {
-    width: 24%;
+    @include linksMediumColumn();
   }
 }
 
 @media screen and (max-width: 768px) {
   :host {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
+    @include linksSmallColumn();
 
     .full-link,
     .academic-link {
-      width: 200px;
-      margin: 10px 5px;
-      height: 65px;
+      @include smallLinks();
     }
 
     .full-events {
-      height: 100%;
-      top: 0;
+      @include smallFullEvents();
     }
 
     .academic-calendar-text {
-      padding-top: 5px;
+      @include smallAcademicCalendar();
     }
 
     .events-button {
-      display: none;
+      @include hidden();
     }
   }
 }
