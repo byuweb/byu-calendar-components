@@ -96,7 +96,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /******/__webpack_require__.p = "";
     /******/
     /******/ // Load entry module and return exports
-    /******/return __webpack_require__(__webpack_require__.s = 12);
+    /******/return __webpack_require__(__webpack_require__.s = 13);
     /******/
 })(
 /************************************************************************/
@@ -996,10 +996,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* unused harmony export classString */
     /* unused harmony export styleString */
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(14);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(16);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(29);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(27);
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(32);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(30);
     /* unused harmony reexport html */
     /* unused harmony reexport svg */
 
@@ -1309,10 +1309,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(20);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(18);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(18);
     /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
         return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
     });
@@ -1408,6 +1408,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /**
      * @constructor
      * @extends {Function}
+     * @private
      */
     function MixinFunction() {}
     /** @type {(WeakMap | undefined)} */
@@ -1454,8 +1455,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return extended;
         }
 
-        return (/** @type {T} */dedupingMixin
-        );
+        return dedupingMixin;
     };
     /* harmony export (immutable) */__webpack_exports__["a"] = dedupingMixin;
 
@@ -1506,7 +1506,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     // module
-    exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
+    exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
 
     // exports
 
@@ -1521,7 +1521,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     // module
-    exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.2);-webkit-box-shadow:0 8px 12px rgba(0,0,0,.2);box-shadow:0 8px 12px rgba(0,0,0,.2)}.section-first{background:#002e5d;color:#fff}.section-second{padding:15px}:host .content{width:100%;display:flex;justify-content:center}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-decoration:none}#location ::slotted(*){font-size:14px}#time ::slotted(*){font-size:14px;text-transform:uppercase}#description ::slotted(*),#title ::slotted(*){font-family:Sentinel A,Sentinel B;line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;text-transform:uppercase;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}:host([layout=vertical]){max-width:170px;display:flex;flex-wrap:wrap;justify-content:flex-start;margin:15px 8px}:host([layout=vertical]) .section-first{height:160px;width:170px;display:flex;flex-wrap:wrap;justify-content:center}:host([layout=vertical]) .section-second{height:190px;padding:15px 0;display:flex;flex-wrap:wrap;justify-content:center;align-content:space-between;align-self:flex-start}:host([layout=vertical]) .section-second ::slotted(*){justify-content:center}:host([layout=vertical]) #month-name{padding:10px;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=vertical]) #day-number{font-size:60px;margin-bottom:10px;font-weight:700}:host([layout=vertical]) #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:5px 0 10px;height:120px;width:150px}:host([layout=vertical]) #time ::slotted(*){font-size:14px;padding:8px 0!important}:host([layout=vertical]) #location ::slotted(*){color:#767676;text-align:center;font-weight:500}:host([layout=horizontal]){width:430px;margin:10px 15px;display:flex}:host([layout=horizontal]) .section-first{width:130px;min-height:130px!important}:host([layout=horizontal]) .section-second{width:300px;align-items:space-between}:host([layout=horizontal]) .section-second ::slotted(*){width:290px}:host([layout=horizontal]).extra-wide .section-second ::slotted(*){width:360px}:host([layout=horizontal]) #month-abb{padding:10px 0;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=horizontal]) #day-number{font-size:48px;font-weight:700}:host([layout=horizontal]) #time{padding:10px 0}:host([layout=horizontal]) #time ::slotted(*){color:#fff;padding:5px 0 10px;display:flex;justify-content:center}:host([layout=horizontal]) #title ::slotted(*){padding:5px 0 10px;width:100%;overflow:hidden}:host([layout=horizontal]) #location ::slotted(*){padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis!important}.section-second ::slotted(*){color:#767676;padding:0;margin:0;display:flex;flex-wrap:wrap;width:100%}:host ::slotted(img){display:none}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Sentinel A,Sentinel B}", ""]);
+    exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.2);-webkit-box-shadow:0 8px 12px rgba(0,0,0,.2);box-shadow:0 8px 12px rgba(0,0,0,.2)}.section-first{background:#002e5d;color:#fff}.section-second{padding:15px}:host .content{width:100%;display:flex;justify-content:center}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-decoration:none}#location ::slotted(*){font-size:14px}#time ::slotted(*){font-size:14px;text-transform:uppercase}#description ::slotted(*),#title ::slotted(*){font-family:Domine,Sentinel A,Sentinel B,serif;line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;text-transform:uppercase;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}:host([layout=vertical]){max-width:170px;display:flex;flex-wrap:wrap;justify-content:flex-start;margin:15px 8px}:host([layout=vertical]) .section-first{height:160px;width:170px;display:flex;flex-wrap:wrap;justify-content:center}:host([layout=vertical]) .section-second{height:190px;padding:15px 0;display:flex;flex-wrap:wrap;justify-content:center;align-content:space-between;align-self:flex-start}:host([layout=vertical]) .section-second ::slotted(*){justify-content:center}:host([layout=vertical]) #month-name{padding:10px;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=vertical]) #day-number{font-size:60px;margin-bottom:10px;font-weight:700}:host([layout=vertical]) #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:5px 0 10px;height:120px;width:150px}:host([layout=vertical]) #time ::slotted(*){font-size:14px;padding:8px 0!important}:host([layout=vertical]) #location ::slotted(*){color:#767676;text-align:center;font-weight:500}:host([layout=horizontal]){width:430px;margin:10px 15px;display:flex}:host([layout=horizontal]) .section-first{width:130px;min-height:130px!important}:host([layout=horizontal]) .section-second{width:300px;align-items:space-between}:host([layout=horizontal]) .section-second ::slotted(*){width:290px}:host([layout=horizontal]).extra-wide .section-second ::slotted(*){width:360px}:host([layout=horizontal]) #month-abb{padding:10px 0;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=horizontal]) #day-number{font-size:48px;font-weight:700}:host([layout=horizontal]) #time{padding:10px 0}:host([layout=horizontal]) #time ::slotted(*){color:#fff;padding:5px 0 10px;display:flex;justify-content:center}:host([layout=horizontal]) #title ::slotted(*){padding:5px 0 10px;width:100%;overflow:hidden}:host([layout=horizontal]) #location ::slotted(*){padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis!important}.section-second ::slotted(*){color:#767676;padding:0;margin:0;display:flex;flex-wrap:wrap;width:100%}:host ::slotted(img){display:none}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
 
     // exports
 
@@ -1536,24 +1536,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
     var util = __webpack_require__(3);
-    var tileTemplate = __webpack_require__(23);
-    var imageTemplate = __webpack_require__(22);
+    var minimalTemplate = __webpack_require__(24);
 
-    var ATTR_IMAGE_ROW = 'image-row';
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var ByuCalendarMinimalTile = function (_WEBPACK_IMPORTED_MO) {
+        _inherits(ByuCalendarMinimalTile, _WEBPACK_IMPORTED_MO);
 
-    var ByuCalendarRow = function (_WEBPACK_IMPORTED_MO) {
-        _inherits(ByuCalendarRow, _WEBPACK_IMPORTED_MO);
+        function ByuCalendarMinimalTile() {
+            _classCallCheck(this, ByuCalendarMinimalTile);
 
-        function ByuCalendarRow() {
-            _classCallCheck(this, ByuCalendarRow);
-
-            return _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).apply(this, arguments));
+            return _possibleConstructorReturn(this, (ByuCalendarMinimalTile.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile)).apply(this, arguments));
         }
 
-        _createClass(ByuCalendarRow, [{
+        _createClass(ByuCalendarMinimalTile, [{
             key: '_createRoot',
             value: function _createRoot() {
                 return this.attachShadow({ mode: 'open' });
@@ -1568,19 +1564,88 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function connectedCallback() {
                 var _this6 = this;
 
+                _get(ByuCalendarMinimalTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile.prototype), 'connectedCallback', this).call(this);
+                util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
+                    var dateOb = _this6.date;
+                    var day = dateOb.getDate();
+                    var monthName = months[dateOb.getMonth()];
+                    _this6.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                });
+            }
+        }, {
+            key: 'date',
+            get: function get() {
+                var dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
+                if (dates.length) {
+                    var date = this.shadowRoot.querySelector('#date-val').assignedNodes()[0];
+                    return new Date(date.innerText.trim());
+                } else {
+                    return null;
+                }
+            }
+        }]);
+
+        return ByuCalendarMinimalTile;
+    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+
+    window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
+    window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
+
+    /***/
+},
+/* 10 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
+
+    var util = __webpack_require__(3);
+    var tileTemplate = __webpack_require__(26);
+    var imageTemplate = __webpack_require__(25);
+
+    var ATTR_IMAGE_ROW = 'image-row';
+
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    var ByuCalendarRow = function (_WEBPACK_IMPORTED_MO2) {
+        _inherits(ByuCalendarRow, _WEBPACK_IMPORTED_MO2);
+
+        function ByuCalendarRow() {
+            _classCallCheck(this, ByuCalendarRow);
+
+            return _possibleConstructorReturn(this, (ByuCalendarRow.__proto__ || Object.getPrototypeOf(ByuCalendarRow)).apply(this, arguments));
+        }
+
+        _createClass(ByuCalendarRow, [{
+            key: '_createRoot',
+            value: function _createRoot() {
+                return this.attachShadow({ mode: 'open' });
+            }
+        }, {
+            key: '_render',
+            value: function _render(_ref2) {
+                _objectDestructuringEmpty(_ref2);
+            }
+        }, {
+            key: 'connectedCallback',
+            value: function connectedCallback() {
+                var _this8 = this;
+
                 _get(ByuCalendarRow.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarRow.prototype), 'connectedCallback', this).call(this);
                 var template = this.imageRow ? imageTemplate : tileTemplate;
                 util.applyTemplate(this, 'byu-calendar-row', template, function () {
-                    if (!_this6.imageRow) {
-                        var dateOb = _this6.date;
+                    if (!_this8.imageRow) {
+                        var dateOb = _this8.date;
                         var day = dateOb.getDate();
                         var weekday = weekdays[dateOb.getDay()];
                         var monthName = months[dateOb.getMonth()];
                         var year = dateOb.getFullYear();
 
-                        _this6.shadowRoot.querySelector('#day-number').innerHTML = day;
-                        _this6.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this6.shadowRoot.querySelector('#year').innerHTML = year;
+                        _this8.shadowRoot.querySelector('#day-number').innerHTML = day;
+                        _this8.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this8.shadowRoot.querySelector('#year').innerHTML = year;
                     }
                 });
             }
@@ -1617,7 +1682,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 10 */
+/* 11 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -1625,15 +1690,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
     var util = __webpack_require__(3);
-    var verticalTemplate = __webpack_require__(25);
-    var horizontalTemplate = __webpack_require__(24);
+    var verticalTemplate = __webpack_require__(28);
+    var horizontalTemplate = __webpack_require__(27);
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-    var ByuCalendarTile = function (_WEBPACK_IMPORTED_MO2) {
-        _inherits(ByuCalendarTile, _WEBPACK_IMPORTED_MO2);
+    var ByuCalendarTile = function (_WEBPACK_IMPORTED_MO3) {
+        _inherits(ByuCalendarTile, _WEBPACK_IMPORTED_MO3);
 
         function ByuCalendarTile() {
             _classCallCheck(this, ByuCalendarTile);
@@ -1648,29 +1713,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }, {
             key: '_render',
-            value: function _render(_ref2) {
-                _objectDestructuringEmpty(_ref2);
+            value: function _render(_ref3) {
+                _objectDestructuringEmpty(_ref3);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this8 = this;
+                var _this10 = this;
 
                 _get(ByuCalendarTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarTile.prototype), 'connectedCallback', this).call(this);
                 var template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
                 util.applyTemplate(this, 'byu-calendar-tile', template, function () {
-                    var dateOb = _this8.date;
+                    var dateOb = _this10.date;
                     var monthName = months[dateOb.getMonth()];
                     var monthAbb = monthAbbs[dateOb.getMonth()];
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
-                    if (_this8.layout == 'horizontal') {
-                        _this8.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+                    if (_this10.layout == 'horizontal') {
+                        _this10.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
                     } else {
-                        _this8.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this8.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+                        _this10.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this10.shadowRoot.querySelector('#weekday').innerHTML = weekday;
                     }
-                    _this8.shadowRoot.querySelector('#day-number').innerHTML = day;
+                    _this10.shadowRoot.querySelector('#day-number').innerHTML = day;
                 });
             }
         }, {
@@ -1706,12 +1771,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 11 */
+/* 12 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(26);
+    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(29);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(3);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(2);
@@ -1747,8 +1812,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var DEFAULT_DAYS = '14';
     var DEFAULT_DISPLAY = 4;
 
-    var ByuCalendar = function (_WEBPACK_IMPORTED_MO3) {
-        _inherits(ByuCalendar, _WEBPACK_IMPORTED_MO3);
+    var ByuCalendar = function (_WEBPACK_IMPORTED_MO4) {
+        _inherits(ByuCalendar, _WEBPACK_IMPORTED_MO4);
 
         function ByuCalendar() {
             _classCallCheck(this, ByuCalendar);
@@ -1763,18 +1828,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }, {
             key: '_render',
-            value: function _render(_ref3) {
-                _objectDestructuringEmpty(_ref3);
+            value: function _render(_ref4) {
+                _objectDestructuringEmpty(_ref4);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this10 = this;
+                var _this12 = this;
 
                 _get(ByuCalendar.prototype.__proto__ || Object.getPrototypeOf(ByuCalendar.prototype), 'connectedCallback', this).call(this);
                 //This will stamp our template for us, then let us perform actions on the stamped DOM.
                 __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
-                    getCalendarData(_this10);
+                    getCalendarData(_this12);
                 });
             }
         }, {
@@ -1996,6 +2061,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             case 5:
                 return fullpage_imgrows(jsonArr);
                 break;
+            case 7:
+                return minimal_tiles(jsonArr);
+                break;
             case 1:
             default:
                 return list_format(jsonArr);
@@ -2135,6 +2203,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return html;
     }
 
+    function minimal_tiles(jsonArr) {
+        var html = '<div class="tile-container">';
+        for (var i = 0; i < jsonArr.length; i++) {
+            var item = jsonArr[i];
+            html += '<byu-calendar-minimal-tile>';
+            var start = new Date(item.StartDateTime.trim());
+            html += '<p slot="date">' + start + '</p>';
+            if (item.AllDay === 'false') {
+                html += '<div slot="time">' + formatTime(start) + '</div>';
+            } else {
+                html += '<div slot="time">ALL DAY</div>';
+            }
+            if (item.LocationName) {
+                html += '<div slot="location">' + item.LocationName + '</div>';
+            }
+            html += '<a slot="title" href="' + item.FullUrl + '">' + item.Title + '</a>';
+            html += '</byu-calendar-minimal-tile>';
+        }
+        html += '</div>';
+        return html;
+    }
+
     function list_format(jsonArr) {
         var html = '<div class="calendar-widget-block display-list">';
         var current = new Date();
@@ -2179,15 +2269,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 12 */
+/* 13 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(11);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(9);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(10);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(12);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(10);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(11);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(9);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -2207,7 +2298,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 13 */
+/* 14 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -2215,7 +2306,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(16);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2247,12 +2338,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @summary Element class mixin for reacting to property changes from
      *   generated property accessors.
      */
-    var PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(function (superClass) {
+    var PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(
+    /**
+     * @template T
+     * @param {function(new:T)} superClass Class to apply mixin to.
+     * @return {function(new:T)} superClass with mixin applied.
+     */
+    function (superClass) {
 
         /**
          * @polymer
          * @mixinClass
-         * @extends {superClass}
          * @implements {Polymer_PropertiesChanged}
          * @unrestricted
          */
@@ -2278,6 +2374,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *   protected `_setProperty` function must be used to set the property
                  * @return {void}
                  * @protected
+                 * @override
                  */
                 value: function _createPropertyAccessor(property, readOnly) {
                     this._addPropertyToAttributeMap(property);
@@ -2296,6 +2393,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * used when deserializing attribute values to properties.
                  *
                  * @param {string} property Name of the property
+                 * @override
                  */
 
             }, {
@@ -2315,6 +2413,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {string} property Name of the property
                  * @param {boolean=} readOnly When true, no setter is created
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -2386,18 +2485,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             function PropertiesChanged() {
                 _classCallCheck(this, PropertiesChanged);
 
-                var _this11 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
+                var _this13 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
 
-                _this11.__dataEnabled = false;
-                _this11.__dataReady = false;
-                _this11.__dataInvalid = false;
-                _this11.__data = {};
-                _this11.__dataPending = null;
-                _this11.__dataOld = null;
-                _this11.__dataInstanceProps = null;
-                _this11.__serializing = false;
-                _this11._initializeProperties();
-                return _this11;
+                _this13.__dataEnabled = false;
+                _this13.__dataReady = false;
+                _this13.__dataInvalid = false;
+                _this13.__data = {};
+                _this13.__dataPending = null;
+                _this13.__dataOld = null;
+                _this13.__dataInstanceProps = null;
+                _this13.__serializing = false;
+                _this13._initializeProperties();
+                return _this13;
             }
 
             /**
@@ -2413,6 +2512,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              *
              * @return {void}
              * @public
+             * @override
              */
 
 
@@ -2431,6 +2531,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2460,6 +2561,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *   when creating property accessors.
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2476,6 +2578,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {*} value Value to set
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2491,6 +2594,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {string} property Name of property
                  * @return {*} Value for the given property
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2511,6 +2615,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {boolean=} ext Not used here; affordance for closure
                  * @return {boolean} Returns true if the property changed
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2540,19 +2645,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
                 key: '_invalidateProperties',
                 value: function _invalidateProperties() {
-                    var _this12 = this;
+                    var _this14 = this;
 
                     if (!this.__dataInvalid && this.__dataReady) {
                         this.__dataInvalid = true;
                         microtask.run(function () {
-                            if (_this12.__dataInvalid) {
-                                _this12.__dataInvalid = false;
-                                _this12._flushProperties();
+                            if (_this14.__dataInvalid) {
+                                _this14.__dataInvalid = false;
+                                _this14._flushProperties();
                             }
                         });
                     }
@@ -2568,6 +2674,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2591,6 +2698,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  *
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2612,11 +2720,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * properties are pending. Override to customize when
                  * `_propertiesChanged` is called.
                  * @param {!Object} currentProps Bag of all current accessor values
-                 * @param {!Object} changedProps Bag of properties changed since the last
+                 * @param {?Object} changedProps Bag of properties changed since the last
                  *   call to `_propertiesChanged`
-                 * @param {!Object} oldProps Bag of previous values for each property
+                 * @param {?Object} oldProps Bag of previous values for each property
                  *   in `changedProps`
                  * @return {boolean} true if changedProps is truthy
+                 * @override
                  */
 
             }, {
@@ -2631,12 +2740,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * `_createPropertyAccessor` have been set.
                  *
                  * @param {!Object} currentProps Bag of all current accessor values
-                 * @param {!Object} changedProps Bag of properties changed since the last
+                 * @param {?Object} changedProps Bag of properties changed since the last
                  *   call to `_propertiesChanged`
-                 * @param {!Object} oldProps Bag of previous values for each property
+                 * @param {?Object} oldProps Bag of previous values for each property
                  *   in `changedProps`
                  * @return {void}
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2661,6 +2771,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @return {boolean} Whether the property should be considered a change
                  *   and enqueue a `_proeprtiesChanged` callback
                  * @protected
+                 * @override
                  */
 
             }, {
@@ -2684,6 +2795,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {?string} namespace Attribute namespace.
                  * @return {void}
                  * @suppress {missingProperties} Super may or may not implement the callback
+                 * @override
                  */
 
             }, {
@@ -2708,6 +2820,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {*=} type type to deserialize to, defaults to the value
                  * returned from `typeForProperty`
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -2729,6 +2842,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {string=} attribute Attribute name to reflect to.
                  * @param {*=} value Property value to refect.
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -2752,6 +2866,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {*} value Value to serialize.
                  * @param {string} attribute Attribute name to serialize to.
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -2775,6 +2890,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {*} value Property value to serialize.
                  * @return {string | undefined} String serialized from the provided
                  * property  value.
+                 * @override
                  */
 
             }, {
@@ -2799,6 +2915,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @param {?string} value Value to deserialize.
                  * @param {*=} type Type to deserialize the string to.
                  * @return {*} Typed value deserialized from the provided string.
+                 * @override
                  */
 
             }, {
@@ -2824,7 +2941,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 14 */
+/* 15 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -2832,7 +2949,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(13);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(14);
     /**
     @license
     Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2882,8 +2999,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         /**
          * @constructor
-         * @extends {superClass}
          * @implements {Polymer_PropertiesChanged}
+         * @private
          */
         var base = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__properties_changed_js__["a" /* PropertiesChanged */])(superClass);
 
@@ -2892,7 +3009,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          * instance of the PropertiesMixin.
          *
          * @param {!PropertiesMixinConstructor} constructor PropertiesMixin constructor
-         * @return {PropertiesMixinConstructor} Super class constructor
+         * @return {?PropertiesMixinConstructor} Super class constructor
          */
         function superPropertiesClass(constructor) {
             var superCtor = Object.getPrototypeOf(constructor);
@@ -2902,7 +3019,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             // because the mixin is deduped and guaranteed only to apply once, hence
             // all constructors in a proto chain will see the same `PropertiesMixin`
             return superCtor.prototype instanceof PropertiesMixin ?
-            /** @type {PropertiesMixinConstructor} */superCtor : null;
+            /** @type {!PropertiesMixinConstructor} */superCtor : null;
         }
 
         /**
@@ -2964,6 +3081,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * `PropertiesChanged`.
                  * @suppress {missingProperties} Super may or may not implement the callback
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -2979,6 +3097,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * Called when the element is removed from a document
                  * @suppress {missingProperties} Super may or may not implement the callback
                  * @return {void}
+                 * @override
                  */
 
             }, {
@@ -3001,7 +3120,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  */
                 value: function finalize() {
                     if (!this.hasOwnProperty(JSCompiler_renameProperty('__finalized', this))) {
-                        var superCtor = superPropertiesClass( /** @type {PropertiesMixinConstructor} */this);
+                        var superCtor = superPropertiesClass( /** @type {!PropertiesMixinConstructor} */this);
                         if (superCtor) {
                             superCtor.finalize();
                         }
@@ -3021,7 +3140,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: '_finalizeClass',
                 value: function _finalizeClass() {
-                    var props = ownProperties( /** @type {PropertiesMixinConstructor} */this);
+                    var props = ownProperties( /** @type {!PropertiesMixinConstructor} */this);
                     if (props) {
                         this.createProperties(props);
                     }
@@ -3062,18 +3181,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                  * @suppress {missingProperties} Interfaces in closure do not inherit statics, but classes do
                  */
                 get: function get() {
-                    var _this14 = this;
+                    var _this16 = this;
 
                     var props = this._properties;
                     return props ? Object.keys(props).map(function (p) {
-                        return _this14.attributeNameForProperty(p);
+                        return _this16.attributeNameForProperty(p);
                     }) : [];
                 }
             }, {
                 key: '_properties',
                 get: function get() {
                     if (!this.hasOwnProperty(JSCompiler_renameProperty('__properties', this))) {
-                        var superCtor = superPropertiesClass( /** @type {PropertiesMixinConstructor} */this);
+                        var superCtor = superPropertiesClass( /** @type {!PropertiesMixinConstructor} */this);
                         this.__properties = Object.assign({}, superCtor && superCtor._properties, ownProperties( /** @type {PropertiesMixinConstructor} */this));
                     }
                     return this.__properties;
@@ -3089,7 +3208,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 15 */
+/* 16 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3310,7 +3429,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 16 */
+/* 17 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3334,13 +3453,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var CAMEL_TO_DASH = /([A-Z])/g;
 
     /**
-     * Module with utilities for converting between "dash-case" and "camelCase"
-     * identifiers.
-     *
-     * @summary Module that provides utilities for converting between "dash-case"
-     *   and "camelCase".
+     * @fileoverview Module with utilities for converting between "dash-case" and
+     * "camelCase" identifiers.
      */
-    'TODO(modulizer): A namespace named Polymer.CaseMap was\ndeclared here. The surrounding comments should be reviewed,\nand this string can then be deleted';
 
     /**
      * Converts "dash-case" identifier (e.g. `foo-bar-baz`) to "camelCase"
@@ -3368,7 +3483,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 17 */
+/* 18 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3402,7 +3517,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 18 */
+/* 19 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3446,13 +3561,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 19 */
+/* 20 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = applyTemplate;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(21);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(23);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hash_sum__);
     /*
      *  @license
@@ -3534,7 +3649,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 20 */
+/* 21 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(4)();
@@ -3542,14 +3657,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
     // module
-    exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Sentinel A,Sentinel B,Vitesse A,Vitesse B,sans-serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Sentinel A,Sentinel B;font-weight:700;font-size:26px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+    exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:row}:host .section-first{background-color:#0057b8;color:#fff;height:120px;width:200px;margin-right:10px;text-align:center}:host .section-second{background-color:#c5c5c5;width:100%;padding:10px}:host #month-and-day{font-size:36px;padding:10px}:host #month-and-day,:host #time{font-family:Vitesse A,Vitesse B,Arial,sans-serif}:host #time{font-size:20px}:host #title{font-size:24px;margin-bottom:10px}:host #location{font-size:12px;text-transform:uppercase;font-weight:700;color:#666}#date,#date ::slotted(*){display:none}", ""]);
 
     // exports
 
 
     /***/
 },
-/* 21 */
+/* 22 */
+/***/function (module, exports, __webpack_require__) {
+
+    exports = module.exports = __webpack_require__(4)();
+    // imports
+
+
+    // module
+    exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Domine,Sentinel A,Sentinel B,Vitesse A,Vitesse B,serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Domine,Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Domine,Sentinel A,Sentinel B;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+
+    // exports
+
+
+    /***/
+},
+/* 23 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
@@ -3613,42 +3743,49 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 22 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-    /***/
-},
-/* 23 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-    /***/
-},
 /* 24 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(21) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
     /***/
 },
 /* 25 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 26 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(20) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
+    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
     /***/
 },
 /* 27 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+
+    /***/
+},
+/* 28 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+    /***/
+},
+/* 29 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(22) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
+
+    /***/
+},
+/* 30 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3747,8 +3884,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * ''. If the value is falsey, the attribute is removed.
      */
 
-    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO4) {
-        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO4);
+    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO5) {
+        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO5);
 
         function BooleanAttributePart() {
             _classCallCheck(this, BooleanAttributePart);
@@ -3780,8 +3917,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */]);
     /* unused harmony export BooleanAttributePart */
 
-    var PropertyPart = function (_WEBPACK_IMPORTED_MO5) {
-        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO5);
+    var PropertyPart = function (_WEBPACK_IMPORTED_MO6) {
+        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO6);
 
         function PropertyPart() {
             _classCallCheck(this, PropertyPart);
@@ -3858,7 +3995,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 28 */
+/* 31 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -4000,14 +4137,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     /***/
 },
-/* 29 */
+/* 32 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = render;
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(28);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(31);
     /* unused harmony reexport html */
     /* unused harmony reexport svg */
     /* unused harmony reexport TemplateResult */
