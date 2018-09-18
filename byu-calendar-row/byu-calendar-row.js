@@ -1,4 +1,5 @@
 'use strict';
+import {LitElement} from '@polymer/lit-element';
 const util = require('byu-web-component-utils');
 const tileTemplate = require('./byu-calendar-tile-row.html');
 const imageTemplate = require('./byu-calendar-image-row.html');
@@ -8,11 +9,10 @@ const ATTR_IMAGE_ROW = 'image-row';
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-class ByuCalendarRow extends HTMLElement {
+class ByuCalendarRow extends LitElement {
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
     }
 
     get imageRow() {
@@ -36,8 +36,13 @@ class ByuCalendarRow extends HTMLElement {
             return null;
         }
     }
+
+    _render({}) {
+
+    }
     
     connectedCallback(){
+        super.connectedCallback();
         let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
             if (!this.imageRow) {

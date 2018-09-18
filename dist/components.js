@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -781,9 +781,266 @@ const removeNodes = (container, startNode, endNode = null) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export renderAttributes */
+/* unused harmony export classString */
+/* unused harmony export styleString */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(30);
+/* unused harmony reexport html */
+/* unused harmony reexport svg */
+
+
+
+
+/**
+ * Renders attributes to the given element based on the `attrInfo` object where
+ * boolean values are added/removed as attributes.
+ * @param element Element on which to set attributes.
+ * @param attrInfo Object describing attributes.
+ */
+function renderAttributes(element, attrInfo) {
+    for (const a in attrInfo) {
+        const v = attrInfo[a] === true ? '' : attrInfo[a];
+        if (v || v === '' || v === 0) {
+            if (element.getAttribute(a) !== v) {
+                element.setAttribute(a, String(v));
+            }
+        }
+        else if (element.hasAttribute(a)) {
+            element.removeAttribute(a);
+        }
+    }
+}
+/**
+ * Returns a string of css class names formed by taking the properties
+ * in the `classInfo` object and appending the property name to the string of
+ * class names if the property value is truthy.
+ * @param classInfo
+ */
+function classString(classInfo) {
+    const o = [];
+    for (const name in classInfo) {
+        const v = classInfo[name];
+        if (v) {
+            o.push(name);
+        }
+    }
+    return o.join(' ');
+}
+/**
+ * Returns a css style string formed by taking the properties in the `styleInfo`
+ * object and appending the property name (dash-cased) colon the
+ * property value. Properties are separated by a semi-colon.
+ * @param styleInfo
+ */
+function styleString(styleInfo) {
+    const o = [];
+    for (const name in styleInfo) {
+        const v = styleInfo[name];
+        if (v || v === 0) {
+            o.push(`${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__["a" /* camelToDashCase */])(name)}: ${v}`);
+        }
+    }
+    return o.join('; ');
+}
+class LitElement extends __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__["a" /* PropertiesMixin */])(HTMLElement) {
+    constructor() {
+        super(...arguments);
+        this.__renderComplete = null;
+        this.__resolveRenderComplete = null;
+        this.__isInvalid = false;
+        this.__isChanging = false;
+    }
+    /**
+     * Override which sets up element rendering by calling* `_createRoot`
+     * and `_firstRendered`.
+     */
+    ready() {
+        this._root = this._createRoot();
+        super.ready();
+        this._firstRendered();
+    }
+    connectedCallback() {
+        if (window.ShadyCSS && this._root) {
+            window.ShadyCSS.styleElement(this);
+        }
+        super.connectedCallback();
+    }
+    /**
+     * Called after the element DOM is rendered for the first time.
+     * Implement to perform tasks after first rendering like capturing a
+     * reference to a static node which must be directly manipulated.
+     * This should not be commonly needed. For tasks which should be performed
+     * before first render, use the element constructor.
+     */
+    _firstRendered() { }
+    /**
+     * Implement to customize where the element's template is rendered by
+     * returning an element into which to render. By default this creates
+     * a shadowRoot for the element. To render into the element's childNodes,
+     * return `this`.
+     * @returns {Element|DocumentFragment} Returns a node into which to render.
+     */
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
+    }
+    /**
+     * Override which returns the value of `_shouldRender` which users
+     * should implement to control rendering. If this method returns false,
+     * _propertiesChanged will not be called and no rendering will occur even
+     * if property values change or `requestRender` is called.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     * @returns {boolean} Default implementation always returns true.
+     */
+    _shouldPropertiesChange(_props, _changedProps, _prevProps) {
+        const shouldRender = this._shouldRender(_props, _changedProps, _prevProps);
+        if (!shouldRender && this.__resolveRenderComplete) {
+            this.__resolveRenderComplete(false);
+        }
+        return shouldRender;
+    }
+    /**
+     * Implement to control if rendering should occur when property values
+     * change or `requestRender` is called. By default, this method always
+     * returns true, but this can be customized as an optimization to avoid
+     * rendering work when changes occur which should not be rendered.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     * @returns {boolean} Default implementation always returns true.
+     */
+    _shouldRender(_props, _changedProps, _prevProps) {
+        return true;
+    }
+    /**
+     * Override which performs element rendering by calling
+     * `_render`, `_applyRender`, and finally `_didRender`.
+     * @param props Current element properties
+     * @param changedProps Changing element properties
+     * @param prevProps Previous element properties
+     */
+    _propertiesChanged(props, changedProps, prevProps) {
+        super._propertiesChanged(props, changedProps, prevProps);
+        const result = this._render(props);
+        if (result && this._root !== undefined) {
+            this._applyRender(result, this._root);
+        }
+        this._didRender(props, changedProps, prevProps);
+        if (this.__resolveRenderComplete) {
+            this.__resolveRenderComplete(true);
+        }
+    }
+    _flushProperties() {
+        this.__isChanging = true;
+        this.__isInvalid = false;
+        super._flushProperties();
+        this.__isChanging = false;
+    }
+    /**
+     * Override which warns when a user attempts to change a property during
+     * the rendering lifecycle. This is an anti-pattern and should be avoided.
+     * @param property {string}
+     * @param value {any}
+     * @param old {any}
+     */
+    // tslint:disable-next-line no-any
+    _shouldPropertyChange(property, value, old) {
+        const change = super._shouldPropertyChange(property, value, old);
+        if (change && this.__isChanging) {
+            console.trace(`Setting properties in response to other properties changing ` +
+                `considered harmful. Setting '${property}' from ` +
+                `'${this._getProperty(property)}' to '${value}'.`);
+        }
+        return change;
+    }
+    /**
+     * Implement to describe the DOM which should be rendered in the element.
+     * Ideally, the implementation is a pure function using only props to describe
+     * the element template. The implementation must return a `lit-html`
+     * TemplateResult. By default this template is rendered into the element's
+     * shadowRoot. This can be customized by implementing `_createRoot`. This
+     * method must be implemented.
+     * @param {*} _props Current element properties
+     * @returns {TemplateResult} Must return a lit-html TemplateResult.
+     */
+    _render(_props) {
+        throw new Error('_render() not implemented');
+    }
+    /**
+     * Renders the given lit-html template `result` into the given `node`.
+     * Implement to customize the way rendering is applied. This is should not
+     * typically be needed and is provided for advanced use cases.
+     * @param result {TemplateResult} `lit-html` template result to render
+     * @param node {Element|DocumentFragment} node into which to render
+     */
+    _applyRender(result, node) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__["a" /* render */])(result, node, this.localName);
+    }
+    /**
+     * Called after element DOM has been rendered. Implement to
+     * directly control rendered DOM. Typically this is not needed as `lit-html`
+     * can be used in the `_render` method to set properties, attributes, and
+     * event listeners. However, it is sometimes useful for calling methods on
+     * rendered elements, like calling `focus()` on an element to focus it.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     */
+    _didRender(_props, _changedProps, _prevProps) { }
+    /**
+     * Call to request the element to asynchronously re-render regardless
+     * of whether or not any property changes are pending.
+     */
+    requestRender() { this._invalidateProperties(); }
+    /**
+     * Override which provides tracking of invalidated state.
+     */
+    _invalidateProperties() {
+        this.__isInvalid = true;
+        super._invalidateProperties();
+    }
+    /**
+     * Returns a promise which resolves after the element next renders.
+     * The promise resolves to `true` if the element rendered and `false` if the
+     * element did not render.
+     * This is useful when users (e.g. tests) need to react to the rendered state
+     * of the element after a change is made.
+     * This can also be useful in event handlers if it is desireable to wait
+     * to send an event until after rendering. If possible implement the
+     * `_didRender` method to directly respond to rendering within the
+     * rendering lifecycle.
+     */
+    get renderComplete() {
+        if (!this.__renderComplete) {
+            this.__renderComplete = new Promise((resolve) => {
+                this.__resolveRenderComplete = (value) => {
+                    this.__resolveRenderComplete = this.__renderComplete = null;
+                    resolve(value);
+                };
+            });
+            if (!this.__isInvalid && this.__resolveRenderComplete) {
+                Promise.resolve().then(() => this.__resolveRenderComplete(false));
+            }
+        }
+        return this.__renderComplete;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = LitElement;
+
+//# sourceMappingURL=lit-element.js.map
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(18);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyTemplate", function() { return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"]; });
@@ -804,7 +1061,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -860,7 +1117,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -883,6 +1140,7 @@ let dedupeId = 0;
 /**
  * @constructor
  * @extends {Function}
+ * @private
  */
 function MixinFunction(){}
 /** @type {(WeakMap | undefined)} */
@@ -929,7 +1187,7 @@ const dedupingMixin = function(mixin) {
     return extended;
   }
 
-  return /** @type {T} */ (dedupingMixin);
+  return dedupingMixin;
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = dedupingMixin;
 
@@ -937,7 +1195,7 @@ const dedupingMixin = function(mixin) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -979,10 +1237,10 @@ function matchesSelector(el, selector) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -993,10 +1251,10 @@ exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;ma
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -1007,14 +1265,14 @@ exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
 
-const util = __webpack_require__(2);
+const util = __webpack_require__(3);
 const minimalTemplate = __webpack_require__(24);
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1054,12 +1312,14 @@ window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile
 window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
-const util = __webpack_require__(2);
+
+const util = __webpack_require__(3);
 const tileTemplate = __webpack_require__(26);
 const imageTemplate = __webpack_require__(25);
 
@@ -1068,11 +1328,10 @@ const ATTR_IMAGE_ROW = 'image-row';
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-class ByuCalendarRow extends HTMLElement {
+class ByuCalendarRow extends __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */] {
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
     }
 
     get imageRow() {
@@ -1096,8 +1355,13 @@ class ByuCalendarRow extends HTMLElement {
             return null;
         }
     }
+
+    _render({}) {
+
+    }
     
     connectedCallback(){
+        super.connectedCallback();
         let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
             if (!this.imageRow) {
@@ -1119,12 +1383,14 @@ window.customElements.define('byu-calendar-row', ByuCalendarRow);
 window.ByuCalendarRow = ByuCalendarRow;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
 
-const util = __webpack_require__(2);
+
+const util = __webpack_require__(3);
 const verticalTemplate = __webpack_require__(28);
 const horizontalTemplate = __webpack_require__(27);
 
@@ -1132,11 +1398,10 @@ var months =["January", "February", "March", "April", "May", "June", "July", "Au
 var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"];
 
-class ByuCalendarTile extends HTMLElement {
+class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */] {
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
     }
 
     get layout() {
@@ -1161,7 +1426,12 @@ class ByuCalendarTile extends HTMLElement {
         }
     }
 
+    _render({}) {
+
+    }
+
     connectedCallback() {
+        super.connectedCallback();
         let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
@@ -1184,13 +1454,14 @@ window.customElements.define('byu-calendar-tile', ByuCalendarTile);
 window.ByuCalendarTile = ByuCalendarTile;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(2);
 /**
  *  @license
  *    Copyright 2017 Brigham Young University
@@ -1211,6 +1482,7 @@ window.ByuCalendarTile = ByuCalendarTile;
 
 
 
+
 // Why do we need this? This breaks the code
 // import { currentId } from 'async_hooks';
 
@@ -1226,14 +1498,18 @@ const DEFAULT_CATEGORIES = 'all';
 const DEFAULT_DAYS = '14';
 const DEFAULT_DISPLAY = 4;
 
-class ByuCalendar extends HTMLElement {
+class ByuCalendar extends __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__["a" /* LitElement */] {
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+  _createRoot() {
+    return this.attachShadow({ mode: 'open' });
+  }
+
+  _render({}) {
+
   }
 
   connectedCallback() {
+    super.connectedCallback();
     //This will stamp our template for us, then let us perform actions on the stamped DOM.
     __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, () => {
       getCalendarData(this);
@@ -1657,17 +1933,15 @@ function formatTime(date) {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(9);
 /**
  *  @license
  *    Copyright 2017 Brigham Young University
@@ -1692,270 +1966,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export renderAttributes */
-/* unused harmony export classString */
-/* unused harmony export styleString */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(30);
-/* unused harmony reexport html */
-/* unused harmony reexport svg */
-
-
-
-
-/**
- * Renders attributes to the given element based on the `attrInfo` object where
- * boolean values are added/removed as attributes.
- * @param element Element on which to set attributes.
- * @param attrInfo Object describing attributes.
- */
-function renderAttributes(element, attrInfo) {
-    for (const a in attrInfo) {
-        const v = attrInfo[a] === true ? '' : attrInfo[a];
-        if (v || v === '' || v === 0) {
-            if (element.getAttribute(a) !== v) {
-                element.setAttribute(a, String(v));
-            }
-        }
-        else if (element.hasAttribute(a)) {
-            element.removeAttribute(a);
-        }
-    }
-}
-/**
- * Returns a string of css class names formed by taking the properties
- * in the `classInfo` object and appending the property name to the string of
- * class names if the property value is truthy.
- * @param classInfo
- */
-function classString(classInfo) {
-    const o = [];
-    for (const name in classInfo) {
-        const v = classInfo[name];
-        if (v) {
-            o.push(name);
-        }
-    }
-    return o.join(' ');
-}
-/**
- * Returns a css style string formed by taking the properties in the `styleInfo`
- * object and appending the property name (dash-cased) colon the
- * property value. Properties are separated by a semi-colon.
- * @param styleInfo
- */
-function styleString(styleInfo) {
-    const o = [];
-    for (const name in styleInfo) {
-        const v = styleInfo[name];
-        if (v || v === 0) {
-            o.push(`${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__["a" /* camelToDashCase */])(name)}: ${v}`);
-        }
-    }
-    return o.join('; ');
-}
-class LitElement extends __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__["a" /* PropertiesMixin */])(HTMLElement) {
-    constructor() {
-        super(...arguments);
-        this.__renderComplete = null;
-        this.__resolveRenderComplete = null;
-        this.__isInvalid = false;
-        this.__isChanging = false;
-    }
-    /**
-     * Override which sets up element rendering by calling* `_createRoot`
-     * and `_firstRendered`.
-     */
-    ready() {
-        this._root = this._createRoot();
-        super.ready();
-        this._firstRendered();
-    }
-    connectedCallback() {
-        if (window.ShadyCSS && this._root) {
-            window.ShadyCSS.styleElement(this);
-        }
-        super.connectedCallback();
-    }
-    /**
-     * Called after the element DOM is rendered for the first time.
-     * Implement to perform tasks after first rendering like capturing a
-     * reference to a static node which must be directly manipulated.
-     * This should not be commonly needed. For tasks which should be performed
-     * before first render, use the element constructor.
-     */
-    _firstRendered() { }
-    /**
-     * Implement to customize where the element's template is rendered by
-     * returning an element into which to render. By default this creates
-     * a shadowRoot for the element. To render into the element's childNodes,
-     * return `this`.
-     * @returns {Element|DocumentFragment} Returns a node into which to render.
-     */
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
-    /**
-     * Override which returns the value of `_shouldRender` which users
-     * should implement to control rendering. If this method returns false,
-     * _propertiesChanged will not be called and no rendering will occur even
-     * if property values change or `requestRender` is called.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     * @returns {boolean} Default implementation always returns true.
-     */
-    _shouldPropertiesChange(_props, _changedProps, _prevProps) {
-        const shouldRender = this._shouldRender(_props, _changedProps, _prevProps);
-        if (!shouldRender && this.__resolveRenderComplete) {
-            this.__resolveRenderComplete(false);
-        }
-        return shouldRender;
-    }
-    /**
-     * Implement to control if rendering should occur when property values
-     * change or `requestRender` is called. By default, this method always
-     * returns true, but this can be customized as an optimization to avoid
-     * rendering work when changes occur which should not be rendered.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     * @returns {boolean} Default implementation always returns true.
-     */
-    _shouldRender(_props, _changedProps, _prevProps) {
-        return true;
-    }
-    /**
-     * Override which performs element rendering by calling
-     * `_render`, `_applyRender`, and finally `_didRender`.
-     * @param props Current element properties
-     * @param changedProps Changing element properties
-     * @param prevProps Previous element properties
-     */
-    _propertiesChanged(props, changedProps, prevProps) {
-        super._propertiesChanged(props, changedProps, prevProps);
-        const result = this._render(props);
-        if (result && this._root !== undefined) {
-            this._applyRender(result, this._root);
-        }
-        this._didRender(props, changedProps, prevProps);
-        if (this.__resolveRenderComplete) {
-            this.__resolveRenderComplete(true);
-        }
-    }
-    _flushProperties() {
-        this.__isChanging = true;
-        this.__isInvalid = false;
-        super._flushProperties();
-        this.__isChanging = false;
-    }
-    /**
-     * Override which warns when a user attempts to change a property during
-     * the rendering lifecycle. This is an anti-pattern and should be avoided.
-     * @param property {string}
-     * @param value {any}
-     * @param old {any}
-     */
-    // tslint:disable-next-line no-any
-    _shouldPropertyChange(property, value, old) {
-        const change = super._shouldPropertyChange(property, value, old);
-        if (change && this.__isChanging) {
-            console.trace(`Setting properties in response to other properties changing ` +
-                `considered harmful. Setting '${property}' from ` +
-                `'${this._getProperty(property)}' to '${value}'.`);
-        }
-        return change;
-    }
-    /**
-     * Implement to describe the DOM which should be rendered in the element.
-     * Ideally, the implementation is a pure function using only props to describe
-     * the element template. The implementation must return a `lit-html`
-     * TemplateResult. By default this template is rendered into the element's
-     * shadowRoot. This can be customized by implementing `_createRoot`. This
-     * method must be implemented.
-     * @param {*} _props Current element properties
-     * @returns {TemplateResult} Must return a lit-html TemplateResult.
-     */
-    _render(_props) {
-        throw new Error('_render() not implemented');
-    }
-    /**
-     * Renders the given lit-html template `result` into the given `node`.
-     * Implement to customize the way rendering is applied. This is should not
-     * typically be needed and is provided for advanced use cases.
-     * @param result {TemplateResult} `lit-html` template result to render
-     * @param node {Element|DocumentFragment} node into which to render
-     */
-    _applyRender(result, node) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__["a" /* render */])(result, node, this.localName);
-    }
-    /**
-     * Called after element DOM has been rendered. Implement to
-     * directly control rendered DOM. Typically this is not needed as `lit-html`
-     * can be used in the `_render` method to set properties, attributes, and
-     * event listeners. However, it is sometimes useful for calling methods on
-     * rendered elements, like calling `focus()` on an element to focus it.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     */
-    _didRender(_props, _changedProps, _prevProps) { }
-    /**
-     * Call to request the element to asynchronously re-render regardless
-     * of whether or not any property changes are pending.
-     */
-    requestRender() { this._invalidateProperties(); }
-    /**
-     * Override which provides tracking of invalidated state.
-     */
-    _invalidateProperties() {
-        this.__isInvalid = true;
-        super._invalidateProperties();
-    }
-    /**
-     * Returns a promise which resolves after the element next renders.
-     * The promise resolves to `true` if the element rendered and `false` if the
-     * element did not render.
-     * This is useful when users (e.g. tests) need to react to the rendered state
-     * of the element after a change is made.
-     * This can also be useful in event handlers if it is desireable to wait
-     * to send an event until after rendering. If possible implement the
-     * `_didRender` method to directly respond to rendering within the
-     * rendering lifecycle.
-     */
-    get renderComplete() {
-        if (!this.__renderComplete) {
-            this.__renderComplete = new Promise((resolve) => {
-                this.__resolveRenderComplete = (value) => {
-                    this.__resolveRenderComplete = this.__renderComplete = null;
-                    resolve(value);
-                };
-            });
-            if (!this.__isInvalid && this.__resolveRenderComplete) {
-                Promise.resolve().then(() => this.__resolveRenderComplete(false));
-            }
-        }
-        return this.__renderComplete;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = LitElement;
-
-//# sourceMappingURL=lit-element.js.map
-
-/***/ }),
 /* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(16);
 /**
 @license
@@ -1992,12 +2009,17 @@ const microtask = __WEBPACK_IMPORTED_MODULE_2__utils_async_js__["a" /* microTask
  * @summary Element class mixin for reacting to property changes from
  *   generated property accessors.
  */
-const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(
+    /**
+     * @template T
+     * @param {function(new:T)} superClass Class to apply mixin to.
+     * @return {function(new:T)} superClass with mixin applied.
+     */
+    (superClass) => {
 
   /**
    * @polymer
    * @mixinClass
-   * @extends {superClass}
    * @implements {Polymer_PropertiesChanged}
    * @unrestricted
    */
@@ -2056,6 +2078,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *   protected `_setProperty` function must be used to set the property
      * @return {void}
      * @protected
+     * @override
      */
     _createPropertyAccessor(property, readOnly) {
       this._addPropertyToAttributeMap(property);
@@ -2074,6 +2097,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * used when deserializing attribute values to properties.
      *
      * @param {string} property Name of the property
+     * @override
      */
     _addPropertyToAttributeMap(property) {
       if (!this.hasOwnProperty('__dataAttributes')) {
@@ -2090,6 +2114,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string} property Name of the property
      * @param {boolean=} readOnly When true, no setter is created
      * @return {void}
+     * @override
      */
      _definePropertyAccessor(property, readOnly) {
       Object.defineProperty(this, property, {
@@ -2132,6 +2157,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @public
+     * @override
      */
     ready() {
       this.__dataReady = true;
@@ -2146,6 +2172,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _initializeProperties() {
       // Capture instance properties; these will be set into accessors
@@ -2172,6 +2199,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *   when creating property accessors.
      * @return {void}
      * @protected
+     * @override
      */
     _initializeInstanceProperties(props) {
       Object.assign(this, props);
@@ -2185,6 +2213,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Value to set
      * @return {void}
      * @protected
+     * @override
      */
     _setProperty(property, value) {
       if (this._setPendingProperty(property, value)) {
@@ -2197,6 +2226,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string} property Name of property
      * @return {*} Value for the given property
      * @protected
+     * @override
      */
     _getProperty(property) {
       return this.__data[property];
@@ -2214,6 +2244,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {boolean=} ext Not used here; affordance for closure
      * @return {boolean} Returns true if the property changed
      * @protected
+     * @override
      */
     _setPendingProperty(property, value, ext) {
       let old = this.__data[property];
@@ -2240,6 +2271,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _invalidateProperties() {
       if (!this.__dataInvalid && this.__dataReady) {
@@ -2263,6 +2295,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _enableProperties() {
       if (!this.__dataEnabled) {
@@ -2283,6 +2316,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _flushProperties() {
       const props = this.__data;
@@ -2301,11 +2335,12 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * properties are pending. Override to customize when
      * `_propertiesChanged` is called.
      * @param {!Object} currentProps Bag of all current accessor values
-     * @param {!Object} changedProps Bag of properties changed since the last
+     * @param {?Object} changedProps Bag of properties changed since the last
      *   call to `_propertiesChanged`
-     * @param {!Object} oldProps Bag of previous values for each property
+     * @param {?Object} oldProps Bag of previous values for each property
      *   in `changedProps`
      * @return {boolean} true if changedProps is truthy
+     * @override
      */
     _shouldPropertiesChange(currentProps, changedProps, oldProps) { // eslint-disable-line no-unused-vars
       return Boolean(changedProps);
@@ -2316,12 +2351,13 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * `_createPropertyAccessor` have been set.
      *
      * @param {!Object} currentProps Bag of all current accessor values
-     * @param {!Object} changedProps Bag of properties changed since the last
+     * @param {?Object} changedProps Bag of properties changed since the last
      *   call to `_propertiesChanged`
-     * @param {!Object} oldProps Bag of previous values for each property
+     * @param {?Object} oldProps Bag of previous values for each property
      *   in `changedProps`
      * @return {void}
      * @protected
+     * @override
      */
     _propertiesChanged(currentProps, changedProps, oldProps) { // eslint-disable-line no-unused-vars
     }
@@ -2343,6 +2379,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @return {boolean} Whether the property should be considered a change
      *   and enqueue a `_proeprtiesChanged` callback
      * @protected
+     * @override
      */
     _shouldPropertyChange(property, value, old) {
       return (
@@ -2363,6 +2400,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {?string} namespace Attribute namespace.
      * @return {void}
      * @suppress {missingProperties} Super may or may not implement the callback
+     * @override
      */
     attributeChangedCallback(name, old, value, namespace) {
       if (old !== value) {
@@ -2384,6 +2422,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*=} type type to deserialize to, defaults to the value
      * returned from `typeForProperty`
      * @return {void}
+     * @override
      */
     _attributeToProperty(attribute, value, type) {
       if (!this.__serializing) {
@@ -2403,6 +2442,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string=} attribute Attribute name to reflect to.
      * @param {*=} value Property value to refect.
      * @return {void}
+     * @override
      */
     _propertyToAttribute(property, attribute, value) {
       this.__serializing = true;
@@ -2424,6 +2464,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Value to serialize.
      * @param {string} attribute Attribute name to serialize to.
      * @return {void}
+     * @override
      */
     _valueToNodeAttribute(node, value, attribute) {
       const str = this._serializeValue(value);
@@ -2444,6 +2485,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Property value to serialize.
      * @return {string | undefined} String serialized from the provided
      * property  value.
+     * @override
      */
     _serializeValue(value) {
       switch (typeof value) {
@@ -2465,6 +2507,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {?string} value Value to deserialize.
      * @param {*=} type Type to deserialize the string to.
      * @return {*} Typed value deserialized from the provided string.
+     * @override
      */
     _deserializeValue(value, type) {
       switch (type) {
@@ -2492,7 +2535,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(14);
 /**
 @license
@@ -2547,8 +2590,8 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
 
  /**
   * @constructor
-  * @extends {superClass}
   * @implements {Polymer_PropertiesChanged}
+  * @private
   */
  const base = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__properties_changed_js__["a" /* PropertiesChanged */])(superClass);
 
@@ -2557,7 +2600,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
   * instance of the PropertiesMixin.
   *
   * @param {!PropertiesMixinConstructor} constructor PropertiesMixin constructor
-  * @return {PropertiesMixinConstructor} Super class constructor
+  * @return {?PropertiesMixinConstructor} Super class constructor
   */
  function superPropertiesClass(constructor) {
    const superCtor = Object.getPrototypeOf(constructor);
@@ -2567,7 +2610,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
    // because the mixin is deduped and guaranteed only to apply once, hence
    // all constructors in a proto chain will see the same `PropertiesMixin`
    return (superCtor.prototype instanceof PropertiesMixin) ?
-     /** @type {PropertiesMixinConstructor} */ (superCtor) : null;
+     /** @type {!PropertiesMixinConstructor} */ (superCtor) : null;
  }
 
  /**
@@ -2619,7 +2662,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     */
    static finalize() {
      if (!this.hasOwnProperty(JSCompiler_renameProperty('__finalized', this))) {
-       const superCtor = superPropertiesClass(/** @type {PropertiesMixinConstructor} */(this));
+       const superCtor = superPropertiesClass(/** @type {!PropertiesMixinConstructor} */(this));
        if (superCtor) {
          superCtor.finalize();
        }
@@ -2636,7 +2679,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * @protected
     */
    static _finalizeClass() {
-     const props = ownProperties(/** @type {PropertiesMixinConstructor} */(this));
+     const props = ownProperties(/** @type {!PropertiesMixinConstructor} */(this));
      if (props) {
        this.createProperties(props);
      }
@@ -2653,7 +2696,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
    static get _properties() {
      if (!this.hasOwnProperty(
        JSCompiler_renameProperty('__properties', this))) {
-       const superCtor = superPropertiesClass(/** @type {PropertiesMixinConstructor} */(this));
+       const superCtor = superPropertiesClass(/** @type {!PropertiesMixinConstructor} */(this));
        this.__properties = Object.assign({},
          superCtor && superCtor._properties,
          ownProperties(/** @type {PropertiesMixinConstructor} */(this)));
@@ -2691,6 +2734,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * `PropertiesChanged`.
     * @suppress {missingProperties} Super may or may not implement the callback
     * @return {void}
+    * @override
     */
    connectedCallback() {
      if (super.connectedCallback) {
@@ -2703,6 +2747,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * Called when the element is removed from a document
     * @suppress {missingProperties} Super may or may not implement the callback
     * @return {void}
+    * @override
     */
    disconnectedCallback() {
      if (super.disconnectedCallback) {
@@ -2964,15 +3009,9 @@ const DASH_TO_CAMEL = /-[a-z]/g;
 const CAMEL_TO_DASH = /([A-Z])/g;
 
 /**
- * Module with utilities for converting between "dash-case" and "camelCase"
- * identifiers.
- *
- * @summary Module that provides utilities for converting between "dash-case"
- *   and "camelCase".
+ * @fileoverview Module with utilities for converting between "dash-case" and
+ * "camelCase" identifiers.
  */
-`TODO(modulizer): A namespace named Polymer.CaseMap was
-declared here. The surrounding comments should be reviewed,
-and this string can then be deleted`;
 
 /**
  * Converts "dash-case" identifier (e.g. `foo-bar-baz`) to "camelCase"
@@ -3043,7 +3082,7 @@ function createEvent(name, detail) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = querySelectorSlot;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__matchesSelector_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__matchesSelector_js__ = __webpack_require__(6);
 /*
  *  @license
  *    Copyright 2017 Brigham Young University
@@ -3178,7 +3217,7 @@ function runAfterStamping(element, callback) {
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -3192,7 +3231,7 @@ exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:ro
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -3277,25 +3316,25 @@ module.exports = "<style>" + __webpack_require__(21) + "</style> <div class=\"se
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (6) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (6) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
 /***/ }),
 /* 29 */

@@ -18,6 +18,7 @@
 
 import template from './byu-calendar.html';
 import * as util from 'byu-web-component-utils';
+import {LitElement} from '@polymer/lit-element';
 // Why do we need this? This breaks the code
 // import { currentId } from 'async_hooks';
 
@@ -33,14 +34,18 @@ const DEFAULT_CATEGORIES = 'all';
 const DEFAULT_DAYS = '14';
 const DEFAULT_DISPLAY = 4;
 
-class ByuCalendar extends HTMLElement {
+class ByuCalendar extends LitElement {
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+  _createRoot() {
+    return this.attachShadow({ mode: 'open' });
+  }
+
+  _render({}) {
+
   }
 
   connectedCallback() {
+    super.connectedCallback();
     //This will stamp our template for us, then let us perform actions on the stamped DOM.
     util.applyTemplate(this, 'byu-calendar', template, () => {
       getCalendarData(this);
