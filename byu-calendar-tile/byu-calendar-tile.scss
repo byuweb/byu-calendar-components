@@ -26,11 +26,11 @@ $medgray: #767676;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 :host ::slotted(*){
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 // general sections styling
@@ -217,7 +217,7 @@ $medgray: #767676;
 }
 
 p, div, a {
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 h1, h2, h3, h4 {

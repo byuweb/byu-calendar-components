@@ -883,6 +883,7 @@ let dedupeId = 0;
 /**
  * @constructor
  * @extends {Function}
+ * @private
  */
 function MixinFunction(){}
 /** @type {(WeakMap | undefined)} */
@@ -929,7 +930,7 @@ const dedupingMixin = function(mixin) {
     return extended;
   }
 
-  return /** @type {T} */ (dedupingMixin);
+  return dedupingMixin;
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = dedupingMixin;
 
@@ -987,7 +988,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
+exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;margin-bottom:10px}.section-first{background:#e5e5e5;color:#002e5d}.section-second{padding:15px;color:#767676}:host .content{width:100%}:host .content,:host ::slotted(*){font-family:Ringside Narrow A,Ringside Narrow B}#title ::slotted(*){color:#002e5d!important;font-size:24px;font-weight:700;text-decoration:none}#price ::slotted(*),.price-label{font-weight:700!important;color:#4d8501}#time{padding:6px 0;margin:0}#time ::slotted(*){font-size:14px;padding:0;margin:0;text-transform:uppercase}#location{padding:0 0 6px}#location ::slotted(*){font-size:14px!important;padding:0;margin:0;text-transform:uppercase}#tickets-link ::slotted(*){text-align:center;background-color:#4d8501!important;padding:9px 15px!important;width:120px;font-size:12px;color:#fff!important;text-decoration:none}#tickets-link ::slotted(:before){content:\"Price: \";display:inline}.section-second{min-height:100px;padding:0 15px 15px;display:block}#title ::slotted(*){line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}#year{letter-spacing:3px}.section-third{padding-top:8px;width:auto;margin-left:auto}:host{display:flex;flex-direction:row;justify-content:flex-start;margin:10px 8px;width:100%}:host .section-first{height:120px;width:120px;display:block;background:#e5e5e5;margin-bottom:15px}:host .section-first .content{width:120px;display:flex;justify-content:center}:host .section-second ::slotted(*){justify-content:flex-start}:host #month-name{padding:10px 0;font-size:13px;text-transform:uppercase;margin-bottom:0;font-weight:500}:host #day-number{font-size:48px;margin-bottom:5px;font-weight:700}:host #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;padding:0 0 5px}:host #time ::slotted(*){font-size:14px}:host #location ::slotted(*){color:#767676;font-weight:500;padding:4px 0}:host #link ::slotted(*){color:#002e5d;padding:4px 0;text-decoration:none}:host([image-row]) .section-first{height:auto;width:100px;background:none}:host([image-row]) .section-first ::slotted(img){height:auto;width:100px}a,div,p{font-family:Ringside Narrow A,Ringside Narrow B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
 
 // exports
 
@@ -1001,7 +1002,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.2);-webkit-box-shadow:0 8px 12px rgba(0,0,0,.2);box-shadow:0 8px 12px rgba(0,0,0,.2)}.section-first{background:#002e5d;color:#fff}.section-second{padding:15px}:host .content{width:100%;display:flex;justify-content:center}:host .content,:host ::slotted(*){font-family:Gotham A,Gotham B}#title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-decoration:none}#location ::slotted(*){font-size:14px}#time ::slotted(*){font-size:14px;text-transform:uppercase}#description ::slotted(*),#title ::slotted(*){font-family:Domine,Sentinel A,Sentinel B,serif;line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;text-transform:uppercase;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}:host([layout=vertical]){max-width:170px;display:flex;flex-wrap:wrap;justify-content:flex-start;margin:15px 8px}:host([layout=vertical]) .section-first{height:160px;width:170px;display:flex;flex-wrap:wrap;justify-content:center}:host([layout=vertical]) .section-second{height:190px;padding:15px 0;display:flex;flex-wrap:wrap;justify-content:center;align-content:space-between;align-self:flex-start}:host([layout=vertical]) .section-second ::slotted(*){justify-content:center}:host([layout=vertical]) #month-name{padding:10px;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=vertical]) #day-number{font-size:60px;margin-bottom:10px;font-weight:700}:host([layout=vertical]) #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:5px 0 10px;height:120px;width:150px}:host([layout=vertical]) #time ::slotted(*){font-size:14px;padding:8px 0!important}:host([layout=vertical]) #location ::slotted(*){color:#767676;text-align:center;font-weight:500}:host([layout=horizontal]){width:430px;margin:10px 15px;display:flex}:host([layout=horizontal]) .section-first{width:130px;min-height:130px!important}:host([layout=horizontal]) .section-second{width:300px;align-items:space-between}:host([layout=horizontal]) .section-second ::slotted(*){width:290px}:host([layout=horizontal]).extra-wide .section-second ::slotted(*){width:360px}:host([layout=horizontal]) #month-abb{padding:10px 0;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=horizontal]) #day-number{font-size:48px;font-weight:700}:host([layout=horizontal]) #time{padding:10px 0}:host([layout=horizontal]) #time ::slotted(*){color:#fff;padding:5px 0 10px;display:flex;justify-content:center}:host([layout=horizontal]) #title ::slotted(*){padding:5px 0 10px;width:100%;overflow:hidden}:host([layout=horizontal]) #location ::slotted(*){padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis!important}.section-second ::slotted(*){color:#767676;padding:0;margin:0;display:flex;flex-wrap:wrap;width:100%}:host ::slotted(img){display:none}a,div,p{font-family:Gotham A,Gotham B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
+exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.2);-webkit-box-shadow:0 8px 12px rgba(0,0,0,.2);box-shadow:0 8px 12px rgba(0,0,0,.2)}.section-first{background:#002e5d;color:#fff}.section-second{padding:15px}:host .content{width:100%;display:flex;justify-content:center}:host .content,:host ::slotted(*){font-family:Ringside Narrow A,Ringside Narrow B}#title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-decoration:none}#location ::slotted(*){font-size:14px}#time ::slotted(*){font-size:14px;text-transform:uppercase}#description ::slotted(*),#title ::slotted(*){font-family:Domine,Sentinel A,Sentinel B,serif;line-height:1.2}#weekday{text-transform:uppercase;font-size:14px;padding-bottom:10px}#location ::slotted(*){color:#767676;text-transform:uppercase;font-size:12px;font-weight:500}#date,#date ::slotted(*){display:none}:host([layout=vertical]){max-width:170px;display:flex;flex-wrap:wrap;justify-content:flex-start;margin:15px 8px}:host([layout=vertical]) .section-first{height:160px;width:170px;display:flex;flex-wrap:wrap;justify-content:center}:host([layout=vertical]) .section-second{height:190px;padding:15px 0;display:flex;flex-wrap:wrap;justify-content:center;align-content:space-between;align-self:flex-start}:host([layout=vertical]) .section-second ::slotted(*){justify-content:center}:host([layout=vertical]) #month-name{padding:10px;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=vertical]) #day-number{font-size:60px;margin-bottom:10px;font-weight:700}:host([layout=vertical]) #title ::slotted(*){color:#002e5d!important;font-size:18px;font-weight:700;text-align:center;padding:5px 0 10px;height:120px;width:150px}:host([layout=vertical]) #time ::slotted(*){font-size:14px;padding:8px 0!important}:host([layout=vertical]) #location ::slotted(*){color:#767676;text-align:center;font-weight:500}:host([layout=horizontal]){width:430px;margin:10px 15px;display:flex}:host([layout=horizontal]) .section-first{width:130px;min-height:130px!important}:host([layout=horizontal]) .section-second{width:300px;align-items:space-between}:host([layout=horizontal]) .section-second ::slotted(*){width:290px}:host([layout=horizontal]).extra-wide .section-second ::slotted(*){width:360px}:host([layout=horizontal]) #month-abb{padding:10px 0;font-size:22px;text-transform:uppercase;margin-bottom:0}:host([layout=horizontal]) #day-number{font-size:48px;font-weight:700}:host([layout=horizontal]) #time{padding:10px 0}:host([layout=horizontal]) #time ::slotted(*){color:#fff;padding:5px 0 10px;display:flex;justify-content:center}:host([layout=horizontal]) #title ::slotted(*){padding:5px 0 10px;width:100%;overflow:hidden}:host([layout=horizontal]) #location ::slotted(*){padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis!important}.section-second ::slotted(*){color:#767676;padding:0;margin:0;display:flex;flex-wrap:wrap;width:100%}:host ::slotted(img){display:none}a,div,p{font-family:Ringside Narrow A,Ringside Narrow B}h1,h2,h3,h4{font-family:Domine,Sentinel A,Sentinel B,serif}", ""]);
 
 // exports
 
@@ -1992,12 +1993,17 @@ const microtask = __WEBPACK_IMPORTED_MODULE_2__utils_async_js__["a" /* microTask
  * @summary Element class mixin for reacting to property changes from
  *   generated property accessors.
  */
-const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(superClass => {
+const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(
+    /**
+     * @template T
+     * @param {function(new:T)} superClass Class to apply mixin to.
+     * @return {function(new:T)} superClass with mixin applied.
+     */
+    (superClass) => {
 
   /**
    * @polymer
    * @mixinClass
-   * @extends {superClass}
    * @implements {Polymer_PropertiesChanged}
    * @unrestricted
    */
@@ -2056,6 +2062,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *   protected `_setProperty` function must be used to set the property
      * @return {void}
      * @protected
+     * @override
      */
     _createPropertyAccessor(property, readOnly) {
       this._addPropertyToAttributeMap(property);
@@ -2074,6 +2081,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * used when deserializing attribute values to properties.
      *
      * @param {string} property Name of the property
+     * @override
      */
     _addPropertyToAttributeMap(property) {
       if (!this.hasOwnProperty('__dataAttributes')) {
@@ -2090,6 +2098,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string} property Name of the property
      * @param {boolean=} readOnly When true, no setter is created
      * @return {void}
+     * @override
      */
      _definePropertyAccessor(property, readOnly) {
       Object.defineProperty(this, property, {
@@ -2132,6 +2141,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @public
+     * @override
      */
     ready() {
       this.__dataReady = true;
@@ -2146,6 +2156,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _initializeProperties() {
       // Capture instance properties; these will be set into accessors
@@ -2172,6 +2183,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *   when creating property accessors.
      * @return {void}
      * @protected
+     * @override
      */
     _initializeInstanceProperties(props) {
       Object.assign(this, props);
@@ -2185,6 +2197,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Value to set
      * @return {void}
      * @protected
+     * @override
      */
     _setProperty(property, value) {
       if (this._setPendingProperty(property, value)) {
@@ -2197,6 +2210,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string} property Name of property
      * @return {*} Value for the given property
      * @protected
+     * @override
      */
     _getProperty(property) {
       return this.__data[property];
@@ -2214,6 +2228,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {boolean=} ext Not used here; affordance for closure
      * @return {boolean} Returns true if the property changed
      * @protected
+     * @override
      */
     _setPendingProperty(property, value, ext) {
       let old = this.__data[property];
@@ -2240,6 +2255,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _invalidateProperties() {
       if (!this.__dataInvalid && this.__dataReady) {
@@ -2263,6 +2279,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _enableProperties() {
       if (!this.__dataEnabled) {
@@ -2283,6 +2300,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      *
      * @return {void}
      * @protected
+     * @override
      */
     _flushProperties() {
       const props = this.__data;
@@ -2301,11 +2319,12 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * properties are pending. Override to customize when
      * `_propertiesChanged` is called.
      * @param {!Object} currentProps Bag of all current accessor values
-     * @param {!Object} changedProps Bag of properties changed since the last
+     * @param {?Object} changedProps Bag of properties changed since the last
      *   call to `_propertiesChanged`
-     * @param {!Object} oldProps Bag of previous values for each property
+     * @param {?Object} oldProps Bag of previous values for each property
      *   in `changedProps`
      * @return {boolean} true if changedProps is truthy
+     * @override
      */
     _shouldPropertiesChange(currentProps, changedProps, oldProps) { // eslint-disable-line no-unused-vars
       return Boolean(changedProps);
@@ -2316,12 +2335,13 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * `_createPropertyAccessor` have been set.
      *
      * @param {!Object} currentProps Bag of all current accessor values
-     * @param {!Object} changedProps Bag of properties changed since the last
+     * @param {?Object} changedProps Bag of properties changed since the last
      *   call to `_propertiesChanged`
-     * @param {!Object} oldProps Bag of previous values for each property
+     * @param {?Object} oldProps Bag of previous values for each property
      *   in `changedProps`
      * @return {void}
      * @protected
+     * @override
      */
     _propertiesChanged(currentProps, changedProps, oldProps) { // eslint-disable-line no-unused-vars
     }
@@ -2343,6 +2363,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @return {boolean} Whether the property should be considered a change
      *   and enqueue a `_proeprtiesChanged` callback
      * @protected
+     * @override
      */
     _shouldPropertyChange(property, value, old) {
       return (
@@ -2363,6 +2384,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {?string} namespace Attribute namespace.
      * @return {void}
      * @suppress {missingProperties} Super may or may not implement the callback
+     * @override
      */
     attributeChangedCallback(name, old, value, namespace) {
       if (old !== value) {
@@ -2384,6 +2406,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*=} type type to deserialize to, defaults to the value
      * returned from `typeForProperty`
      * @return {void}
+     * @override
      */
     _attributeToProperty(attribute, value, type) {
       if (!this.__serializing) {
@@ -2403,6 +2426,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {string=} attribute Attribute name to reflect to.
      * @param {*=} value Property value to refect.
      * @return {void}
+     * @override
      */
     _propertyToAttribute(property, attribute, value) {
       this.__serializing = true;
@@ -2424,6 +2448,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Value to serialize.
      * @param {string} attribute Attribute name to serialize to.
      * @return {void}
+     * @override
      */
     _valueToNodeAttribute(node, value, attribute) {
       const str = this._serializeValue(value);
@@ -2444,6 +2469,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {*} value Property value to serialize.
      * @return {string | undefined} String serialized from the provided
      * property  value.
+     * @override
      */
     _serializeValue(value) {
       switch (typeof value) {
@@ -2465,6 +2491,7 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
      * @param {?string} value Value to deserialize.
      * @param {*=} type Type to deserialize the string to.
      * @return {*} Typed value deserialized from the provided string.
+     * @override
      */
     _deserializeValue(value, type) {
       switch (type) {
@@ -2547,8 +2574,8 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
 
  /**
   * @constructor
-  * @extends {superClass}
   * @implements {Polymer_PropertiesChanged}
+  * @private
   */
  const base = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__properties_changed_js__["a" /* PropertiesChanged */])(superClass);
 
@@ -2557,7 +2584,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
   * instance of the PropertiesMixin.
   *
   * @param {!PropertiesMixinConstructor} constructor PropertiesMixin constructor
-  * @return {PropertiesMixinConstructor} Super class constructor
+  * @return {?PropertiesMixinConstructor} Super class constructor
   */
  function superPropertiesClass(constructor) {
    const superCtor = Object.getPrototypeOf(constructor);
@@ -2567,7 +2594,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
    // because the mixin is deduped and guaranteed only to apply once, hence
    // all constructors in a proto chain will see the same `PropertiesMixin`
    return (superCtor.prototype instanceof PropertiesMixin) ?
-     /** @type {PropertiesMixinConstructor} */ (superCtor) : null;
+     /** @type {!PropertiesMixinConstructor} */ (superCtor) : null;
  }
 
  /**
@@ -2619,7 +2646,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     */
    static finalize() {
      if (!this.hasOwnProperty(JSCompiler_renameProperty('__finalized', this))) {
-       const superCtor = superPropertiesClass(/** @type {PropertiesMixinConstructor} */(this));
+       const superCtor = superPropertiesClass(/** @type {!PropertiesMixinConstructor} */(this));
        if (superCtor) {
          superCtor.finalize();
        }
@@ -2636,7 +2663,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * @protected
     */
    static _finalizeClass() {
-     const props = ownProperties(/** @type {PropertiesMixinConstructor} */(this));
+     const props = ownProperties(/** @type {!PropertiesMixinConstructor} */(this));
      if (props) {
        this.createProperties(props);
      }
@@ -2653,7 +2680,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
    static get _properties() {
      if (!this.hasOwnProperty(
        JSCompiler_renameProperty('__properties', this))) {
-       const superCtor = superPropertiesClass(/** @type {PropertiesMixinConstructor} */(this));
+       const superCtor = superPropertiesClass(/** @type {!PropertiesMixinConstructor} */(this));
        this.__properties = Object.assign({},
          superCtor && superCtor._properties,
          ownProperties(/** @type {PropertiesMixinConstructor} */(this)));
@@ -2691,6 +2718,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * `PropertiesChanged`.
     * @suppress {missingProperties} Super may or may not implement the callback
     * @return {void}
+    * @override
     */
    connectedCallback() {
      if (super.connectedCallback) {
@@ -2703,6 +2731,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
     * Called when the element is removed from a document
     * @suppress {missingProperties} Super may or may not implement the callback
     * @return {void}
+    * @override
     */
    disconnectedCallback() {
      if (super.disconnectedCallback) {
@@ -2964,15 +2993,9 @@ const DASH_TO_CAMEL = /-[a-z]/g;
 const CAMEL_TO_DASH = /([A-Z])/g;
 
 /**
- * Module with utilities for converting between "dash-case" and "camelCase"
- * identifiers.
- *
- * @summary Module that provides utilities for converting between "dash-case"
- *   and "camelCase".
+ * @fileoverview Module with utilities for converting between "dash-case" and
+ * "camelCase" identifiers.
  */
-`TODO(modulizer): A namespace named Polymer.CaseMap was
-declared here. The surrounding comments should be reviewed,
-and this string can then be deleted`;
 
 /**
  * Converts "dash-case" identifier (e.g. `foo-bar-baz`) to "camelCase"
@@ -3197,7 +3220,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Domine,Sentinel A,Sentinel B,Vitesse A,Vitesse B,serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Domine,Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Gotham A,Gotham B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Domine,Sentinel A,Sentinel B;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:Domine,Sentinel A,Sentinel B,Vitesse A,Vitesse B,serif}.fullpage-date-text{padding-left:10px}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.calendar-block-title{font-family:Domine,Sentinel A,Sentinel B}.block-calendar-widget-block div{font-family:Ringside Narrow A,Ringside Narrow B}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:Domine,Sentinel A,Sentinel B;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
 
 // exports
 

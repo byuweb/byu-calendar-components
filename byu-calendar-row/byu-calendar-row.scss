@@ -30,11 +30,11 @@ $ticket-region-width: 250px;
 
 :host .content {
 	width: 100%;
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 :host ::slotted(*){
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 // general sections styling
@@ -204,7 +204,7 @@ $ticket-region-width: 250px;
 }
 
 p, div, a {
-	font-family: "Gotham A", "Gotham B";
+	font-family: "Ringside Narrow A", "Ringside Narrow B";
 }
 
 h1, h2, h3, h4 {
