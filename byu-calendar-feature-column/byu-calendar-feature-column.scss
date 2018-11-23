@@ -23,15 +23,11 @@
     @include featureSectionSecond();
   }
 
-  #title-0,
-  #title-1 {
+  ::slotted(h4) {
     @include featureTitle();
   }
 
-  #time-0,
-  #time-1,
-  #location-0,
-  #location-1 {
+  ::slotted(div) {
     @include featureTimeAndLocation();
   }
 
