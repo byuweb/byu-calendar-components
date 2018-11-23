@@ -1,0 +1,72 @@
+@import 'byu-calendar-feature-column-common';
+
+#date, #date ::slotted(*) {
+  @include hidden();
+}
+
+:host {
+  @include byuFeatureColumn();
+
+  .section-first {
+    @include featureSectionFirst();
+  }
+
+  #weekday {
+    @include featureWeekday();
+  }
+
+  #month-and-day {
+    @include featureMonthAndDay();
+  }
+
+  .section-second {
+    @include featureSectionSecond();
+  }
+
+  #title-0,
+  #title-1 {
+    @include featureTitle();
+  }
+
+  #time-0,
+  #time-1,
+  #location-0,
+  #location-1 {
+    @include featureTimeAndLocation();
+  }
+
+  .section-third {
+    @include featureSectionThird();
+  }
+}
+
+@media screen and (min-width: 769px) {
+  :host {
+    @include featureBigColumn();
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1223px) {
+  :host {
+    @include featureMediumColumn();
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :host {
+    @include featureSmallColumn();
+
+    .section-first {
+      @include featureSmallSectionFirst();
+    }
+
+    #month-and-day {
+      @include featureSmallMonthDay();
+    }
+
+    #weekday {
+      @include featureSmallWeekday();
+    }
+
+  }
+}

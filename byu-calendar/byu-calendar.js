@@ -261,6 +261,9 @@ function formatCalendarData(jsonArr, data) {
     case 5:
       return fullpage_imgrows(jsonArr);
       break;
+    case 6:
+      return feature_columns(jsonArr);
+      break;
     case 7:
       return minimal_tiles(jsonArr);
       break;
@@ -293,7 +296,7 @@ function vertical_tiles(jsonArr) {
     }
     html += '</byu-calendar-tile>';
   }
-  html += '</div>'
+  html += '</div>';
   return html;
 }
 
@@ -318,7 +321,7 @@ function horizontal_tiles(jsonArr) {
     }
     html += '</byu-calendar-tile>';
   }  
-  html += '</div>'
+  html += '</div>';
   return html;
 }
 
@@ -334,6 +337,9 @@ function fullpage_rows(jsonArr) {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
     } else {
       html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
     }
     if (item.TicketsExist === 'Yes') {
       if (item.IsFree === 'true') {
@@ -399,6 +405,54 @@ function fullpage_imgrows(jsonArr) {
     }
     html += '<a href="' + item.FullUrl + '" slot="link" target="_blank">SEE FULL EVENT</a></byu-calendar-row>';
   }
+  html += '</div>';
+  return html;
+}
+
+function feature_columns(jsonArr) {
+  let html = '<div class="overall-feature-wrapper calendar-widget-block display-list">';
+  let current = new Date();
+  let eventCount = 0;
+  let columnCount = 0;
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    let start = new Date(item.StartDateTime.trim());
+    let diff = dateDiff(current, start);
+    if (i === 0 || diff !== 0 ) {
+      if (i !== 0) {
+        html += '</byu-calendar-feature-column>';
+        eventCount = 0;
+        if (columnCount == 4) {
+          html += '<byu-calendar-feature-links></byu-calendar-feature-links>';
+          html += '</div>';
+          return html;
+        }
+      }
+      columnCount++;
+      html += '<byu-calendar-feature-column class="column-' + columnCount + '">';
+      html += '<p slot="date">' + start + '</p>';
+      current = start;
+    }
+
+    if (eventCount < 2) {
+      if (eventCount == 1) {
+        html += '<hr slot="divider">'
+      }
+      html += '<h4 slot="title-' + eventCount + '"><a href="' + item.FullUrl + ' " target="_blank">' + item.Title + '</a></h4>';
+      if (item.AllDay === 'false') {
+        html += '<div class="time" slot="time-' + eventCount + '">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+      }
+      else {
+        html += '<div class="time" slot="time-' + eventCount + '">All Day</div>';
+      }
+      if (item.LocationName) {
+        html += '<div class="location" slot="location-' + eventCount + '">' + item.LocationName + '</div>';
+      }
+      eventCount++;
+    }
+  }
+  html += '</byu-calendar-feature-column>';
+  html += '<byu-calendar-feature-links></byu-calendar-feature-links>';
   html += '</div>';
   return html;
 }

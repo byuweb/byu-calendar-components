@@ -63,11 +63,351 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export renderAttributes */
+/* unused harmony export classString */
+/* unused harmony export styleString */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(36);
+/* unused harmony reexport html */
+/* unused harmony reexport svg */
+
+
+
+
+/**
+ * Renders attributes to the given element based on the `attrInfo` object where
+ * boolean values are added/removed as attributes.
+ * @param element Element on which to set attributes.
+ * @param attrInfo Object describing attributes.
+ */
+function renderAttributes(element, attrInfo) {
+    for (const a in attrInfo) {
+        const v = attrInfo[a] === true ? '' : attrInfo[a];
+        if (v || v === '' || v === 0) {
+            if (element.getAttribute(a) !== v) {
+                element.setAttribute(a, String(v));
+            }
+        }
+        else if (element.hasAttribute(a)) {
+            element.removeAttribute(a);
+        }
+    }
+}
+/**
+ * Returns a string of css class names formed by taking the properties
+ * in the `classInfo` object and appending the property name to the string of
+ * class names if the property value is truthy.
+ * @param classInfo
+ */
+function classString(classInfo) {
+    const o = [];
+    for (const name in classInfo) {
+        const v = classInfo[name];
+        if (v) {
+            o.push(name);
+        }
+    }
+    return o.join(' ');
+}
+/**
+ * Returns a css style string formed by taking the properties in the `styleInfo`
+ * object and appending the property name (dash-cased) colon the
+ * property value. Properties are separated by a semi-colon.
+ * @param styleInfo
+ */
+function styleString(styleInfo) {
+    const o = [];
+    for (const name in styleInfo) {
+        const v = styleInfo[name];
+        if (v || v === 0) {
+            o.push(`${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__["a" /* camelToDashCase */])(name)}: ${v}`);
+        }
+    }
+    return o.join('; ');
+}
+class LitElement extends __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__["a" /* PropertiesMixin */])(HTMLElement) {
+    constructor() {
+        super(...arguments);
+        this.__renderComplete = null;
+        this.__resolveRenderComplete = null;
+        this.__isInvalid = false;
+        this.__isChanging = false;
+    }
+    /**
+     * Override which sets up element rendering by calling* `_createRoot`
+     * and `_firstRendered`.
+     */
+    ready() {
+        this._root = this._createRoot();
+        super.ready();
+        this._firstRendered();
+    }
+    connectedCallback() {
+        if (window.ShadyCSS && this._root) {
+            window.ShadyCSS.styleElement(this);
+        }
+        super.connectedCallback();
+    }
+    /**
+     * Called after the element DOM is rendered for the first time.
+     * Implement to perform tasks after first rendering like capturing a
+     * reference to a static node which must be directly manipulated.
+     * This should not be commonly needed. For tasks which should be performed
+     * before first render, use the element constructor.
+     */
+    _firstRendered() { }
+    /**
+     * Implement to customize where the element's template is rendered by
+     * returning an element into which to render. By default this creates
+     * a shadowRoot for the element. To render into the element's childNodes,
+     * return `this`.
+     * @returns {Element|DocumentFragment} Returns a node into which to render.
+     */
+    _createRoot() {
+        return this.attachShadow({ mode: 'open' });
+    }
+    /**
+     * Override which returns the value of `_shouldRender` which users
+     * should implement to control rendering. If this method returns false,
+     * _propertiesChanged will not be called and no rendering will occur even
+     * if property values change or `requestRender` is called.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     * @returns {boolean} Default implementation always returns true.
+     */
+    _shouldPropertiesChange(_props, _changedProps, _prevProps) {
+        const shouldRender = this._shouldRender(_props, _changedProps, _prevProps);
+        if (!shouldRender && this.__resolveRenderComplete) {
+            this.__resolveRenderComplete(false);
+        }
+        return shouldRender;
+    }
+    /**
+     * Implement to control if rendering should occur when property values
+     * change or `requestRender` is called. By default, this method always
+     * returns true, but this can be customized as an optimization to avoid
+     * rendering work when changes occur which should not be rendered.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     * @returns {boolean} Default implementation always returns true.
+     */
+    _shouldRender(_props, _changedProps, _prevProps) {
+        return true;
+    }
+    /**
+     * Override which performs element rendering by calling
+     * `_render`, `_applyRender`, and finally `_didRender`.
+     * @param props Current element properties
+     * @param changedProps Changing element properties
+     * @param prevProps Previous element properties
+     */
+    _propertiesChanged(props, changedProps, prevProps) {
+        super._propertiesChanged(props, changedProps, prevProps);
+        const result = this._render(props);
+        if (result && this._root !== undefined) {
+            this._applyRender(result, this._root);
+        }
+        this._didRender(props, changedProps, prevProps);
+        if (this.__resolveRenderComplete) {
+            this.__resolveRenderComplete(true);
+        }
+    }
+    _flushProperties() {
+        this.__isChanging = true;
+        this.__isInvalid = false;
+        super._flushProperties();
+        this.__isChanging = false;
+    }
+    /**
+     * Override which warns when a user attempts to change a property during
+     * the rendering lifecycle. This is an anti-pattern and should be avoided.
+     * @param property {string}
+     * @param value {any}
+     * @param old {any}
+     */
+    // tslint:disable-next-line no-any
+    _shouldPropertyChange(property, value, old) {
+        const change = super._shouldPropertyChange(property, value, old);
+        if (change && this.__isChanging) {
+            console.trace(`Setting properties in response to other properties changing ` +
+                `considered harmful. Setting '${property}' from ` +
+                `'${this._getProperty(property)}' to '${value}'.`);
+        }
+        return change;
+    }
+    /**
+     * Implement to describe the DOM which should be rendered in the element.
+     * Ideally, the implementation is a pure function using only props to describe
+     * the element template. The implementation must return a `lit-html`
+     * TemplateResult. By default this template is rendered into the element's
+     * shadowRoot. This can be customized by implementing `_createRoot`. This
+     * method must be implemented.
+     * @param {*} _props Current element properties
+     * @returns {TemplateResult} Must return a lit-html TemplateResult.
+     */
+    _render(_props) {
+        throw new Error('_render() not implemented');
+    }
+    /**
+     * Renders the given lit-html template `result` into the given `node`.
+     * Implement to customize the way rendering is applied. This is should not
+     * typically be needed and is provided for advanced use cases.
+     * @param result {TemplateResult} `lit-html` template result to render
+     * @param node {Element|DocumentFragment} node into which to render
+     */
+    _applyRender(result, node) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__["a" /* render */])(result, node, this.localName);
+    }
+    /**
+     * Called after element DOM has been rendered. Implement to
+     * directly control rendered DOM. Typically this is not needed as `lit-html`
+     * can be used in the `_render` method to set properties, attributes, and
+     * event listeners. However, it is sometimes useful for calling methods on
+     * rendered elements, like calling `focus()` on an element to focus it.
+     * @param _props Current element properties
+     * @param _changedProps Changing element properties
+     * @param _prevProps Previous element properties
+     */
+    _didRender(_props, _changedProps, _prevProps) { }
+    /**
+     * Call to request the element to asynchronously re-render regardless
+     * of whether or not any property changes are pending.
+     */
+    requestRender() { this._invalidateProperties(); }
+    /**
+     * Override which provides tracking of invalidated state.
+     */
+    _invalidateProperties() {
+        this.__isInvalid = true;
+        super._invalidateProperties();
+    }
+    /**
+     * Returns a promise which resolves after the element next renders.
+     * The promise resolves to `true` if the element rendered and `false` if the
+     * element did not render.
+     * This is useful when users (e.g. tests) need to react to the rendered state
+     * of the element after a change is made.
+     * This can also be useful in event handlers if it is desireable to wait
+     * to send an event until after rendering. If possible implement the
+     * `_didRender` method to directly respond to rendering within the
+     * rendering lifecycle.
+     */
+    get renderComplete() {
+        if (!this.__renderComplete) {
+            this.__renderComplete = new Promise((resolve) => {
+                this.__resolveRenderComplete = (value) => {
+                    this.__resolveRenderComplete = this.__renderComplete = null;
+                    resolve(value);
+                };
+            });
+            if (!this.__isInvalid && this.__resolveRenderComplete) {
+                Promise.resolve().then(() => this.__resolveRenderComplete(false));
+            }
+        }
+        return this.__renderComplete;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = LitElement;
+
+//# sourceMappingURL=lit-element.js.map
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(20);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyTemplate", function() { return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchesSelector", function() { return __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "querySelectorSlot", function() { return __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createEvent", function() { return __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__["a"]; });
+/**
+ * Created by ThatJoeMoore on 2/14/17
+ */
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 /**
@@ -84,7 +424,7 @@ window.JSCompiler_renameProperty = function(prop) { return prop; };
 
 
 /***/ }),
-/* 1 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -777,351 +1117,11 @@ const removeNodes = (container, startNode, endNode = null) => {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export renderAttributes */
-/* unused harmony export classString */
-/* unused harmony export styleString */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(30);
-/* unused harmony reexport html */
-/* unused harmony reexport svg */
-
-
-
-
-/**
- * Renders attributes to the given element based on the `attrInfo` object where
- * boolean values are added/removed as attributes.
- * @param element Element on which to set attributes.
- * @param attrInfo Object describing attributes.
- */
-function renderAttributes(element, attrInfo) {
-    for (const a in attrInfo) {
-        const v = attrInfo[a] === true ? '' : attrInfo[a];
-        if (v || v === '' || v === 0) {
-            if (element.getAttribute(a) !== v) {
-                element.setAttribute(a, String(v));
-            }
-        }
-        else if (element.hasAttribute(a)) {
-            element.removeAttribute(a);
-        }
-    }
-}
-/**
- * Returns a string of css class names formed by taking the properties
- * in the `classInfo` object and appending the property name to the string of
- * class names if the property value is truthy.
- * @param classInfo
- */
-function classString(classInfo) {
-    const o = [];
-    for (const name in classInfo) {
-        const v = classInfo[name];
-        if (v) {
-            o.push(name);
-        }
-    }
-    return o.join(' ');
-}
-/**
- * Returns a css style string formed by taking the properties in the `styleInfo`
- * object and appending the property name (dash-cased) colon the
- * property value. Properties are separated by a semi-colon.
- * @param styleInfo
- */
-function styleString(styleInfo) {
-    const o = [];
-    for (const name in styleInfo) {
-        const v = styleInfo[name];
-        if (v || v === 0) {
-            o.push(`${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__["a" /* camelToDashCase */])(name)}: ${v}`);
-        }
-    }
-    return o.join('; ');
-}
-class LitElement extends __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__["a" /* PropertiesMixin */])(HTMLElement) {
-    constructor() {
-        super(...arguments);
-        this.__renderComplete = null;
-        this.__resolveRenderComplete = null;
-        this.__isInvalid = false;
-        this.__isChanging = false;
-    }
-    /**
-     * Override which sets up element rendering by calling* `_createRoot`
-     * and `_firstRendered`.
-     */
-    ready() {
-        this._root = this._createRoot();
-        super.ready();
-        this._firstRendered();
-    }
-    connectedCallback() {
-        if (window.ShadyCSS && this._root) {
-            window.ShadyCSS.styleElement(this);
-        }
-        super.connectedCallback();
-    }
-    /**
-     * Called after the element DOM is rendered for the first time.
-     * Implement to perform tasks after first rendering like capturing a
-     * reference to a static node which must be directly manipulated.
-     * This should not be commonly needed. For tasks which should be performed
-     * before first render, use the element constructor.
-     */
-    _firstRendered() { }
-    /**
-     * Implement to customize where the element's template is rendered by
-     * returning an element into which to render. By default this creates
-     * a shadowRoot for the element. To render into the element's childNodes,
-     * return `this`.
-     * @returns {Element|DocumentFragment} Returns a node into which to render.
-     */
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
-    /**
-     * Override which returns the value of `_shouldRender` which users
-     * should implement to control rendering. If this method returns false,
-     * _propertiesChanged will not be called and no rendering will occur even
-     * if property values change or `requestRender` is called.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     * @returns {boolean} Default implementation always returns true.
-     */
-    _shouldPropertiesChange(_props, _changedProps, _prevProps) {
-        const shouldRender = this._shouldRender(_props, _changedProps, _prevProps);
-        if (!shouldRender && this.__resolveRenderComplete) {
-            this.__resolveRenderComplete(false);
-        }
-        return shouldRender;
-    }
-    /**
-     * Implement to control if rendering should occur when property values
-     * change or `requestRender` is called. By default, this method always
-     * returns true, but this can be customized as an optimization to avoid
-     * rendering work when changes occur which should not be rendered.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     * @returns {boolean} Default implementation always returns true.
-     */
-    _shouldRender(_props, _changedProps, _prevProps) {
-        return true;
-    }
-    /**
-     * Override which performs element rendering by calling
-     * `_render`, `_applyRender`, and finally `_didRender`.
-     * @param props Current element properties
-     * @param changedProps Changing element properties
-     * @param prevProps Previous element properties
-     */
-    _propertiesChanged(props, changedProps, prevProps) {
-        super._propertiesChanged(props, changedProps, prevProps);
-        const result = this._render(props);
-        if (result && this._root !== undefined) {
-            this._applyRender(result, this._root);
-        }
-        this._didRender(props, changedProps, prevProps);
-        if (this.__resolveRenderComplete) {
-            this.__resolveRenderComplete(true);
-        }
-    }
-    _flushProperties() {
-        this.__isChanging = true;
-        this.__isInvalid = false;
-        super._flushProperties();
-        this.__isChanging = false;
-    }
-    /**
-     * Override which warns when a user attempts to change a property during
-     * the rendering lifecycle. This is an anti-pattern and should be avoided.
-     * @param property {string}
-     * @param value {any}
-     * @param old {any}
-     */
-    // tslint:disable-next-line no-any
-    _shouldPropertyChange(property, value, old) {
-        const change = super._shouldPropertyChange(property, value, old);
-        if (change && this.__isChanging) {
-            console.trace(`Setting properties in response to other properties changing ` +
-                `considered harmful. Setting '${property}' from ` +
-                `'${this._getProperty(property)}' to '${value}'.`);
-        }
-        return change;
-    }
-    /**
-     * Implement to describe the DOM which should be rendered in the element.
-     * Ideally, the implementation is a pure function using only props to describe
-     * the element template. The implementation must return a `lit-html`
-     * TemplateResult. By default this template is rendered into the element's
-     * shadowRoot. This can be customized by implementing `_createRoot`. This
-     * method must be implemented.
-     * @param {*} _props Current element properties
-     * @returns {TemplateResult} Must return a lit-html TemplateResult.
-     */
-    _render(_props) {
-        throw new Error('_render() not implemented');
-    }
-    /**
-     * Renders the given lit-html template `result` into the given `node`.
-     * Implement to customize the way rendering is applied. This is should not
-     * typically be needed and is provided for advanced use cases.
-     * @param result {TemplateResult} `lit-html` template result to render
-     * @param node {Element|DocumentFragment} node into which to render
-     */
-    _applyRender(result, node) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__["a" /* render */])(result, node, this.localName);
-    }
-    /**
-     * Called after element DOM has been rendered. Implement to
-     * directly control rendered DOM. Typically this is not needed as `lit-html`
-     * can be used in the `_render` method to set properties, attributes, and
-     * event listeners. However, it is sometimes useful for calling methods on
-     * rendered elements, like calling `focus()` on an element to focus it.
-     * @param _props Current element properties
-     * @param _changedProps Changing element properties
-     * @param _prevProps Previous element properties
-     */
-    _didRender(_props, _changedProps, _prevProps) { }
-    /**
-     * Call to request the element to asynchronously re-render regardless
-     * of whether or not any property changes are pending.
-     */
-    requestRender() { this._invalidateProperties(); }
-    /**
-     * Override which provides tracking of invalidated state.
-     */
-    _invalidateProperties() {
-        this.__isInvalid = true;
-        super._invalidateProperties();
-    }
-    /**
-     * Returns a promise which resolves after the element next renders.
-     * The promise resolves to `true` if the element rendered and `false` if the
-     * element did not render.
-     * This is useful when users (e.g. tests) need to react to the rendered state
-     * of the element after a change is made.
-     * This can also be useful in event handlers if it is desireable to wait
-     * to send an event until after rendering. If possible implement the
-     * `_didRender` method to directly respond to rendering within the
-     * rendering lifecycle.
-     */
-    get renderComplete() {
-        if (!this.__renderComplete) {
-            this.__renderComplete = new Promise((resolve) => {
-                this.__resolveRenderComplete = (value) => {
-                    this.__resolveRenderComplete = this.__renderComplete = null;
-                    resolve(value);
-                };
-            });
-            if (!this.__isInvalid && this.__resolveRenderComplete) {
-                Promise.resolve().then(() => this.__resolveRenderComplete(false));
-            }
-        }
-        return this.__renderComplete;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = LitElement;
-
-//# sourceMappingURL=lit-element.js.map
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(18);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyTemplate", function() { return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchesSelector", function() { return __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "querySelectorSlot", function() { return __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createEvent", function() { return __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__["a"]; });
-/**
- * Created by ThatJoeMoore on 2/14/17
- */
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-
-/***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
 /**
 @license
@@ -1240,7 +1240,7 @@ function matchesSelector(el, selector) {
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -1254,7 +1254,7 @@ exports.push([module.i, ":host{padding:10px 0;border-bottom:1px solid #e5e5e5;ma
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -1269,11 +1269,91 @@ exports.push([module.i, ":host{padding:0;-moz-box-shadow:0 8px 12px rgba(0,0,0,.
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
 
 
-const util = __webpack_require__(3);
-const minimalTemplate = __webpack_require__(24);
+const util = __webpack_require__(1);
+const featureTemplate = __webpack_require__(28);
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+class ByuCalendarFeatureColumn extends __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */] {
+
+  _createRoot() {
+    return this.attachShadow({ mode: 'open' });
+  }
+
+  _render({}) {
+
+  }
+
+  get date() {
+    var dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
+    if (dates.length) {
+      var date = this.shadowRoot.querySelector('#date-val').assignedNodes()[0];
+      return new Date(date.innerText.trim());
+    } else {
+      return null;
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
+      var dateOb = this.date;
+      var day = dateOb.getDate();
+      var weekday = weekdays[dateOb.getDay()];
+      var monthName = months[dateOb.getMonth()];
+
+      this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+      this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+    });
+  }
+}
+
+window.customElements.define('byu-calendar-feature-column', ByuCalendarFeatureColumn);
+window.ByuCalendarFeatureColumn = ByuCalendarFeatureColumn;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+
+
+const util = __webpack_require__(1);
+const linksTemplate = __webpack_require__(29);
+
+class ByuCalendarFeatureLinks extends __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */] {
+  _createRoot() {
+    return this.attachShadow({ mode: 'open' });
+  }
+
+  _render({}) {
+
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    util.applyTemplate(this, 'byu-calendar-feature-links', linksTemplate);
+  }
+}
+
+window.customElements.define('byu-calendar-feature-links', ByuCalendarFeatureLinks);
+window.ByuCalendarFeatureLinks = ByuCalendarFeatureLinks;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+
+
+const util = __webpack_require__(1);
+const minimalTemplate = __webpack_require__(30);
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -1312,16 +1392,16 @@ window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile
 window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
 
 
-const util = __webpack_require__(3);
-const tileTemplate = __webpack_require__(26);
-const imageTemplate = __webpack_require__(25);
+const util = __webpack_require__(1);
+const tileTemplate = __webpack_require__(32);
+const imageTemplate = __webpack_require__(31);
 
 const ATTR_IMAGE_ROW = 'image-row';
 
@@ -1383,16 +1463,16 @@ window.customElements.define('byu-calendar-row', ByuCalendarRow);
 window.ByuCalendarRow = ByuCalendarRow;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
 
 
-const util = __webpack_require__(3);
-const verticalTemplate = __webpack_require__(28);
-const horizontalTemplate = __webpack_require__(27);
+const util = __webpack_require__(1);
+const verticalTemplate = __webpack_require__(34);
+const horizontalTemplate = __webpack_require__(33);
 
 var months =["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -1454,14 +1534,14 @@ window.customElements.define('byu-calendar-tile', ByuCalendarTile);
 window.ByuCalendarTile = ByuCalendarTile;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(0);
 /**
  *  @license
  *    Copyright 2017 Brigham Young University
@@ -1725,6 +1805,9 @@ function formatCalendarData(jsonArr, data) {
     case 5:
       return fullpage_imgrows(jsonArr);
       break;
+    case 6:
+      return feature_columns(jsonArr);
+      break;
     case 7:
       return minimal_tiles(jsonArr);
       break;
@@ -1757,7 +1840,7 @@ function vertical_tiles(jsonArr) {
     }
     html += '</byu-calendar-tile>';
   }
-  html += '</div>'
+  html += '</div>';
   return html;
 }
 
@@ -1782,7 +1865,7 @@ function horizontal_tiles(jsonArr) {
     }
     html += '</byu-calendar-tile>';
   }  
-  html += '</div>'
+  html += '</div>';
   return html;
 }
 
@@ -1798,6 +1881,9 @@ function fullpage_rows(jsonArr) {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
     } else {
       html += '<div class="time" slot="time">All Day</div>';
+    }
+    if (item.LocationName) {
+      html += '<div class="location" slot="location">' + item.LocationName + '</div>';
     }
     if (item.TicketsExist === 'Yes') {
       if (item.IsFree === 'true') {
@@ -1863,6 +1949,54 @@ function fullpage_imgrows(jsonArr) {
     }
     html += '<a href="' + item.FullUrl + '" slot="link" target="_blank">SEE FULL EVENT</a></byu-calendar-row>';
   }
+  html += '</div>';
+  return html;
+}
+
+function feature_columns(jsonArr) {
+  let html = '<div class="overall-feature-wrapper calendar-widget-block display-list">';
+  let current = new Date();
+  let eventCount = 0;
+  let columnCount = 0;
+  for (let i = 0; i < jsonArr.length; i++) {
+    let item = jsonArr[i];
+    let start = new Date(item.StartDateTime.trim());
+    let diff = dateDiff(current, start);
+    if (i === 0 || diff !== 0 ) {
+      if (i !== 0) {
+        html += '</byu-calendar-feature-column>';
+        eventCount = 0;
+        if (columnCount == 4) {
+          html += '<byu-calendar-feature-links></byu-calendar-feature-links>';
+          html += '</div>';
+          return html;
+        }
+      }
+      columnCount++;
+      html += '<byu-calendar-feature-column class="column-' + columnCount + '">';
+      html += '<p slot="date">' + start + '</p>';
+      current = start;
+    }
+
+    if (eventCount < 2) {
+      if (eventCount == 1) {
+        html += '<hr slot="divider">'
+      }
+      html += '<h4 slot="title-' + eventCount + '"><a href="' + item.FullUrl + ' " target="_blank">' + item.Title + '</a></h4>';
+      if (item.AllDay === 'false') {
+        html += '<div class="time" slot="time-' + eventCount + '">' + formatTime(start) + ' ' + item.Timezone + '</div>';
+      }
+      else {
+        html += '<div class="time" slot="time-' + eventCount + '">All Day</div>';
+      }
+      if (item.LocationName) {
+        html += '<div class="location" slot="location-' + eventCount + '">' + item.LocationName + '</div>';
+      }
+      eventCount++;
+    }
+  }
+  html += '</byu-calendar-feature-column>';
+  html += '<byu-calendar-feature-links></byu-calendar-feature-links>';
   html += '</div>';
   return html;
 }
@@ -1933,15 +2067,17 @@ function formatTime(date) {
 }
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_feature_column_byu_calendar_feature_column_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__byu_calendar_feature_links_byu_calendar_feature_links_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(11);
 /**
  *  @license
  *    Copyright 2017 Brigham Young University
@@ -1965,15 +2101,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(18);
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2529,14 +2667,14 @@ const PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__uti
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(16);
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -2765,7 +2903,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2773,7 +2911,7 @@ const PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils
 /* unused harmony export animationFrame */
 /* unused harmony export idlePeriod */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return microTask; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
 /**
 @license
@@ -2985,13 +3123,13 @@ const microTask = {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export dashToCamelCase */
 /* harmony export (immutable) */ __webpack_exports__["a"] = camelToDashCase;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
 /**
 @license
@@ -3043,7 +3181,7 @@ function camelToDashCase(camel) {
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3077,7 +3215,7 @@ function createEvent(name, detail) {
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3123,12 +3261,12 @@ function querySelectorSlot(slot, selector) {
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = applyTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hash_sum___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hash_sum__);
 /*
  *  @license
@@ -3214,10 +3352,38 @@ function runAfterStamping(element, callback) {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "#date,#date ::slotted(*){display:none}:host{width:19%;overflow:hidden}:host .section-first{width:100%;background:#5d7998;margin-bottom:10px;color:#fff;font-family:Ringside Narrow A,Ringside Narrow B,Arial,sans-serif}:host #weekday{padding:10px 10px 0;margin-top:0;font-weight:500;font-size:12px;margin-bottom:5px}:host #month-and-day,:host #weekday{text-align:center;text-transform:uppercase}:host #month-and-day{font-weight:700;font-size:16px;padding-bottom:10px}:host .section-second{margin-bottom:25px}:host #title-0,:host #title-1{font-family:Vitesse A,Vitesse B,Arial,sans-serif;font-size:18px;font-weight:400;line-height:20px}:host #location-0,:host #location-1,:host #time-0,:host #time-1{font-size:14px;color:#666;font-family:Ringside Narrow A,Ringside Narrow B,Arial,sans-serif}:host .section-third{margin-top:15px}@media screen and (min-width:769px){:host{height:350px}}@media screen and (min-width:769px) and (max-width:1223px){:host{width:24%}}@media screen and (max-width:768px){:host{width:100%;margin-bottom:20px}:host .section-first{display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;align-content:center}:host #month-and-day{padding:0 29px}:host #weekday{padding:5px 30px 5px 15px}}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, ":host{width:19%;overflow:hidden}:host .academic-calendar-wrapper,:host .full-events{color:#fff;position:relative;display:flex;flex-wrap:wrap;flex-direction:column;justify-content:center;align-items:center;font-family:Ringside Narrow A,Ringside Narrow B,Arial,sans-serif}:host .full-link{height:67%;display:flex;flex-direction:row;justify-content:center;align-items:flex-start;background-color:#5d7998;text-decoration:none}:host .academic-calendar-text,:host .full-events-text{font-size:12px;text-align:center;font-weight:500}:host .academic-calendar-text .larger,:host .full-events-text .larger{font-size:16px;margin:-3px 0;font-weight:700}:host .events-button{font-size:14px;line-height:14px;font-weight:700;text-transform:uppercase;text-align:center;width:80px;padding:5px;border:3px solid #fff}:host .academic-link{height:33%;display:flex;flex-direction:row;justify-content:center;transform:skewY(0deg);text-decoration:none}:host .academic-link,:host .full-link:hover .events-button{background-color:#002e5d}:host .academic-link:hover .events-button{background-color:#5d7998}@media screen and (min-width:769px){:host{height:350px}:host .full-events{position:relative;top:50px}:host .full-events-text{padding-bottom:15px}:host .academic-calendar-text{padding-bottom:5px}:host .academic-link:after{position:absolute;top:0;left:0;content:\"\";background:inherit;z-index:-1;width:100%;height:60%;transform-origin:top left;transform:skewY(-13deg);border-top:5px solid #fff}}@media screen and (min-width:769px) and (max-width:1223px){:host{width:24%}}@media screen and (max-width:768px){:host{display:flex;justify-content:center;width:100%;margin-bottom:20px}:host .academic-link,:host .full-link{width:200px;margin:10px 5px;height:65px}:host .full-events{height:100%;top:0}:host .academic-calendar-text{padding-top:5px}:host .events-button{display:none}}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -3228,21 +3394,21 @@ exports.push([module.i, ":host{margin-bottom:15px;display:flex;flex-direction:ro
 
 
 /***/ }),
-/* 22 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
 // module
-exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase;font-family:HCo Ringside Narrow SSm,serif}.fullpage-date-text{padding-left:10px;font-family:HCo Ringside Narrow SSm,serif}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.block-calendar-widget-block div,.calendar-block-title{font-family:HCo Ringside Narrow SSm}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:HCo Ringside Narrow SSm;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}", ""]);
+exports.push([module.i, "/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */\n/*!\n *  @license\n *    Copyright 2017 Brigham Young University\n *\n *    Licensed under the Apache License, Version 2.0 (the \"License\");\n *    you may not use this file except in compliance with the License.\n *    You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n *    Unless required by applicable law or agreed to in writing, software\n *    distributed under the License is distributed on an \"AS IS\" BASIS,\n *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *    See the License for the specific language governing permissions and\n *    limitations under the License.\n */a[slot=title]{color:#002e5d;font-weight:500}a[slot=title]:hover{color:#0057b8}a{color:#003da5}a,a:focus,a:hover{text-decoration:none}a:focus,a:hover{color:#002c5c}.block-calendar-widget-block div,.calendar-block-title{font-family:HCo Ringside Narrow SSm}.block-calendar-widget-block h2{color:#002e5d;border-bottom:1px solid #e5e5e5;font-size:28px;padding-bottom:6px}.block-calendar-widget-block .date-wrapper{display:flex;margin-bottom:12px}.block-calendar-widget-block .date-day-number{font-family:HCo Ringside Narrow SSm;font-weight:700;font-size:23px;padding-top:4px;margin-right:7px}.block-calendar-widget-block .date-text{font-weight:500;font-size:21px;padding-top:4px}.block-calendar-widget-block .event-content{padding:0 0 15px 15px;display:flex;justify-content:space-between;line-height:1.3em;font-size:17px}.block-calendar-widget-block .event-time{min-width:60px;margin-left:12px;color:#767676;font-size:16px;display:flex;justify-content:flex-end}.calendar-widget-block.display-list{width:100%;margin-right:20px}@media screen and (max-width:1023px){.block-calendar-widget-block{width:100%}.calendar-widget-block.display-list{width:100%;margin-right:0}}.fullpage-date-wrapper{color:#002e5d;font-weight:700;font-size:32px;margin-bottom:25px;display:flex}.fullpage-date-weekday{text-transform:uppercase}.fullpage-date-text,.fullpage-date-weekday{font-family:HCo Ringside Narrow SSm,Arial,Helvetica,sans-serif}.fullpage-date-text{padding-left:10px}.overall-feature-wrapper{display:flex;justify-content:space-between}@media screen and (min-width:769px) and (max-width:1223px){.column-4{display:none}}@media screen and (max-width:768px){.overall-feature-wrapper{display:flex;flex-direction:column}}", ""]);
 
 // exports
 
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3307,47 +3473,59 @@ module.exports = sum;
 
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<style>" + __webpack_require__(21) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<style>" + __webpack_require__ (7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<style>" + __webpack_require__ (7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
-
-/***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (23) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"weekday\" class=\"content\"></div> <div id=\"month-and-day\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title-0\" class=\"content\"><slot name=\"title-0\"></slot></div> <div id=\"location-0\" class=\"content\"><slot name=\"location-0\"></slot></div> <div id=\"time-0\" class=\"content\"><slot name=\"time-0\"></slot></div> </div> <div id=\"divider\" class=\"content\"><slot name=\"divider\"></slot></div> <div class=\"section-third\"> <div id=\"title-1\" class=\"content\"><slot name=\"title-1\"></slot></div> <div id=\"location-1\" class=\"content\"><slot name=\"location-1\"></slot></div> <div id=\"time-1\" class=\"content\"><slot name=\"time-1\"></slot></div> </div>";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__(22) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items </div>";
+module.exports = "<style>" + __webpack_require__(24) + "</style> <a href=\"https://calendar.byu.edu\" class=\"full-link\" id=\"full-events-area\"> <div class=\"full-events\"> <div class=\"full-events-text\"> FULL<div class=\"larger\">EVENTS</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a> <a href=\"https://registrar.byu.edu/academic-calendar\" class=\"academic-link\" id=\"academic-area\"> <div class=\"academic-calendar-wrapper\"> <div class=\"academic-calendar-text\"> <div class=\"larger\">ACADEMIC</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a>";
 
 /***/ }),
 /* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__(25) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__ (7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__ (7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__ (8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<style>" + __webpack_require__(26) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items... </div>";
+
+/***/ }),
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
 /* unused harmony reexport render */
 /**
  * @license
@@ -3508,13 +3686,13 @@ class EventPart {
 //# sourceMappingURL=lit-extended.js.map
 
 /***/ }),
-/* 31 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeNodesFromTemplate;
 /* harmony export (immutable) */ __webpack_exports__["b"] = insertNodeIntoTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -3640,13 +3818,13 @@ function insertNodeIntoTemplate(template, node, refNode = null) {
 //# sourceMappingURL=modify-template.js.map
 
 /***/ }),
-/* 32 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(37);
 /* unused harmony reexport html */
 /* unused harmony reexport svg */
 /* unused harmony reexport TemplateResult */

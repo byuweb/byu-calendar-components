@@ -1,0 +1,92 @@
+@import 'byu-calendar-feature-links-common';
+
+:host {
+  @include byuFeatureLinks();
+
+  .full-events,
+  .academic-calendar-wrapper {
+    @include linksWrapper();
+  }
+
+  .full-link {
+    @include fullEventsLink();
+  }
+
+  .full-events-text,
+  .academic-calendar-text {
+    @include linksText();
+
+    .larger {
+      @include linksLargerText();
+    }
+  }
+
+  .events-button {
+    @include linksEventsButton();
+  }
+
+  .academic-link {
+    @include academicCalendarLink();
+  }
+
+  .full-link:hover .events-button {
+    @include fullEventsLinkHover();
+  }
+
+  .academic-link:hover .events-button {
+    @include academicCalendarLinkHover();
+  }
+
+}
+
+@media screen and (min-width: 769px) {
+  :host {
+    @include linksBigColumn();
+
+    .full-events {
+      @include bigFullEventsLink();
+    }
+
+    .full-events-text {
+      @include bigFullEventsText();
+    }
+
+    .academic-calendar-text {
+      @include bigAcademicCalendarText();
+    }
+
+    .academic-link:after {
+      @include skewMiddleBorder();
+    }
+
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1223px) {
+  :host {
+    @include linksMediumColumn();
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :host {
+    @include linksSmallColumn();
+
+    .full-link,
+    .academic-link {
+      @include smallLinks();
+    }
+
+    .full-events {
+      @include smallFullEvents();
+    }
+
+    .academic-calendar-text {
+      @include smallAcademicCalendar();
+    }
+
+    .events-button {
+      @include hidden();
+    }
+  }
+}

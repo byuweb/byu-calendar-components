@@ -53,19 +53,4 @@ a[slot="title"] {
 a[slot="title"]:hover {
   color: #0057B8; }
 
-.fullpage-date-wrapper {
-  color: #002e5d;
-  font-weight: bold;
-  font-size: 32px;
-  margin-bottom: 25px;
-  display: flex; }
-
-.fullpage-date-weekday {
-  text-transform: uppercase;
-  font-family: "HCo Ringside Narrow SSm", serif; }
-
-.fullpage-date-text {
-  padding-left: 10px;
-  font-family: "HCo Ringside Narrow SSm", serif; }
-
 /*# sourceMappingURL=byu-calendar.css.map */

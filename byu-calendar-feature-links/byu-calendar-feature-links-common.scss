@@ -1,0 +1,145 @@
+//Delete these variables when share-styles is merged, then use the proper @import statements.
+$teal: #5d7998;
+$navy: #002e5d;
+$white: #fff;
+$sentinel: Domine, "Sentinel A", "Sentinel B", serif;
+$vitesse: "Vitesse A", "Vitesse B", Arial, sans-serif;
+$ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+
+//Delete this function when shared-styles is merged, then use the proper @import statement.
+
+@mixin hidden() {
+  display: none;
+}
+
+//General styling for feature links
+
+@mixin byuFeatureLinks() {
+  width: 19%;
+  overflow: hidden;
+}
+
+@mixin linksWrapper() {
+  color: $white;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: $ringside;
+}
+
+@mixin fullEventsLink() {
+  height: 67%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: $teal;
+  text-decoration: none;
+}
+
+@mixin linksText() {
+  font-size: 12px;
+  text-align: center;
+  font-weight: 500;
+}
+
+@mixin linksLargerText() {
+  font-size: 16px;
+  margin: -3px 0;
+  font-weight: bold;
+}
+
+@mixin linksEventsButton() {
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  width: 80px;
+  padding: 5px;
+  border: 3px solid $white;
+}
+
+@mixin academicCalendarLink() {
+  height: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: $navy;
+  transform: skewY(0deg);
+  text-decoration: none;
+}
+
+@mixin fullEventsLinkHover() {
+  background-color: $navy;
+}
+
+@mixin academicCalendarLinkHover() {
+  background-color: $teal;
+}
+
+// Styling for large viewports
+
+@mixin linksBigColumn() {
+  height: 350px;
+}
+
+@mixin bigFullEventsLink() {
+  position: relative;
+  top: 50px;
+}
+
+@mixin bigFullEventsText() {
+  padding-bottom: 15px;
+}
+
+@mixin bigAcademicCalendarText() {
+  padding-bottom: 5px;
+}
+
+@mixin skewMiddleBorder() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  background: inherit;
+  z-index: -1;
+  width: 100%;
+  height: 60%;
+  transform-origin: top left;
+  transform: skewY(-13deg);
+  border-top: 5px solid $white;
+}
+
+//Styling for medium-sized viewports
+
+@mixin linksMediumColumn() {
+  width: 24%;
+}
+
+//Styling for small viewports
+
+@mixin linksSmallColumn() {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@mixin smallLinks() {
+  width: 200px;
+  margin: 10px 5px;
+  height: 65px;
+}
+
+@mixin smallFullEvents() {
+  height: 100%;
+  top: 0;
+}
+
+@mixin smallAcademicCalendar() {
+  padding-top: 5px;
+}
