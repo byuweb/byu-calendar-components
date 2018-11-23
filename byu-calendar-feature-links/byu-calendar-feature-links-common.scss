@@ -1,10 +1,10 @@
 //Delete these variables when share-styles is merged, then use the proper @import statements.
-$teal: #5d7998;
+$teal: #32538d;
 $navy: #002e5d;
 $white: #fff;
-$sentinel: Domine, "Sentinel A", "Sentinel B", serif;
-$vitesse: "Vitesse A", "Vitesse B", Arial, sans-serif;
-$ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+$sentinel: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
+$vitesse: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
+$ringside: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
 
 //Delete this function when shared-styles is merged, then use the proper @import statement.
 
@@ -41,7 +41,9 @@ $ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
 }
 
 @mixin linksText() {
-  font-size: 12px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  line-height: 22px;
   text-align: center;
   font-weight: 500;
 }
@@ -53,8 +55,8 @@ $ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
 }
 
 @mixin linksEventsButton() {
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 15px;
+  line-height: 15px;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;

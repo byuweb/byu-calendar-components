@@ -1,11 +1,11 @@
 // Delete variables and use @import statements when shared-styles is merged
-$teal: #5d7998;
+$teal: #32538d;
 $navy: #002e5d;
 $white: #fff;
 $gray: #666;
-$sentinel: Domine, "Sentinel A", "Sentinel B", serif;
-$vitesse: "Vitesse A", "Vitesse B", Arial, sans-serif;
-$ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
+$sentinel: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
+$vitesse: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
+$ringside: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
 
 // Replace this function with mixins from shared-styles when merged
 
@@ -34,13 +34,15 @@ $ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
   text-transform: uppercase;
   margin-top: 0;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 15px;
+  letter-spacing: 2px;
   margin-bottom: 5px;
 }
 
 @mixin featureMonthAndDay() {
   font-weight: bold;
   font-size: 16px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   text-align: center;
   padding-bottom: 10px;
@@ -58,7 +60,7 @@ $ringside: "Ringside Narrow A", "Ringside Narrow B", Arial, sans-serif;
 }
 
 @mixin featureTimeAndLocation() {
-  font-size: 14px;
+  font-size: 15px;
   color: $gray;
   font-family: $ringside;
 }
