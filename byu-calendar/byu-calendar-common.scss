@@ -30,12 +30,12 @@
 
 @mixin fullpageDateWeekday() {
   text-transform: uppercase;
-  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
+  font-family: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif
 }
 
 @mixin fullpageDateText() {
   padding-left: 10px;
-  font-family: Domine, "Sentinel A", "Sentinel B", "Vitesse A", "Vitesse B", serif;
+  font-family: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
 }
 
 @mixin overallFeatureWrapper() {

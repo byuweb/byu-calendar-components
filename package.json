@@ -1,6 +1,6 @@
 {
   "name": "byu-calendar",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "engines": {
     "node": ">=6.10.0"
@@ -16,9 +16,10 @@
   "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^2.18.12",
+    "@polymer/lit-element": "^0.5.2",
+    "browser-sync": "^2.26.0",
     "byu-web-component-build": "^0.2.3",
-    "gulp": "^3.9.1",
-    "@polymer/lit-element": "^0.5.2"
+    "byu-web-component-utils": "^0.4.2",
+    "gulp": "^3.9.1"
   }
 }
