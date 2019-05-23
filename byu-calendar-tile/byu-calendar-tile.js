@@ -1,5 +1,5 @@
 'use strict';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 const util = require('byu-web-component-utils');
 const verticalTemplate = require('./byu-calendar-vtile.html');
 const horizontalTemplate = require('./byu-calendar-htile.html');

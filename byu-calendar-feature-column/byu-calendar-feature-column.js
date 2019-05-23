@@ -1,5 +1,5 @@
 'use strict';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 const util = require('byu-web-component-utils');
 const featureTemplate = require('./byu-calendar-feature-column.html');
 

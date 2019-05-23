@@ -18,7 +18,7 @@
 
 import template from './byu-calendar.html';
 import * as util from 'byu-web-component-utils';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 // Why do we need this? This breaks the code
 // import { currentId } from 'async_hooks';
 

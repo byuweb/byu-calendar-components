@@ -11,11 +11,15 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /******/(function (modules) {
     // webpackBootstrap
@@ -96,7 +100,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     /******/__webpack_require__.p = "";
     /******/
     /******/ // Load entry module and return exports
-    /******/return __webpack_require__(__webpack_require__.s = 15);
+    /******/return __webpack_require__(__webpack_require__.s = 25);
     /******/
 })(
 /************************************************************************/
@@ -105,314 +109,260 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
-    /* unused harmony export renderAttributes */
-    /* unused harmony export classString */
-    /* unused harmony export styleString */
-    /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__ = __webpack_require__(17);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__ = __webpack_require__(19);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__ = __webpack_require__(38);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3_lit_html_lib_lit_extended_js__ = __webpack_require__(36);
-    /* unused harmony reexport html */
-    /* unused harmony reexport svg */
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * An expression marker with embedded unique key to avoid collision with
+     * possible text in templates.
+     */
+
+    var marker = '{{lit-' + String(Math.random()).slice(2) + '}}';
+    /* harmony export (immutable) */__webpack_exports__["a"] = marker;
 
     /**
-     * Renders attributes to the given element based on the `attrInfo` object where
-     * boolean values are added/removed as attributes.
-     * @param element Element on which to set attributes.
-     * @param attrInfo Object describing attributes.
+     * An expression marker used text-positions, multi-binding attributes, and
+     * attributes with markup-like text values.
      */
-    function renderAttributes(element, attrInfo) {
-        for (var a in attrInfo) {
-            var v = attrInfo[a] === true ? '' : attrInfo[a];
-            if (v || v === '' || v === 0) {
-                if (element.getAttribute(a) !== v) {
-                    element.setAttribute(a, String(v));
-                }
-            } else if (element.hasAttribute(a)) {
-                element.removeAttribute(a);
-            }
-        }
-    }
+    var nodeMarker = '<!--' + marker + '-->';
+    /* harmony export (immutable) */__webpack_exports__["f"] = nodeMarker;
+
+    var markerRegex = new RegExp(marker + '|' + nodeMarker);
+    /* unused harmony export markerRegex */
+
     /**
-     * Returns a string of css class names formed by taking the properties
-     * in the `classInfo` object and appending the property name to the string of
-     * class names if the property value is truthy.
-     * @param classInfo
+     * Suffix appended to all bound attribute names.
      */
-    function classString(classInfo) {
-        var o = [];
-        for (var name in classInfo) {
-            var v = classInfo[name];
-            if (v) {
-                o.push(name);
-            }
-        }
-        return o.join(' ');
-    }
+    var boundAttributeSuffix = '$lit$';
+    /* harmony export (immutable) */__webpack_exports__["g"] = boundAttributeSuffix;
+
     /**
-     * Returns a css style string formed by taking the properties in the `styleInfo`
-     * object and appending the property name (dash-cased) colon the
-     * property value. Properties are separated by a semi-colon.
-     * @param styleInfo
+     * An updateable Template that tracks the location of dynamic parts.
      */
-    function styleString(styleInfo) {
-        var o = [];
-        for (var name in styleInfo) {
-            var v = styleInfo[name];
-            if (v || v === 0) {
-                o.push(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__polymer_polymer_lib_utils_case_map_js__["a" /* camelToDashCase */])(name) + ': ' + v);
+
+    var Template = function Template(result, element) {
+        _classCallCheck(this, Template);
+
+        this.parts = [];
+        this.element = element;
+        var nodesToRemove = [];
+        var stack = [];
+        // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be null
+        var walker = document.createTreeWalker(element.content, 133 /* NodeFilter.SHOW_{ELEMENT|COMMENT|TEXT} */, null, false);
+        // Keeps track of the last index associated with a part. We try to delete
+        // unnecessary nodes, but we never want to associate two different parts
+        // to the same index. They must have a constant node between.
+        var lastPartIndex = 0;
+        var index = -1;
+        var partIndex = 0;
+        var strings = result.strings,
+            length = result.values.length;
+
+        while (partIndex < length) {
+            var node = walker.nextNode();
+            if (node === null) {
+                // We've exhausted the content inside a nested template element.
+                // Because we still have parts (the outer for-loop), we know:
+                // - There is a template in the stack
+                // - The walker will find a nextNode outside the template
+                walker.currentNode = stack.pop();
+                continue;
             }
-        }
-        return o.join('; ');
-    }
+            index++;
+            if (node.nodeType === 1 /* Node.ELEMENT_NODE */) {
+                    if (node.hasAttributes()) {
+                        var attributes = node.attributes;
+                        var _length = attributes.length;
+                        // Per
+                        // https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap,
+                        // attributes are not guaranteed to be returned in document order.
+                        // In particular, Edge/IE can return them out of order, so we cannot
+                        // assume a correspondence between part index and attribute index.
 
-    var LitElement = function (_webpack_require__$i) {
-        _inherits(LitElement, _webpack_require__$i);
-
-        function LitElement() {
-            _classCallCheck(this, LitElement);
-
-            var _this = _possibleConstructorReturn(this, (LitElement.__proto__ || Object.getPrototypeOf(LitElement)).apply(this, arguments));
-
-            _this.__renderComplete = null;
-            _this.__resolveRenderComplete = null;
-            _this.__isInvalid = false;
-            _this.__isChanging = false;
-            return _this;
-        }
-        /**
-         * Override which sets up element rendering by calling* `_createRoot`
-         * and `_firstRendered`.
-         */
-
-
-        _createClass(LitElement, [{
-            key: 'ready',
-            value: function ready() {
-                this._root = this._createRoot();
-                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), 'ready', this).call(this);
-                this._firstRendered();
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
-                if (window.ShadyCSS && this._root) {
-                    window.ShadyCSS.styleElement(this);
-                }
-                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), 'connectedCallback', this).call(this);
-            }
-            /**
-             * Called after the element DOM is rendered for the first time.
-             * Implement to perform tasks after first rendering like capturing a
-             * reference to a static node which must be directly manipulated.
-             * This should not be commonly needed. For tasks which should be performed
-             * before first render, use the element constructor.
-             */
-
-        }, {
-            key: '_firstRendered',
-            value: function _firstRendered() {}
-            /**
-             * Implement to customize where the element's template is rendered by
-             * returning an element into which to render. By default this creates
-             * a shadowRoot for the element. To render into the element's childNodes,
-             * return `this`.
-             * @returns {Element|DocumentFragment} Returns a node into which to render.
-             */
-
-        }, {
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-            /**
-             * Override which returns the value of `_shouldRender` which users
-             * should implement to control rendering. If this method returns false,
-             * _propertiesChanged will not be called and no rendering will occur even
-             * if property values change or `requestRender` is called.
-             * @param _props Current element properties
-             * @param _changedProps Changing element properties
-             * @param _prevProps Previous element properties
-             * @returns {boolean} Default implementation always returns true.
-             */
-
-        }, {
-            key: '_shouldPropertiesChange',
-            value: function _shouldPropertiesChange(_props, _changedProps, _prevProps) {
-                var shouldRender = this._shouldRender(_props, _changedProps, _prevProps);
-                if (!shouldRender && this.__resolveRenderComplete) {
-                    this.__resolveRenderComplete(false);
-                }
-                return shouldRender;
-            }
-            /**
-             * Implement to control if rendering should occur when property values
-             * change or `requestRender` is called. By default, this method always
-             * returns true, but this can be customized as an optimization to avoid
-             * rendering work when changes occur which should not be rendered.
-             * @param _props Current element properties
-             * @param _changedProps Changing element properties
-             * @param _prevProps Previous element properties
-             * @returns {boolean} Default implementation always returns true.
-             */
-
-        }, {
-            key: '_shouldRender',
-            value: function _shouldRender(_props, _changedProps, _prevProps) {
-                return true;
-            }
-            /**
-             * Override which performs element rendering by calling
-             * `_render`, `_applyRender`, and finally `_didRender`.
-             * @param props Current element properties
-             * @param changedProps Changing element properties
-             * @param prevProps Previous element properties
-             */
-
-        }, {
-            key: '_propertiesChanged',
-            value: function _propertiesChanged(props, changedProps, prevProps) {
-                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), '_propertiesChanged', this).call(this, props, changedProps, prevProps);
-                var result = this._render(props);
-                if (result && this._root !== undefined) {
-                    this._applyRender(result, this._root);
-                }
-                this._didRender(props, changedProps, prevProps);
-                if (this.__resolveRenderComplete) {
-                    this.__resolveRenderComplete(true);
-                }
-            }
-        }, {
-            key: '_flushProperties',
-            value: function _flushProperties() {
-                this.__isChanging = true;
-                this.__isInvalid = false;
-                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), '_flushProperties', this).call(this);
-                this.__isChanging = false;
-            }
-            /**
-             * Override which warns when a user attempts to change a property during
-             * the rendering lifecycle. This is an anti-pattern and should be avoided.
-             * @param property {string}
-             * @param value {any}
-             * @param old {any}
-             */
-            // tslint:disable-next-line no-any
-
-        }, {
-            key: '_shouldPropertyChange',
-            value: function _shouldPropertyChange(property, value, old) {
-                var change = _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), '_shouldPropertyChange', this).call(this, property, value, old);
-                if (change && this.__isChanging) {
-                    console.trace('Setting properties in response to other properties changing ' + ('considered harmful. Setting \'' + property + '\' from ') + ('\'' + this._getProperty(property) + '\' to \'' + value + '\'.'));
-                }
-                return change;
-            }
-            /**
-             * Implement to describe the DOM which should be rendered in the element.
-             * Ideally, the implementation is a pure function using only props to describe
-             * the element template. The implementation must return a `lit-html`
-             * TemplateResult. By default this template is rendered into the element's
-             * shadowRoot. This can be customized by implementing `_createRoot`. This
-             * method must be implemented.
-             * @param {*} _props Current element properties
-             * @returns {TemplateResult} Must return a lit-html TemplateResult.
-             */
-
-        }, {
-            key: '_render',
-            value: function _render(_props) {
-                throw new Error('_render() not implemented');
-            }
-            /**
-             * Renders the given lit-html template `result` into the given `node`.
-             * Implement to customize the way rendering is applied. This is should not
-             * typically be needed and is provided for advanced use cases.
-             * @param result {TemplateResult} `lit-html` template result to render
-             * @param node {Element|DocumentFragment} node into which to render
-             */
-
-        }, {
-            key: '_applyRender',
-            value: function _applyRender(result, node) {
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_lit_html_lib_shady_render_js__["a" /* render */])(result, node, this.localName);
-            }
-            /**
-             * Called after element DOM has been rendered. Implement to
-             * directly control rendered DOM. Typically this is not needed as `lit-html`
-             * can be used in the `_render` method to set properties, attributes, and
-             * event listeners. However, it is sometimes useful for calling methods on
-             * rendered elements, like calling `focus()` on an element to focus it.
-             * @param _props Current element properties
-             * @param _changedProps Changing element properties
-             * @param _prevProps Previous element properties
-             */
-
-        }, {
-            key: '_didRender',
-            value: function _didRender(_props, _changedProps, _prevProps) {}
-            /**
-             * Call to request the element to asynchronously re-render regardless
-             * of whether or not any property changes are pending.
-             */
-
-        }, {
-            key: 'requestRender',
-            value: function requestRender() {
-                this._invalidateProperties();
-            }
-            /**
-             * Override which provides tracking of invalidated state.
-             */
-
-        }, {
-            key: '_invalidateProperties',
-            value: function _invalidateProperties() {
-                this.__isInvalid = true;
-                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), '_invalidateProperties', this).call(this);
-            }
-            /**
-             * Returns a promise which resolves after the element next renders.
-             * The promise resolves to `true` if the element rendered and `false` if the
-             * element did not render.
-             * This is useful when users (e.g. tests) need to react to the rendered state
-             * of the element after a change is made.
-             * This can also be useful in event handlers if it is desireable to wait
-             * to send an event until after rendering. If possible implement the
-             * `_didRender` method to directly respond to rendering within the
-             * rendering lifecycle.
-             */
-
-        }, {
-            key: 'renderComplete',
-            get: function get() {
-                var _this2 = this;
-
-                if (!this.__renderComplete) {
-                    this.__renderComplete = new Promise(function (resolve) {
-                        _this2.__resolveRenderComplete = function (value) {
-                            _this2.__resolveRenderComplete = _this2.__renderComplete = null;
-                            resolve(value);
-                        };
-                    });
-                    if (!this.__isInvalid && this.__resolveRenderComplete) {
-                        Promise.resolve().then(function () {
-                            return _this2.__resolveRenderComplete(false);
-                        });
+                        var count = 0;
+                        for (var i = 0; i < _length; i++) {
+                            if (endsWith(attributes[i].name, boundAttributeSuffix)) {
+                                count++;
+                            }
+                        }
+                        while (count-- > 0) {
+                            // Get the template literal section leading up to the first
+                            // expression in this attribute
+                            var stringForPart = strings[partIndex];
+                            // Find the attribute name
+                            var name = lastAttributeNameRegex.exec(stringForPart)[2];
+                            // Find the corresponding attribute
+                            // All bound attributes have had a suffix added in
+                            // TemplateResult#getHTML to opt out of special attribute
+                            // handling. To look up the attribute value we also need to add
+                            // the suffix.
+                            var attributeLookupName = name.toLowerCase() + boundAttributeSuffix;
+                            var attributeValue = node.getAttribute(attributeLookupName);
+                            node.removeAttribute(attributeLookupName);
+                            var statics = attributeValue.split(markerRegex);
+                            this.parts.push({ type: 'attribute', index: index, name: name, strings: statics });
+                            partIndex += statics.length - 1;
+                        }
+                    }
+                    if (node.tagName === 'TEMPLATE') {
+                        stack.push(node);
+                        walker.currentNode = node.content;
+                    }
+                } else if (node.nodeType === 3 /* Node.TEXT_NODE */) {
+                    var data = node.data;
+                    if (data.indexOf(marker) >= 0) {
+                        var parent = node.parentNode;
+                        var _strings = data.split(markerRegex);
+                        var lastIndex = _strings.length - 1;
+                        // Generate a new text node for each literal section
+                        // These nodes are also used as the markers for node parts
+                        for (var _i = 0; _i < lastIndex; _i++) {
+                            var insert = void 0;
+                            var s = _strings[_i];
+                            if (s === '') {
+                                insert = createMarker();
+                            } else {
+                                var match = lastAttributeNameRegex.exec(s);
+                                if (match !== null && endsWith(match[2], boundAttributeSuffix)) {
+                                    s = s.slice(0, match.index) + match[1] + match[2].slice(0, -boundAttributeSuffix.length) + match[3];
+                                }
+                                insert = document.createTextNode(s);
+                            }
+                            parent.insertBefore(insert, node);
+                            this.parts.push({ type: 'node', index: ++index });
+                        }
+                        // If there's no text, we must insert a comment to mark our place.
+                        // Else, we can trust it will stick around after cloning.
+                        if (_strings[lastIndex] === '') {
+                            parent.insertBefore(createMarker(), node);
+                            nodesToRemove.push(node);
+                        } else {
+                            node.data = _strings[lastIndex];
+                        }
+                        // We have a part for each match found
+                        partIndex += lastIndex;
+                    }
+                } else if (node.nodeType === 8 /* Node.COMMENT_NODE */) {
+                    if (node.data === marker) {
+                        var _parent = node.parentNode;
+                        // Add a new marker node to be the startNode of the Part if any of
+                        // the following are true:
+                        //  * We don't have a previousSibling
+                        //  * The previousSibling is already the start of a previous part
+                        if (node.previousSibling === null || index === lastPartIndex) {
+                            index++;
+                            _parent.insertBefore(createMarker(), node);
+                        }
+                        lastPartIndex = index;
+                        this.parts.push({ type: 'node', index: index });
+                        // If we don't have a nextSibling, keep this node so we have an end.
+                        // Else, we can remove it to save future costs.
+                        if (node.nextSibling === null) {
+                            node.data = '';
+                        } else {
+                            nodesToRemove.push(node);
+                            index--;
+                        }
+                        partIndex++;
+                    } else {
+                        var _i2 = -1;
+                        while ((_i2 = node.data.indexOf(marker, _i2 + 1)) !== -1) {
+                            // Comment node has a binding marker inside, make an inactive part
+                            // The binding won't work, but subsequent bindings will
+                            // TODO (justinfagnani): consider whether it's even worth it to
+                            // make bindings in comments work
+                            this.parts.push({ type: 'node', index: -1 });
+                            partIndex++;
+                        }
                     }
                 }
-                return this.__renderComplete;
-            }
-        }]);
+        }
+        // Remove text binding nodes after the walk to not disturb the TreeWalker
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-        return LitElement;
-    }(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__polymer_polymer_lib_mixins_properties_mixin_js__["a" /* PropertiesMixin */])(HTMLElement));
+        try {
+            for (var _iterator = nodesToRemove[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var n = _step.value;
+
+                n.parentNode.removeChild(n);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+    };
     /* harmony export (immutable) */
 
-    __webpack_exports__["a"] = LitElement;
+    __webpack_exports__["b"] = Template;
 
-    //# sourceMappingURL=lit-element.js.map
+    var endsWith = function endsWith(str, suffix) {
+        var index = str.length - suffix.length;
+        return index >= 0 && str.slice(index) === suffix;
+    };
+    var isTemplatePartActive = function isTemplatePartActive(part) {
+        return part.index !== -1;
+    };
+    /* harmony export (immutable) */__webpack_exports__["c"] = isTemplatePartActive;
+
+    // Allows `document.createComment('')` to be renamed for a
+    // small manual size-savings.
+    var createMarker = function createMarker() {
+        return document.createComment('');
+    };
+    /* harmony export (immutable) */__webpack_exports__["d"] = createMarker;
+
+    /**
+     * This regex extracts the attribute name preceding an attribute-position
+     * expression. It does this by matching the syntax allowed for attributes
+     * against the string literal directly preceding the expression, assuming that
+     * the expression is in an attribute-value position.
+     *
+     * See attributes in the HTML spec:
+     * https://www.w3.org/TR/html5/syntax.html#elements-attributes
+     *
+     * " \x09\x0a\x0c\x0d" are HTML space characters:
+     * https://www.w3.org/TR/html5/infrastructure.html#space-characters
+     *
+     * "\0-\x1F\x7F-\x9F" are Unicode control characters, which includes every
+     * space character except " ".
+     *
+     * So an attribute is:
+     *  * The name: any character except a control character, space character, ('),
+     *    ("), ">", "=", or "/"
+     *  * Followed by zero or more space characters
+     *  * Followed by "="
+     *  * Followed by zero or more space characters
+     *  * Followed by:
+     *    * Any character except space, ('), ("), "<", ">", "=", (`), or
+     *    * (") then any non-("), or
+     *    * (') then any non-(')
+     */
+    var lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+    /* harmony export (immutable) */__webpack_exports__["e"] = lastAttributeNameRegex;
+
+    //# sourceMappingURL=template.js.map
 
     /***/
 },
@@ -422,10 +372,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(22);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(6);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(21);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(20);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lib_templating__ = __webpack_require__(28);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_matchesSelector__ = __webpack_require__(10);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_querySelectorSlot__ = __webpack_require__(27);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_createEvent__ = __webpack_require__(26);
     /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "applyTemplate", function () {
         return __WEBPACK_IMPORTED_MODULE_0__lib_templating__["a"];
     });
@@ -499,31 +449,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     /***/
 },
 /* 3 */
-/***/function (module, exports) {
-
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    window.JSCompiler_renameProperty = function (prop) {
-        return prop;
-    };
-
-    /***/
-},
-/* 4 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
-    /* unused harmony export defaultTemplateFactory */
-    /* unused harmony export render */
-    /* unused harmony export directiveValue */
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0_lit_html__ = __webpack_require__(9);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_lit_html_lib_shady_render_js__ = __webpack_require__(44);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_updating_element_js__ = __webpack_require__(14);
+    /* unused harmony namespace reexport */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_decorators_js__ = __webpack_require__(42);
+    /* unused harmony namespace reexport */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4_lit_html_lit_html_js__ = __webpack_require__(9);
+    /* unused harmony reexport html */
+    /* unused harmony reexport svg */
+    /* unused harmony reexport TemplateResult */
+    /* unused harmony reexport SVGTemplateResult */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__lib_css_tag_js__ = __webpack_require__(13);
+    /* unused harmony namespace reexport */
     /**
      * @license
      * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -537,38 +479,311 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      * subject to an additional IP rights grant found at
      * http://polymer.github.io/PATENTS.txt
      */
-    // The first argument to JS template tags retain identity across multiple
-    // calls to a tag for the same literal, so we can cache work done per literal
-    // in a Map.
 
-    var templateCaches = new Map();
-    /* harmony export (immutable) */__webpack_exports__["a"] = templateCaches;
-
+    // IMPORTANT: do not change the property name or the assignment expression.
+    // This line will be used in regexes to search for LitElement usage.
+    // TODO(justinfagnani): inject version number at build time
+    (window['litElementVersions'] || (window['litElementVersions'] = [])).push('2.0.1');
     /**
-     * Interprets a template literal as an HTML template that can efficiently
-     * render to and update a container.
+     * Minimal implementation of Array.prototype.flat
+     * @param arr the array to flatten
+     * @param result the accumlated result
      */
-    var html = function html(strings) {
-        for (var _len = arguments.length, values = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            values[_key - 1] = arguments[_key];
+    function arrayFlat(styles) {
+        var result = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+        for (var i = 0, _length2 = styles.length; i < _length2; i++) {
+            var value = styles[i];
+            if (Array.isArray(value)) {
+                arrayFlat(value, result);
+            } else {
+                result.push(value);
+            }
+        }
+        return result;
+    }
+    /** Deeply flattens styles array. Uses native flat if available. */
+    var flattenStyles = function flattenStyles(styles) {
+        return styles.flat ? styles.flat(Infinity) : arrayFlat(styles);
+    };
+
+    var LitElement = function (_WEBPACK_IMPORTED_MO) {
+        _inherits(LitElement, _WEBPACK_IMPORTED_MO);
+
+        function LitElement() {
+            _classCallCheck(this, LitElement);
+
+            return _possibleConstructorReturn(this, (LitElement.__proto__ || Object.getPrototypeOf(LitElement)).apply(this, arguments));
         }
 
-        return new TemplateResult(strings, values, 'html');
-    };
-    /* unused harmony export html */
+        _createClass(LitElement, [{
+            key: 'initialize',
+
+            /**
+             * Performs element initialization. By default this calls `createRenderRoot`
+             * to create the element `renderRoot` node and captures any pre-set values for
+             * registered properties.
+             */
+            value: function initialize() {
+                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), 'initialize', this).call(this);
+                this.renderRoot = this.createRenderRoot();
+                // Note, if renderRoot is not a shadowRoot, styles would/could apply to the
+                // element's getRootNode(). While this could be done, we're choosing not to
+                // support this now since it would require different logic around de-duping.
+                if (window.ShadowRoot && this.renderRoot instanceof window.ShadowRoot) {
+                    this.adoptStyles();
+                }
+            }
+            /**
+             * Returns the node into which the element should render and by default
+             * creates and returns an open shadowRoot. Implement to customize where the
+             * element's DOM is rendered. For example, to render into the element's
+             * childNodes, return `this`.
+             * @returns {Element|DocumentFragment} Returns a node into which to render.
+             */
+
+        }, {
+            key: 'createRenderRoot',
+            value: function createRenderRoot() {
+                return this.attachShadow({ mode: 'open' });
+            }
+            /**
+             * Applies styling to the element shadowRoot using the `static get styles`
+             * property. Styling will apply using `shadowRoot.adoptedStyleSheets` where
+             * available and will fallback otherwise. When Shadow DOM is polyfilled,
+             * ShadyCSS scopes styles and adds them to the document. When Shadow DOM
+             * is available but `adoptedStyleSheets` is not, styles are appended to the
+             * end of the `shadowRoot` to [mimic spec
+             * behavior](https://wicg.github.io/construct-stylesheets/#using-constructed-stylesheets).
+             */
+
+        }, {
+            key: 'adoptStyles',
+            value: function adoptStyles() {
+                var styles = this.constructor._styles;
+                if (styles.length === 0) {
+                    return;
+                }
+                // There are three separate cases here based on Shadow DOM support.
+                // (1) shadowRoot polyfilled: use ShadyCSS
+                // (2) shadowRoot.adoptedStyleSheets available: use it.
+                // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after
+                // rendering
+                if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
+                    window.ShadyCSS.ScopingShim.prepareAdoptedCssText(styles.map(function (s) {
+                        return s.cssText;
+                    }), this.localName);
+                } else if (__WEBPACK_IMPORTED_MODULE_5__lib_css_tag_js__["a" /* supportsAdoptingStyleSheets */]) {
+                    this.renderRoot.adoptedStyleSheets = styles.map(function (s) {
+                        return s.styleSheet;
+                    });
+                } else {
+                    // This must be done after rendering so the actual style insertion is done
+                    // in `update`.
+                    this._needsShimAdoptedStyleSheets = true;
+                }
+            }
+        }, {
+            key: 'connectedCallback',
+            value: function connectedCallback() {
+                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), 'connectedCallback', this).call(this);
+                // Note, first update/render handles styleElement so we only call this if
+                // connected after first update.
+                if (this.hasUpdated && window.ShadyCSS !== undefined) {
+                    window.ShadyCSS.styleElement(this);
+                }
+            }
+            /**
+             * Updates the element. This method reflects property values to attributes
+             * and calls `render` to render DOM via lit-html. Setting properties inside
+             * this method will *not* trigger another update.
+             * * @param _changedProperties Map of changed properties with old values
+             */
+
+        }, {
+            key: 'update',
+            value: function update(changedProperties) {
+                var _this2 = this;
+
+                _get(LitElement.prototype.__proto__ || Object.getPrototypeOf(LitElement.prototype), 'update', this).call(this, changedProperties);
+                var templateResult = this.render();
+                if (templateResult instanceof __WEBPACK_IMPORTED_MODULE_0_lit_html__["a" /* TemplateResult */]) {
+                    this.constructor.render(templateResult, this.renderRoot, { scopeName: this.localName, eventContext: this });
+                }
+                // When native Shadow DOM is used but adoptedStyles are not supported,
+                // insert styling after rendering to ensure adoptedStyles have highest
+                // priority.
+                if (this._needsShimAdoptedStyleSheets) {
+                    this._needsShimAdoptedStyleSheets = false;
+                    this.constructor._styles.forEach(function (s) {
+                        var style = document.createElement('style');
+                        style.textContent = s.cssText;
+                        _this2.renderRoot.appendChild(style);
+                    });
+                }
+            }
+            /**
+             * Invoked on each update to perform rendering tasks. This method must return
+             * a lit-html TemplateResult. Setting properties inside this method will *not*
+             * trigger the element to update.
+             */
+
+        }, {
+            key: 'render',
+            value: function render() {}
+        }], [{
+            key: 'finalize',
+
+            /** @nocollapse */
+            value: function finalize() {
+                _get(LitElement.__proto__ || Object.getPrototypeOf(LitElement), 'finalize', this).call(this);
+                // Prepare styling that is stamped at first render time. Styling
+                // is built from user provided `styles` or is inherited from the superclass.
+                this._styles = this.hasOwnProperty(JSCompiler_renameProperty('styles', this)) ? this._getUniqueStyles() : this._styles || [];
+            }
+            /** @nocollapse */
+
+        }, {
+            key: '_getUniqueStyles',
+            value: function _getUniqueStyles() {
+                // Take care not to call `this.styles` multiple times since this generates
+                // new CSSResults each time.
+                // TODO(sorvell): Since we do not cache CSSResults by input, any
+                // shared styles will generate new stylesheet objects, which is wasteful.
+                // This should be addressed when a browser ships constructable
+                // stylesheets.
+                var userStyles = this.styles;
+                var styles = [];
+                if (Array.isArray(userStyles)) {
+                    var flatStyles = flattenStyles(userStyles);
+                    // As a performance optimization to avoid duplicated styling that can
+                    // occur especially when composing via subclassing, de-duplicate styles
+                    // preserving the last item in the list. The last item is kept to
+                    // try to preserve cascade order with the assumption that it's most
+                    // important that last added styles override previous styles.
+                    var styleSet = flatStyles.reduceRight(function (set, s) {
+                        set.add(s);
+                        // on IE set.add does not return the set.
+                        return set;
+                    }, new Set());
+                    // Array.from does not work on Set in IE
+                    styleSet.forEach(function (v) {
+                        return styles.unshift(v);
+                    });
+                } else if (userStyles) {
+                    styles.push(userStyles);
+                }
+                return styles;
+            }
+        }]);
+
+        return LitElement;
+    }(__WEBPACK_IMPORTED_MODULE_2__lib_updating_element_js__["a" /* UpdatingElement */]);
+    /* harmony export (immutable) */
+
+    __webpack_exports__["a"] = LitElement;
 
     /**
-     * Interprets a template literal as an SVG template that can efficiently
-     * render to and update a container.
+     * Ensure this class is marked as `finalized` as an optimization ensuring
+     * it will not needlessly try to `finalize`.
      */
-    var svg = function svg(strings) {
-        for (var _len2 = arguments.length, values = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-            values[_key2 - 1] = arguments[_key2];
-        }
+    LitElement.finalized = true;
+    /**
+     * Render method used to render the lit-html TemplateResult to the element's
+     * DOM.
+     * @param {TemplateResult} Template to render.
+     * @param {Element|DocumentFragment} Node into which to render.
+     * @param {String} Element name.
+     * @nocollapse
+     */
+    LitElement.render = __WEBPACK_IMPORTED_MODULE_1_lit_html_lib_shady_render_js__["a" /* render */];
+    //# sourceMappingURL=lit-element.js.map
 
-        return new SVGTemplateResult(strings, values, 'svg');
+    /***/
+},
+/* 4 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * True if the custom elements polyfill is in use.
+     */
+
+    var isCEPolyfill = window.customElements !== undefined && window.customElements.polyfillWrapFlushCallback !== undefined;
+    /* harmony export (immutable) */__webpack_exports__["b"] = isCEPolyfill;
+
+    /**
+     * Reparents nodes, starting from `start` (inclusive) to `end` (exclusive),
+     * into another container (could be the same container), before `before`. If
+     * `before` is null, it appends the nodes to the container.
+     */
+    var reparentNodes = function reparentNodes(container, start) {
+        var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+        var before = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+        while (start !== end) {
+            var n = start.nextSibling;
+            container.insertBefore(start, before);
+            start = n;
+        }
     };
-    /* unused harmony export svg */
+    /* harmony export (immutable) */__webpack_exports__["c"] = reparentNodes;
+
+    /**
+     * Removes nodes, starting from `start` (inclusive) to `end` (exclusive), from
+     * `container`.
+     */
+    var removeNodes = function removeNodes(container, start) {
+        var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+        while (start !== end) {
+            var n = start.nextSibling;
+            container.removeChild(start);
+            start = n;
+        }
+    };
+    /* harmony export (immutable) */__webpack_exports__["a"] = removeNodes;
+
+    //# sourceMappingURL=dom.js.map
+
+    /***/
+},
+/* 5 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__dom_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__template_js__ = __webpack_require__(0);
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * @module lit-html
+     */
 
     /**
      * The return type of `html`, which holds a Template and the values from
@@ -576,18 +791,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      */
 
     var TemplateResult = function () {
-        function TemplateResult(strings, values, type) {
-            var partCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultPartCallback;
-
+        function TemplateResult(strings, values, type, processor) {
             _classCallCheck(this, TemplateResult);
 
             this.strings = strings;
             this.values = values;
             this.type = type;
-            this.partCallback = partCallback;
+            this.processor = processor;
         }
         /**
-         * Returns a string of HTML used to create a <template> element.
+         * Returns a string of HTML used to create a `<template>` element.
          */
 
 
@@ -596,16 +809,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function getHTML() {
                 var l = this.strings.length - 1;
                 var html = '';
-                var isTextBinding = true;
+                var isCommentBinding = false;
                 for (var i = 0; i < l; i++) {
                     var s = this.strings[i];
-                    html += s;
-                    // We're in a text position if the previous string closed its tags.
-                    // If it doesn't have any tags, then we use the previous text position
-                    // state.
-                    var closing = findTagClose(s);
-                    isTextBinding = closing > -1 ? closing < s.length : isTextBinding;
-                    html += isTextBinding ? nodeMarker : marker;
+                    // For each binding we want to determine the kind of marker to insert
+                    // into the template source before it's parsed by the browser's HTML
+                    // parser. The marker type is based on whether the expression is in an
+                    // attribute, text, or comment poisition.
+                    //   * For node-position bindings we insert a comment with the marker
+                    //     sentinel as its text content, like <!--{{lit-guid}}-->.
+                    //   * For attribute bindings we insert just the marker sentinel for the
+                    //     first binding, so that we support unquoted attribute bindings.
+                    //     Subsequent bindings can use a comment marker because multi-binding
+                    //     attributes must be quoted.
+                    //   * For comment bindings we insert just the marker sentinel so we don't
+                    //     close the comment.
+                    //
+                    // The following code scans the template source, but is *not* an HTML
+                    // parser. We don't need to track the tree structure of the HTML, only
+                    // whether a binding is inside a comment, and if not, if it appears to be
+                    // the first binding in an attribute.
+                    var commentOpen = s.lastIndexOf('<!--');
+                    // We're in comment position if we have a comment open with no following
+                    // comment close. Because <-- can appear in an attribute value there can
+                    // be false positives.
+                    isCommentBinding = (commentOpen > -1 || isCommentBinding) && s.indexOf('-->', commentOpen + 1) === -1;
+                    // Check to see if we have an attribute-like sequence preceeding the
+                    // expression. This can match "name=value" like structures in text,
+                    // comments, and attribute values, so there can be false-positives.
+                    var attributeMatch = __WEBPACK_IMPORTED_MODULE_1__template_js__["e" /* lastAttributeNameRegex */].exec(s);
+                    if (attributeMatch === null) {
+                        // We're only in this branch if we don't have a attribute-like
+                        // preceeding sequence. For comments, this guards against unusual
+                        // attribute values like <div foo="<!--${'bar'}">. Cases like
+                        // <!-- foo=${'bar'}--> are handled correctly in the attribute branch
+                        // below.
+                        html += s + (isCommentBinding ? __WEBPACK_IMPORTED_MODULE_1__template_js__["a" /* marker */] : __WEBPACK_IMPORTED_MODULE_1__template_js__["f" /* nodeMarker */]);
+                    } else {
+                        // For attributes we use just a marker sentinel, and also append a
+                        // $lit$ suffix to the name to opt-out of attribute-specific parsing
+                        // that IE and Edge do for style and certain SVG attributes.
+                        html += s.substr(0, attributeMatch.index) + attributeMatch[1] + attributeMatch[2] + __WEBPACK_IMPORTED_MODULE_1__template_js__["g" /* boundAttributeSuffix */] + attributeMatch[3] + __WEBPACK_IMPORTED_MODULE_1__template_js__["a" /* marker */];
+                    }
                 }
                 html += this.strings[l];
                 return html;
@@ -623,13 +868,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }();
     /* harmony export (immutable) */
 
-    __webpack_exports__["f"] = TemplateResult;
+    __webpack_exports__["a"] = TemplateResult;
 
     /**
      * A TemplateResult for SVG fragments.
      *
-     * This class wraps HTMl in an <svg> tag in order to parse its contents in the
-     * SVG namespace, then modifies the template to remove the <svg> tag so that
+     * This class wraps HTML in an `<svg>` tag in order to parse its contents in the
+     * SVG namespace, then modifies the template to remove the `<svg>` tag so that
      * clones only container the original fragment.
      */
 
@@ -654,7 +899,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var content = template.content;
                 var svgElement = content.firstChild;
                 content.removeChild(svgElement);
-                reparentNodes(content, svgElement.firstChild);
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__dom_js__["c" /* reparentNodes */])(content, svgElement.firstChild);
                 return template;
             }
         }]);
@@ -663,511 +908,359 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(TemplateResult);
     /* harmony export (immutable) */
 
-    __webpack_exports__["g"] = SVGTemplateResult;
+    __webpack_exports__["b"] = SVGTemplateResult;
 
-    /**
-     * The default TemplateFactory which caches Templates keyed on
-     * result.type and result.strings.
-     */
-    function defaultTemplateFactory(result) {
-        var templateCache = templateCaches.get(result.type);
-        if (templateCache === undefined) {
-            templateCache = new Map();
-            templateCaches.set(result.type, templateCache);
-        }
-        var template = templateCache.get(result.strings);
-        if (template === undefined) {
-            template = new Template(result, result.getTemplateElement());
-            templateCache.set(result.strings, template);
-        }
-        return template;
-    }
-    /**
-     * Renders a template to a container.
-     *
-     * To update a container with new values, reevaluate the template literal and
-     * call `render` with the new result.
-     *
-     * @param result a TemplateResult created by evaluating a template tag like
-     *     `html` or `svg`.
-     * @param container A DOM parent to render to. The entire contents are either
-     *     replaced, or efficiently updated if the same result type was previous
-     *     rendered there.
-     * @param templateFactory a function to create a Template or retreive one from
-     *     cache.
-     */
-    function render(result, container) {
-        var templateFactory = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultTemplateFactory;
+    //# sourceMappingURL=template-result.js.map
 
-        var template = templateFactory(result);
-        var instance = container.__templateInstance;
-        // Repeat render, just call update()
-        if (instance !== undefined && instance.template === template && instance._partCallback === result.partCallback) {
-            instance.update(result.values);
-            return;
-        }
-        // First render, create a new TemplateInstance and append it
-        instance = new TemplateInstance(template, result.partCallback, templateFactory);
-        container.__templateInstance = instance;
-        var fragment = instance._clone();
-        instance.update(result.values);
-        removeNodes(container, container.firstChild);
-        container.appendChild(fragment);
-    }
+    /***/
+},
+/* 6 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__directive_js__ = __webpack_require__(16);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__dom_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__part_js__ = __webpack_require__(17);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__template_instance_js__ = __webpack_require__(8);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__template_result_js__ = __webpack_require__(5);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__template_js__ = __webpack_require__(0);
     /**
-     * An expression marker with embedded unique key to avoid collision with
-     * possible text in templates.
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
      */
-    var marker = '{{lit-' + String(Math.random()).slice(2) + '}}';
     /**
-     * An expression marker used text-positions, not attribute positions,
-     * in template.
-     */
-    var nodeMarker = '<!--' + marker + '-->';
-    var markerRegex = new RegExp(marker + '|' + nodeMarker);
-    /**
-     * This regex extracts the attribute name preceding an attribute-position
-     * expression. It does this by matching the syntax allowed for attributes
-     * against the string literal directly preceding the expression, assuming that
-     * the expression is in an attribute-value position.
-     *
-     * See attributes in the HTML spec:
-     * https://www.w3.org/TR/html5/syntax.html#attributes-0
-     *
-     * "\0-\x1F\x7F-\x9F" are Unicode control characters
-     *
-     * " \x09\x0a\x0c\x0d" are HTML space characters:
-     * https://www.w3.org/TR/html5/infrastructure.html#space-character
-     *
-     * So an attribute is:
-     *  * The name: any character except a control character, space character, ('),
-     *    ("), ">", "=", or "/"
-     *  * Followed by zero or more space characters
-     *  * Followed by "="
-     *  * Followed by zero or more space characters
-     *  * Followed by:
-     *    * Any character except space, ('), ("), "<", ">", "=", (`), or
-     *    * (") then any non-("), or
-     *    * (') then any non-(')
-     */
-    var lastAttributeNameRegex = /[ \x09\x0a\x0c\x0d]([^\0-\x1F\x7F-\x9F \x09\x0a\x0c\x0d"'>=/]+)[ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*)$/;
-    /**
-     * Finds the closing index of the last closed HTML tag.
-     * This has 3 possible return values:
-     *   - `-1`, meaning there is no tag in str.
-     *   - `string.length`, meaning the last opened tag is unclosed.
-     *   - Some positive number < str.length, meaning the index of the closing '>'.
-     */
-    function findTagClose(str) {
-        var close = str.lastIndexOf('>');
-        var open = str.indexOf('<', close + 1);
-        return open > -1 ? str.length : close;
-    }
-    /**
-     * A placeholder for a dynamic expression in an HTML template.
-     *
-     * There are two built-in part types: AttributePart and NodePart. NodeParts
-     * always represent a single dynamic expression, while AttributeParts may
-     * represent as many expressions are contained in the attribute.
-     *
-     * A Template's parts are mutable, so parts can be replaced or modified
-     * (possibly to implement different template semantics). The contract is that
-     * parts can only be replaced, not removed, added or reordered, and parts must
-     * always consume the correct number of values in their `update()` method.
-     *
-     * TODO(justinfagnani): That requirement is a little fragile. A
-     * TemplateInstance could instead be more careful about which values it gives
-     * to Part.update().
+     * @module lit-html
      */
 
-    var TemplatePart = function TemplatePart(type, index, name, rawName, strings) {
-        _classCallCheck(this, TemplatePart);
-
-        this.type = type;
-        this.index = index;
-        this.name = name;
-        this.rawName = rawName;
-        this.strings = strings;
-    };
-    /* unused harmony export TemplatePart */
-
-    var isTemplatePartActive = function isTemplatePartActive(part) {
-        return part.index !== -1;
-    };
-    /* harmony export (immutable) */__webpack_exports__["e"] = isTemplatePartActive;
-
-    /**
-     * An updateable Template that tracks the location of dynamic parts.
-     */
-
-    var Template = function Template(result, element) {
-        _classCallCheck(this, Template);
-
-        this.parts = [];
-        this.element = element;
-        var content = this.element.content;
-        // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be null
-        var walker = document.createTreeWalker(content, 133 /* NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT |
-                                                            NodeFilter.SHOW_TEXT */, null, false);
-        var index = -1;
-        var partIndex = 0;
-        var nodesToRemove = [];
-        // The actual previous node, accounting for removals: if a node is removed
-        // it will never be the previousNode.
-        var previousNode = void 0;
-        // Used to set previousNode at the top of the loop.
-        var currentNode = void 0;
-        while (walker.nextNode()) {
-            index++;
-            previousNode = currentNode;
-            var node = currentNode = walker.currentNode;
-            if (node.nodeType === 1 /* Node.ELEMENT_NODE */) {
-                    if (!node.hasAttributes()) {
-                        continue;
-                    }
-                    var attributes = node.attributes;
-                    // Per https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap,
-                    // attributes are not guaranteed to be returned in document order. In
-                    // particular, Edge/IE can return them out of order, so we cannot assume
-                    // a correspondance between part index and attribute index.
-                    var count = 0;
-                    for (var i = 0; i < attributes.length; i++) {
-                        if (attributes[i].value.indexOf(marker) >= 0) {
-                            count++;
-                        }
-                    }
-                    while (count-- > 0) {
-                        // Get the template literal section leading up to the first
-                        // expression in this attribute
-                        var stringForPart = result.strings[partIndex];
-                        // Find the attribute name
-                        var attributeNameInPart = lastAttributeNameRegex.exec(stringForPart)[1];
-                        // Find the corresponding attribute
-                        // TODO(justinfagnani): remove non-null assertion
-                        var attribute = attributes.getNamedItem(attributeNameInPart);
-                        var stringsForAttributeValue = attribute.value.split(markerRegex);
-                        this.parts.push(new TemplatePart('attribute', index, attribute.name, attributeNameInPart, stringsForAttributeValue));
-                        node.removeAttribute(attribute.name);
-                        partIndex += stringsForAttributeValue.length - 1;
-                    }
-                } else if (node.nodeType === 3 /* Node.TEXT_NODE */) {
-                    var nodeValue = node.nodeValue;
-                    if (nodeValue.indexOf(marker) < 0) {
-                        continue;
-                    }
-                    var parent = node.parentNode;
-                    var strings = nodeValue.split(markerRegex);
-                    var lastIndex = strings.length - 1;
-                    // We have a part for each match found
-                    partIndex += lastIndex;
-                    // Generate a new text node for each literal section
-                    // These nodes are also used as the markers for node parts
-                    for (var _i = 0; _i < lastIndex; _i++) {
-                        parent.insertBefore(strings[_i] === '' ? document.createComment('') : document.createTextNode(strings[_i]), node);
-                        this.parts.push(new TemplatePart('node', index++));
-                    }
-                    parent.insertBefore(strings[lastIndex] === '' ? document.createComment('') : document.createTextNode(strings[lastIndex]), node);
-                    nodesToRemove.push(node);
-                } else if (node.nodeType === 8 /* Node.COMMENT_NODE */ && node.nodeValue === marker) {
-                var _parent = node.parentNode;
-                // Add a new marker node to be the startNode of the Part if any of the
-                // following are true:
-                //  * We don't have a previousSibling
-                //  * previousSibling is being removed (thus it's not the
-                //    `previousNode`)
-                //  * previousSibling is not a Text node
-                //
-                // TODO(justinfagnani): We should be able to use the previousNode here
-                // as the marker node and reduce the number of extra nodes we add to a
-                // template. See https://github.com/PolymerLabs/lit-html/issues/147
-                var previousSibling = node.previousSibling;
-                if (previousSibling === null || previousSibling !== previousNode || previousSibling.nodeType !== Node.TEXT_NODE) {
-                    _parent.insertBefore(document.createComment(''), node);
-                } else {
-                    index--;
-                }
-                this.parts.push(new TemplatePart('node', index++));
-                nodesToRemove.push(node);
-                // If we don't have a nextSibling add a marker node.
-                // We don't have to check if the next node is going to be removed,
-                // because that node will induce a new marker if so.
-                if (node.nextSibling === null) {
-                    _parent.insertBefore(document.createComment(''), node);
-                } else {
-                    index--;
-                }
-                currentNode = previousNode;
-                partIndex++;
-            }
-        }
-        // Remove text binding nodes after the walk to not disturb the TreeWalker
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = nodesToRemove[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var n = _step.value;
-
-                n.parentNode.removeChild(n);
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
-    };
-    /* harmony export (immutable) */
-
-    __webpack_exports__["b"] = Template;
-
-    /**
-     * Returns a value ready to be inserted into a Part from a user-provided value.
-     *
-     * If the user value is a directive, this invokes the directive with the given
-     * part. If the value is null, it's converted to undefined to work better
-     * with certain DOM APIs, like textContent.
-     */
-    var getValue = function getValue(part, value) {
-        // `null` as the value of a Text node will render the string 'null'
-        // so we convert it to undefined
-        if (isDirective(value)) {
-            value = value(part);
-            return noChange;
-        }
-        return value === null ? undefined : value;
-    };
-    /* harmony export (immutable) */__webpack_exports__["j"] = getValue;
-
-    var directive = function directive(f) {
-        f.__litDirective = true;
-        return f;
-    };
-    /* unused harmony export directive */
-
-    var isDirective = function isDirective(o) {
-        return typeof o === 'function' && o.__litDirective === true;
-    };
-    /**
-     * A sentinel value that signals that a value was handled by a directive and
-     * should not be written to the DOM.
-     */
-    var noChange = {};
-    /* harmony export (immutable) */__webpack_exports__["k"] = noChange;
-
-    /**
-     * @deprecated Use `noChange` instead.
-     */
-
-    var isPrimitiveValue = function isPrimitiveValue(value) {
+    var isPrimitive = function isPrimitive(value) {
         return value === null || !((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' || typeof value === 'function');
     };
+    /* unused harmony export isPrimitive */
 
-    var AttributePart = function () {
-        function AttributePart(instance, element, name, strings) {
-            _classCallCheck(this, AttributePart);
+    var isIterable = function isIterable(value) {
+        return Array.isArray(value) ||
+        // tslint:disable-next-line:no-any
+        !!(value && value[Symbol.iterator]);
+    };
+    /* unused harmony export isIterable */
 
-            this.instance = instance;
+    /**
+     * Writes attribute values to the DOM for a group of AttributeParts bound to a
+     * single attibute. The value is only set once even if there are multiple parts
+     * for an attribute.
+     */
+
+    var AttributeCommitter = function () {
+        function AttributeCommitter(element, name, strings) {
+            _classCallCheck(this, AttributeCommitter);
+
+            this.dirty = true;
             this.element = element;
             this.name = name;
             this.strings = strings;
-            this.size = strings.length - 1;
-            this._previousValues = [];
+            this.parts = [];
+            for (var i = 0; i < strings.length - 1; i++) {
+                this.parts[i] = this._createPart();
+            }
         }
+        /**
+         * Creates a single part. Override this to create a differnt type of part.
+         */
 
-        _createClass(AttributePart, [{
-            key: '_interpolate',
-            value: function _interpolate(values, startIndex) {
+
+        _createClass(AttributeCommitter, [{
+            key: '_createPart',
+            value: function _createPart() {
+                return new AttributePart(this);
+            }
+        }, {
+            key: '_getValue',
+            value: function _getValue() {
                 var strings = this.strings;
                 var l = strings.length - 1;
                 var text = '';
                 for (var i = 0; i < l; i++) {
                     text += strings[i];
-                    var v = getValue(this, values[startIndex + i]);
-                    if (v && v !== noChange && (Array.isArray(v) || typeof v !== 'string' && v[Symbol.iterator])) {
-                        var _iteratorNormalCompletion2 = true;
-                        var _didIteratorError2 = false;
-                        var _iteratorError2 = undefined;
+                    var part = this.parts[i];
+                    if (part !== undefined) {
+                        var v = part.value;
+                        if (isPrimitive(v) || !isIterable(v)) {
+                            text += typeof v === 'string' ? v : String(v);
+                        } else {
+                            var _iteratorNormalCompletion2 = true;
+                            var _didIteratorError2 = false;
+                            var _iteratorError2 = undefined;
 
-                        try {
-                            for (var _iterator2 = v[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                                var t = _step2.value;
-
-                                // TODO: we need to recursively call getValue into iterables...
-                                text += t;
-                            }
-                        } catch (err) {
-                            _didIteratorError2 = true;
-                            _iteratorError2 = err;
-                        } finally {
                             try {
-                                if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                    _iterator2.return();
+                                for (var _iterator2 = v[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                                    var t = _step2.value;
+
+                                    text += typeof t === 'string' ? t : String(t);
                                 }
+                            } catch (err) {
+                                _didIteratorError2 = true;
+                                _iteratorError2 = err;
                             } finally {
-                                if (_didIteratorError2) {
-                                    throw _iteratorError2;
+                                try {
+                                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                        _iterator2.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError2) {
+                                        throw _iteratorError2;
+                                    }
                                 }
                             }
                         }
-                    } else {
-                        text += v;
                     }
                 }
-                return text + strings[l];
+                text += strings[l];
+                return text;
             }
         }, {
-            key: '_equalToPreviousValues',
-            value: function _equalToPreviousValues(values, startIndex) {
-                for (var i = startIndex; i < startIndex + this.size; i++) {
-                    if (this._previousValues[i] !== values[i] || !isPrimitiveValue(values[i])) {
-                        return false;
-                    }
+            key: 'commit',
+            value: function commit() {
+                if (this.dirty) {
+                    this.dirty = false;
+                    this.element.setAttribute(this.name, this._getValue());
                 }
-                return true;
             }
-        }, {
+        }]);
+
+        return AttributeCommitter;
+    }();
+    /* harmony export (immutable) */
+
+    __webpack_exports__["e"] = AttributeCommitter;
+
+    /**
+     * A Part that controls all or part of an attribute value.
+     */
+
+    var AttributePart = function () {
+        function AttributePart(committer) {
+            _classCallCheck(this, AttributePart);
+
+            this.value = undefined;
+            this.committer = committer;
+        }
+
+        _createClass(AttributePart, [{
             key: 'setValue',
-            value: function setValue(values, startIndex) {
-                if (this._equalToPreviousValues(values, startIndex)) {
+            value: function setValue(value) {
+                if (value !== __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */] && (!isPrimitive(value) || value !== this.value)) {
+                    this.value = value;
+                    // If the value is a not a directive, dirty the committer so that it'll
+                    // call setAttribute. If the value is a directive, it'll dirty the
+                    // committer if it calls setValue().
+                    if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__directive_js__["a" /* isDirective */])(value)) {
+                        this.committer.dirty = true;
+                    }
+                }
+            }
+        }, {
+            key: 'commit',
+            value: function commit() {
+                while (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__directive_js__["a" /* isDirective */])(this.value)) {
+                    var directive = this.value;
+                    this.value = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+                    directive(this);
+                }
+                if (this.value === __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */]) {
                     return;
                 }
-                var s = this.strings;
-                var value = void 0;
-                if (s.length === 2 && s[0] === '' && s[1] === '') {
-                    // An expression that occupies the whole attribute value will leave
-                    // leading and trailing empty strings.
-                    value = getValue(this, values[startIndex]);
-                    if (Array.isArray(value)) {
-                        value = value.join('');
-                    }
-                } else {
-                    value = this._interpolate(values, startIndex);
-                }
-                if (value !== noChange) {
-                    this.element.setAttribute(this.name, value);
-                }
-                this._previousValues = values;
+                this.committer.commit();
             }
         }]);
 
         return AttributePart;
     }();
-    /* harmony export (immutable) */
+    /* unused harmony export AttributePart */
 
-    __webpack_exports__["h"] = AttributePart;
+    /**
+     * A Part that controls a location within a Node tree. Like a Range, NodePart
+     * has start and end locations and can set and update the Nodes between those
+     * locations.
+     *
+     * NodeParts support several value types: primitives, Nodes, TemplateResults,
+     * as well as arrays and iterables of those types.
+     */
+
 
     var NodePart = function () {
-        function NodePart(instance, startNode, endNode) {
+        function NodePart(options) {
             _classCallCheck(this, NodePart);
 
-            this.instance = instance;
-            this.startNode = startNode;
-            this.endNode = endNode;
-            this._previousValue = undefined;
+            this.value = undefined;
+            this.__pendingValue = undefined;
+            this.options = options;
         }
+        /**
+         * Appends this part into a container.
+         *
+         * This part must be empty, as its contents are not automatically moved.
+         */
+
 
         _createClass(NodePart, [{
+            key: 'appendInto',
+            value: function appendInto(container) {
+                this.startNode = container.appendChild(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__template_js__["d" /* createMarker */])());
+                this.endNode = container.appendChild(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__template_js__["d" /* createMarker */])());
+            }
+            /**
+             * Inserts this part after the `ref` node (between `ref` and `ref`'s next
+             * sibling). Both `ref` and its next sibling must be static, unchanging nodes
+             * such as those that appear in a literal section of a template.
+             *
+             * This part must be empty, as its contents are not automatically moved.
+             */
+
+        }, {
+            key: 'insertAfterNode',
+            value: function insertAfterNode(ref) {
+                this.startNode = ref;
+                this.endNode = ref.nextSibling;
+            }
+            /**
+             * Appends this part into a parent part.
+             *
+             * This part must be empty, as its contents are not automatically moved.
+             */
+
+        }, {
+            key: 'appendIntoPart',
+            value: function appendIntoPart(part) {
+                part.__insert(this.startNode = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__template_js__["d" /* createMarker */])());
+                part.__insert(this.endNode = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__template_js__["d" /* createMarker */])());
+            }
+            /**
+             * Inserts this part after the `ref` part.
+             *
+             * This part must be empty, as its contents are not automatically moved.
+             */
+
+        }, {
+            key: 'insertAfterPart',
+            value: function insertAfterPart(ref) {
+                ref.__insert(this.startNode = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__template_js__["d" /* createMarker */])());
+                this.endNode = ref.endNode;
+                ref.endNode = this.startNode;
+            }
+        }, {
             key: 'setValue',
             value: function setValue(value) {
-                value = getValue(this, value);
-                if (value === noChange) {
+                this.__pendingValue = value;
+            }
+        }, {
+            key: 'commit',
+            value: function commit() {
+                while (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__directive_js__["a" /* isDirective */])(this.__pendingValue)) {
+                    var directive = this.__pendingValue;
+                    this.__pendingValue = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+                    directive(this);
+                }
+                var value = this.__pendingValue;
+                if (value === __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */]) {
                     return;
                 }
-                if (isPrimitiveValue(value)) {
-                    // Handle primitive values
-                    // If the value didn't change, do nothing
-                    if (value === this._previousValue) {
-                        return;
+                if (isPrimitive(value)) {
+                    if (value !== this.value) {
+                        this.__commitText(value);
                     }
-                    this._setText(value);
-                } else if (value instanceof TemplateResult) {
-                    this._setTemplateResult(value);
-                } else if (Array.isArray(value) || value[Symbol.iterator]) {
-                    this._setIterable(value);
+                } else if (value instanceof __WEBPACK_IMPORTED_MODULE_4__template_result_js__["a" /* TemplateResult */]) {
+                    this.__commitTemplateResult(value);
                 } else if (value instanceof Node) {
-                    this._setNode(value);
-                } else if (value.then !== undefined) {
-                    this._setPromise(value);
+                    this.__commitNode(value);
+                } else if (isIterable(value)) {
+                    this.__commitIterable(value);
+                } else if (value === __WEBPACK_IMPORTED_MODULE_2__part_js__["b" /* nothing */]) {
+                    this.value = __WEBPACK_IMPORTED_MODULE_2__part_js__["b" /* nothing */];
+                    this.clear();
                 } else {
                     // Fallback, will render the string representation
-                    this._setText(value);
+                    this.__commitText(value);
                 }
             }
         }, {
-            key: '_insert',
-            value: function _insert(node) {
+            key: '__insert',
+            value: function __insert(node) {
                 this.endNode.parentNode.insertBefore(node, this.endNode);
             }
         }, {
-            key: '_setNode',
-            value: function _setNode(value) {
-                if (this._previousValue === value) {
+            key: '__commitNode',
+            value: function __commitNode(value) {
+                if (this.value === value) {
                     return;
                 }
                 this.clear();
-                this._insert(value);
-                this._previousValue = value;
+                this.__insert(value);
+                this.value = value;
             }
         }, {
-            key: '_setText',
-            value: function _setText(value) {
+            key: '__commitText',
+            value: function __commitText(value) {
                 var node = this.startNode.nextSibling;
-                value = value === undefined ? '' : value;
-                if (node === this.endNode.previousSibling && node.nodeType === Node.TEXT_NODE) {
-                    // If we only have a single text node between the markers, we can just
-                    // set its value, rather than replacing it.
-                    // TODO(justinfagnani): Can we just check if _previousValue is
-                    // primitive?
-                    node.textContent = value;
-                } else {
-                    this._setNode(document.createTextNode(value));
+                value = value == null ? '' : value;
+                if (node === this.endNode.previousSibling && node.nodeType === 3 /* Node.TEXT_NODE */) {
+                        // If we only have a single text node between the markers, we can just
+                        // set its value, rather than replacing it.
+                        // TODO(justinfagnani): Can we just check if this.value is primitive?
+                        node.data = value;
+                    } else {
+                    this.__commitNode(document.createTextNode(typeof value === 'string' ? value : String(value)));
                 }
-                this._previousValue = value;
+                this.value = value;
             }
         }, {
-            key: '_setTemplateResult',
-            value: function _setTemplateResult(value) {
-                var template = this.instance._getTemplate(value);
-                var instance = void 0;
-                if (this._previousValue && this._previousValue.template === template) {
-                    instance = this._previousValue;
+            key: '__commitTemplateResult',
+            value: function __commitTemplateResult(value) {
+                var template = this.options.templateFactory(value);
+                if (this.value instanceof __WEBPACK_IMPORTED_MODULE_3__template_instance_js__["a" /* TemplateInstance */] && this.value.template === template) {
+                    this.value.update(value.values);
                 } else {
-                    instance = new TemplateInstance(template, this.instance._partCallback, this.instance._getTemplate);
-                    this._setNode(instance._clone());
-                    this._previousValue = instance;
+                    // Make sure we propagate the template processor from the TemplateResult
+                    // so that we use its syntax extension, etc. The template factory comes
+                    // from the render function options so that it can control template
+                    // caching and preprocessing.
+                    var instance = new __WEBPACK_IMPORTED_MODULE_3__template_instance_js__["a" /* TemplateInstance */](template, value.processor, this.options);
+                    var fragment = instance._clone();
+                    instance.update(value.values);
+                    this.__commitNode(fragment);
+                    this.value = instance;
                 }
-                instance.update(value.values);
             }
         }, {
-            key: '_setIterable',
-            value: function _setIterable(value) {
+            key: '__commitIterable',
+            value: function __commitIterable(value) {
                 // For an Iterable, we create a new InstancePart per item, then set its
                 // value to the item. This is a little bit of overhead for every item in
                 // an Iterable, but it lets us recurse easily and efficiently update Arrays
                 // of TemplateResults that will be commonly returned from expressions like:
                 // array.map((i) => html`${i}`), by reusing existing TemplateInstances.
-                // If _previousValue is an array, then the previous render was of an
-                // iterable and _previousValue will contain the NodeParts from the previous
-                // render. If _previousValue is not an array, clear this part and make a new
+                // If _value is an array, then the previous render was of an
+                // iterable and _value will contain the NodeParts from the previous
+                // render. If _value is not an array, clear this part and make a new
                 // array for NodeParts.
-                if (!Array.isArray(this._previousValue)) {
+                if (!Array.isArray(this.value)) {
+                    this.value = [];
                     this.clear();
-                    this._previousValue = [];
                 }
                 // Lets us keep track of how many items we stamped so we can clear leftover
                 // items from a previous render
-                var itemParts = this._previousValue;
+                var itemParts = this.value;
                 var partIndex = 0;
+                var itemPart = void 0;
                 var _iteratorNormalCompletion3 = true;
                 var _didIteratorError3 = false;
                 var _iteratorError3 = undefined;
@@ -1177,23 +1270,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         var item = _step3.value;
 
                         // Try to reuse an existing part
-                        var itemPart = itemParts[partIndex];
+                        itemPart = itemParts[partIndex];
                         // If no existing part, create a new one
                         if (itemPart === undefined) {
-                            // If we're creating the first item part, it's startNode should be the
-                            // container's startNode
-                            var itemStart = this.startNode;
-                            // If we're not creating the first part, create a new separator marker
-                            // node, and fix up the previous part's endNode to point to it
-                            if (partIndex > 0) {
-                                var previousPart = itemParts[partIndex - 1];
-                                itemStart = previousPart.endNode = document.createTextNode('');
-                                this._insert(itemStart);
-                            }
-                            itemPart = new NodePart(this.instance, itemStart, this.endNode);
+                            itemPart = new NodePart(this.options);
                             itemParts.push(itemPart);
+                            if (partIndex === 0) {
+                                itemPart.appendIntoPart(this);
+                            } else {
+                                itemPart.insertAfterPart(itemParts[partIndex - 1]);
+                            }
                         }
                         itemPart.setValue(item);
+                        itemPart.commit();
                         partIndex++;
                     }
                 } catch (err) {
@@ -1211,51 +1300,325 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }
 
-                if (partIndex === 0) {
-                    this.clear();
-                    this._previousValue = undefined;
-                } else if (partIndex < itemParts.length) {
-                    var lastPart = itemParts[partIndex - 1];
-                    // Truncate the parts array so _previousValue reflects the current state
+                if (partIndex < itemParts.length) {
+                    // Truncate the parts array so _value reflects the current state
                     itemParts.length = partIndex;
-                    this.clear(lastPart.endNode.previousSibling);
-                    lastPart.endNode = this.endNode;
+                    this.clear(itemPart && itemPart.endNode);
                 }
-            }
-        }, {
-            key: '_setPromise',
-            value: function _setPromise(value) {
-                var _this4 = this;
-
-                this._previousValue = value;
-                value.then(function (v) {
-                    if (_this4._previousValue === value) {
-                        _this4.setValue(v);
-                    }
-                });
             }
         }, {
             key: 'clear',
             value: function clear() {
                 var startNode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.startNode;
 
-                removeNodes(this.startNode.parentNode, startNode.nextSibling, this.endNode);
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__dom_js__["a" /* removeNodes */])(this.startNode.parentNode, startNode.nextSibling, this.endNode);
             }
         }]);
 
         return NodePart;
     }();
-    /* unused harmony export NodePart */
+    /* harmony export (immutable) */
 
-    var defaultPartCallback = function defaultPartCallback(instance, templatePart, node) {
-        if (templatePart.type === 'attribute') {
-            return new AttributePart(instance, node, templatePart.name, templatePart.strings);
-        } else if (templatePart.type === 'node') {
-            return new NodePart(instance, node, node.nextSibling);
+    __webpack_exports__["a"] = NodePart;
+
+    /**
+     * Implements a boolean attribute, roughly as defined in the HTML
+     * specification.
+     *
+     * If the value is truthy, then the attribute is present with a value of
+     * ''. If the value is falsey, the attribute is removed.
+     */
+
+    var BooleanAttributePart = function () {
+        function BooleanAttributePart(element, name, strings) {
+            _classCallCheck(this, BooleanAttributePart);
+
+            this.value = undefined;
+            this.__pendingValue = undefined;
+            if (strings.length !== 2 || strings[0] !== '' || strings[1] !== '') {
+                throw new Error('Boolean attributes can only contain a single expression');
+            }
+            this.element = element;
+            this.name = name;
+            this.strings = strings;
         }
-        throw new Error('Unknown part type ' + templatePart.type);
+
+        _createClass(BooleanAttributePart, [{
+            key: 'setValue',
+            value: function setValue(value) {
+                this.__pendingValue = value;
+            }
+        }, {
+            key: 'commit',
+            value: function commit() {
+                while (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__directive_js__["a" /* isDirective */])(this.__pendingValue)) {
+                    var directive = this.__pendingValue;
+                    this.__pendingValue = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+                    directive(this);
+                }
+                if (this.__pendingValue === __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */]) {
+                    return;
+                }
+                var value = !!this.__pendingValue;
+                if (this.value !== value) {
+                    if (value) {
+                        this.element.setAttribute(this.name, '');
+                    } else {
+                        this.element.removeAttribute(this.name);
+                    }
+                    this.value = value;
+                }
+                this.__pendingValue = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+            }
+        }]);
+
+        return BooleanAttributePart;
+    }();
+    /* harmony export (immutable) */
+
+    __webpack_exports__["d"] = BooleanAttributePart;
+
+    /**
+     * Sets attribute values for PropertyParts, so that the value is only set once
+     * even if there are multiple parts for a property.
+     *
+     * If an expression controls the whole property value, then the value is simply
+     * assigned to the property under control. If there are string literals or
+     * multiple expressions, then the strings are expressions are interpolated into
+     * a string first.
+     */
+
+    var PropertyCommitter = function (_AttributeCommitter) {
+        _inherits(PropertyCommitter, _AttributeCommitter);
+
+        function PropertyCommitter(element, name, strings) {
+            _classCallCheck(this, PropertyCommitter);
+
+            var _this4 = _possibleConstructorReturn(this, (PropertyCommitter.__proto__ || Object.getPrototypeOf(PropertyCommitter)).call(this, element, name, strings));
+
+            _this4.single = strings.length === 2 && strings[0] === '' && strings[1] === '';
+            return _this4;
+        }
+
+        _createClass(PropertyCommitter, [{
+            key: '_createPart',
+            value: function _createPart() {
+                return new PropertyPart(this);
+            }
+        }, {
+            key: '_getValue',
+            value: function _getValue() {
+                if (this.single) {
+                    return this.parts[0].value;
+                }
+                return _get(PropertyCommitter.prototype.__proto__ || Object.getPrototypeOf(PropertyCommitter.prototype), '_getValue', this).call(this);
+            }
+        }, {
+            key: 'commit',
+            value: function commit() {
+                if (this.dirty) {
+                    this.dirty = false;
+                    // tslint:disable-next-line:no-any
+                    this.element[this.name] = this._getValue();
+                }
+            }
+        }]);
+
+        return PropertyCommitter;
+    }(AttributeCommitter);
+    /* harmony export (immutable) */
+
+    __webpack_exports__["b"] = PropertyCommitter;
+
+    var PropertyPart = function (_AttributePart) {
+        _inherits(PropertyPart, _AttributePart);
+
+        function PropertyPart() {
+            _classCallCheck(this, PropertyPart);
+
+            return _possibleConstructorReturn(this, (PropertyPart.__proto__ || Object.getPrototypeOf(PropertyPart)).apply(this, arguments));
+        }
+
+        return PropertyPart;
+    }(AttributePart);
+    /* unused harmony export PropertyPart */
+
+    // Detect event listener options support. If the `capture` property is read
+    // from the options object, then options are supported. If not, then the thrid
+    // argument to add/removeEventListener is interpreted as the boolean capture
+    // value so we should only pass the `capture` property.
+
+
+    var eventOptionsSupported = false;
+    try {
+        var options = {
+            get capture() {
+                eventOptionsSupported = true;
+                return false;
+            }
+        };
+        // tslint:disable-next-line:no-any
+        window.addEventListener('test', options, options);
+        // tslint:disable-next-line:no-any
+        window.removeEventListener('test', options, options);
+    } catch (_e) {}
+
+    var EventPart = function () {
+        function EventPart(element, eventName, eventContext) {
+            var _this6 = this;
+
+            _classCallCheck(this, EventPart);
+
+            this.value = undefined;
+            this.__pendingValue = undefined;
+            this.element = element;
+            this.eventName = eventName;
+            this.eventContext = eventContext;
+            this.__boundHandleEvent = function (e) {
+                return _this6.handleEvent(e);
+            };
+        }
+
+        _createClass(EventPart, [{
+            key: 'setValue',
+            value: function setValue(value) {
+                this.__pendingValue = value;
+            }
+        }, {
+            key: 'commit',
+            value: function commit() {
+                while (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__directive_js__["a" /* isDirective */])(this.__pendingValue)) {
+                    var directive = this.__pendingValue;
+                    this.__pendingValue = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+                    directive(this);
+                }
+                if (this.__pendingValue === __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */]) {
+                    return;
+                }
+                var newListener = this.__pendingValue;
+                var oldListener = this.value;
+                var shouldRemoveListener = newListener == null || oldListener != null && (newListener.capture !== oldListener.capture || newListener.once !== oldListener.once || newListener.passive !== oldListener.passive);
+                var shouldAddListener = newListener != null && (oldListener == null || shouldRemoveListener);
+                if (shouldRemoveListener) {
+                    this.element.removeEventListener(this.eventName, this.__boundHandleEvent, this.__options);
+                }
+                if (shouldAddListener) {
+                    this.__options = getOptions(newListener);
+                    this.element.addEventListener(this.eventName, this.__boundHandleEvent, this.__options);
+                }
+                this.value = newListener;
+                this.__pendingValue = __WEBPACK_IMPORTED_MODULE_2__part_js__["a" /* noChange */];
+            }
+        }, {
+            key: 'handleEvent',
+            value: function handleEvent(event) {
+                if (typeof this.value === 'function') {
+                    this.value.call(this.eventContext || this.element, event);
+                } else {
+                    this.value.handleEvent(event);
+                }
+            }
+        }]);
+
+        return EventPart;
+    }();
+    /* harmony export (immutable) */
+
+    __webpack_exports__["c"] = EventPart;
+
+    // We copy options because of the inconsistent behavior of browsers when reading
+    // the third argument of add/removeEventListener. IE11 doesn't support options
+    // at all. Chrome 41 only reads `capture` if the argument is an object.
+    var getOptions = function getOptions(o) {
+        return o && (eventOptionsSupported ? { capture: o.capture, passive: o.passive, once: o.once } : o.capture);
     };
-    /* harmony export (immutable) */__webpack_exports__["i"] = defaultPartCallback;
+    //# sourceMappingURL=parts.js.map
+
+    /***/
+},
+/* 7 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony export (immutable) */
+    __webpack_exports__["b"] = templateFactory;
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__template_js__ = __webpack_require__(0);
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+
+    /**
+     * The default TemplateFactory which caches Templates keyed on
+     * result.type and result.strings.
+     */
+    function templateFactory(result) {
+        var templateCache = templateCaches.get(result.type);
+        if (templateCache === undefined) {
+            templateCache = {
+                stringsArray: new WeakMap(),
+                keyString: new Map()
+            };
+            templateCaches.set(result.type, templateCache);
+        }
+        var template = templateCache.stringsArray.get(result.strings);
+        if (template !== undefined) {
+            return template;
+        }
+        // If the TemplateStringsArray is new, generate a key from the strings
+        // This key is shared between all templates with identical content
+        var key = result.strings.join(__WEBPACK_IMPORTED_MODULE_0__template_js__["a" /* marker */]);
+        // Check if we already have a Template for this key
+        template = templateCache.keyString.get(key);
+        if (template === undefined) {
+            // If we have not seen this key before, create a new Template
+            template = new __WEBPACK_IMPORTED_MODULE_0__template_js__["b" /* Template */](result, result.getTemplateElement());
+            // Cache the Template for this key
+            templateCache.keyString.set(key, template);
+        }
+        // Cache all future queries for this TemplateStringsArray
+        templateCache.stringsArray.set(result.strings, template);
+        return template;
+    }
+    var templateCaches = new Map();
+    /* harmony export (immutable) */__webpack_exports__["a"] = templateCaches;
+
+    //# sourceMappingURL=template-factory.js.map
+
+    /***/
+},
+/* 8 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__dom_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__template_js__ = __webpack_require__(0);
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * @module lit-html
+     */
 
     /**
      * An instance of a `Template` that can be attached to the DOM and updated
@@ -1263,36 +1626,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      */
 
     var TemplateInstance = function () {
-        function TemplateInstance(template, partCallback, getTemplate) {
+        function TemplateInstance(template, processor, options) {
             _classCallCheck(this, TemplateInstance);
 
-            this._parts = [];
+            this.__parts = [];
             this.template = template;
-            this._partCallback = partCallback;
-            this._getTemplate = getTemplate;
+            this.processor = processor;
+            this.options = options;
         }
 
         _createClass(TemplateInstance, [{
             key: 'update',
             value: function update(values) {
-                var valueIndex = 0;
+                var i = 0;
                 var _iteratorNormalCompletion4 = true;
                 var _didIteratorError4 = false;
                 var _iteratorError4 = undefined;
 
                 try {
-                    for (var _iterator4 = this._parts[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    for (var _iterator4 = this.__parts[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                         var part = _step4.value;
 
-                        if (!part) {
-                            valueIndex++;
-                        } else if (part.size === undefined) {
-                            part.setValue(values[valueIndex]);
-                            valueIndex++;
-                        } else {
-                            part.setValue(values, valueIndex);
-                            valueIndex += part.size;
+                        if (part !== undefined) {
+                            part.setValue(values[i]);
                         }
+                        i++;
                     }
                 } catch (err) {
                     _didIteratorError4 = true;
@@ -1308,33 +1666,124 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }
                     }
                 }
+
+                var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
+
+                try {
+                    for (var _iterator5 = this.__parts[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                        var _part = _step5.value;
+
+                        if (_part !== undefined) {
+                            _part.commit();
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                            _iterator5.return();
+                        }
+                    } finally {
+                        if (_didIteratorError5) {
+                            throw _iteratorError5;
+                        }
+                    }
+                }
             }
         }, {
             key: '_clone',
             value: function _clone() {
-                // Clone the node, rather than importing it, to keep the fragment in the
-                // template's document. This leaves the fragment inert so custom elements
-                // won't upgrade until after the main document adopts the node.
-                var fragment = this.template.element.content.cloneNode(true);
+                // There are a number of steps in the lifecycle of a template instance's
+                // DOM fragment:
+                //  1. Clone - create the instance fragment
+                //  2. Adopt - adopt into the main document
+                //  3. Process - find part markers and create parts
+                //  4. Upgrade - upgrade custom elements
+                //  5. Update - set node, attribute, property, etc., values
+                //  6. Connect - connect to the document. Optional and outside of this
+                //     method.
+                //
+                // We have a few constraints on the ordering of these steps:
+                //  * We need to upgrade before updating, so that property values will pass
+                //    through any property setters.
+                //  * We would like to process before upgrading so that we're sure that the
+                //    cloned fragment is inert and not disturbed by self-modifying DOM.
+                //  * We want custom elements to upgrade even in disconnected fragments.
+                //
+                // Given these constraints, with full custom elements support we would
+                // prefer the order: Clone, Process, Adopt, Upgrade, Update, Connect
+                //
+                // But Safari dooes not implement CustomElementRegistry#upgrade, so we
+                // can not implement that order and still have upgrade-before-update and
+                // upgrade disconnected fragments. So we instead sacrifice the
+                // process-before-upgrade constraint, since in Custom Elements v1 elements
+                // must not modify their light DOM in the constructor. We still have issues
+                // when co-existing with CEv0 elements like Polymer 1, and with polyfills
+                // that don't strictly adhere to the no-modification rule because shadow
+                // DOM, which may be created in the constructor, is emulated by being placed
+                // in the light DOM.
+                //
+                // The resulting order is on native is: Clone, Adopt, Upgrade, Process,
+                // Update, Connect. document.importNode() performs Clone, Adopt, and Upgrade
+                // in one step.
+                //
+                // The Custom Elements v1 polyfill supports upgrade(), so the order when
+                // polyfilled is the more ideal: Clone, Process, Adopt, Upgrade, Update,
+                // Connect.
+                var fragment = __WEBPACK_IMPORTED_MODULE_0__dom_js__["b" /* isCEPolyfill */] ? this.template.element.content.cloneNode(true) : document.importNode(this.template.element.content, true);
+                var stack = [];
                 var parts = this.template.parts;
-                if (parts.length > 0) {
-                    // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be
-                    // null
-                    var _walker = document.createTreeWalker(fragment, 133 /* NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT |
-                                                                          NodeFilter.SHOW_TEXT */, null, false);
-                    var _index = -1;
-                    for (var i = 0; i < parts.length; i++) {
-                        var part = parts[i];
-                        var partActive = isTemplatePartActive(part);
-                        // An inactive part has no coresponding Template node.
-                        if (partActive) {
-                            while (_index < part.index) {
-                                _index++;
-                                _walker.nextNode();
-                            }
-                        }
-                        this._parts.push(partActive ? this._partCallback(this, part, _walker.currentNode) : undefined);
+                // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be null
+                var walker = document.createTreeWalker(fragment, 133 /* NodeFilter.SHOW_{ELEMENT|COMMENT|TEXT} */, null, false);
+                var partIndex = 0;
+                var nodeIndex = 0;
+                var part = void 0;
+                var node = walker.nextNode();
+                // Loop through all the nodes and parts of a template
+                while (partIndex < parts.length) {
+                    part = parts[partIndex];
+                    if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__template_js__["c" /* isTemplatePartActive */])(part)) {
+                        this.__parts.push(undefined);
+                        partIndex++;
+                        continue;
                     }
+                    // Progress the tree walker until we find our next part's node.
+                    // Note that multiple parts may share the same node (attribute parts
+                    // on a single element), so this loop may not run at all.
+                    while (nodeIndex < part.index) {
+                        nodeIndex++;
+                        if (node.nodeName === 'TEMPLATE') {
+                            stack.push(node);
+                            walker.currentNode = node.content;
+                        }
+                        if ((node = walker.nextNode()) === null) {
+                            // We've exhausted the content inside a nested template element.
+                            // Because we still have parts (the outer for-loop), we know:
+                            // - There is a template in the stack
+                            // - The walker will find a nextNode outside the template
+                            walker.currentNode = stack.pop();
+                            node = walker.nextNode();
+                        }
+                    }
+                    // We've arrived at our part's node.
+                    if (part.type === 'node') {
+                        var _part2 = this.processor.handleTextExpression(this.options);
+                        _part2.insertAfterNode(node.previousSibling);
+                        this.__parts.push(_part2);
+                    } else {
+                        var _parts;
+
+                        (_parts = this.__parts).push.apply(_parts, _toConsumableArray(this.processor.handleAttributeExpressions(node, part.name, part.strings, this.options)));
+                    }
+                    partIndex++;
+                }
+                if (__WEBPACK_IMPORTED_MODULE_0__dom_js__["b" /* isCEPolyfill */]) {
+                    document.adoptNode(fragment);
+                    customElements.upgrade(fragment);
                 }
                 return fragment;
             }
@@ -1344,126 +1793,125 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }();
     /* harmony export (immutable) */
 
-    __webpack_exports__["c"] = TemplateInstance;
+    __webpack_exports__["a"] = TemplateInstance;
+
+    //# sourceMappingURL=template-instance.js.map
+
+    /***/
+},
+/* 9 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__lib_default_template_processor_js__ = __webpack_require__(15);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__lib_template_result_js__ = __webpack_require__(5);
+    /* unused harmony reexport DefaultTemplateProcessor */
+    /* unused harmony reexport defaultTemplateProcessor */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__lib_directive_js__ = __webpack_require__(16);
+    /* unused harmony reexport directive */
+    /* unused harmony reexport isDirective */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__lib_dom_js__ = __webpack_require__(4);
+    /* unused harmony reexport removeNodes */
+    /* unused harmony reexport reparentNodes */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__lib_part_js__ = __webpack_require__(17);
+    /* unused harmony reexport noChange */
+    /* unused harmony reexport nothing */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__lib_parts_js__ = __webpack_require__(6);
+    /* unused harmony reexport AttributeCommitter */
+    /* unused harmony reexport AttributePart */
+    /* unused harmony reexport BooleanAttributePart */
+    /* unused harmony reexport EventPart */
+    /* unused harmony reexport isIterable */
+    /* unused harmony reexport isPrimitive */
+    /* unused harmony reexport NodePart */
+    /* unused harmony reexport PropertyCommitter */
+    /* unused harmony reexport PropertyPart */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_6__lib_render_js__ = __webpack_require__(18);
+    /* unused harmony reexport parts */
+    /* unused harmony reexport render */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_7__lib_template_factory_js__ = __webpack_require__(7);
+    /* unused harmony reexport templateCaches */
+    /* unused harmony reexport templateFactory */
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_8__lib_template_instance_js__ = __webpack_require__(8);
+    /* unused harmony reexport TemplateInstance */
+    /* unused harmony reexport SVGTemplateResult */
+    /* harmony reexport (binding) */__webpack_require__.d(__webpack_exports__, "a", function () {
+        return __WEBPACK_IMPORTED_MODULE_1__lib_template_result_js__["a"];
+    });
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_9__lib_template_js__ = __webpack_require__(0);
+    /* unused harmony reexport createMarker */
+    /* unused harmony reexport isTemplatePartActive */
+    /* unused harmony reexport Template */
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     *
+     * Main lit-html module.
+     *
+     * Main exports:
+     *
+     * -  [[html]]
+     * -  [[svg]]
+     * -  [[render]]
+     *
+     * @module lit-html
+     * @preferred
+     */
+    /**
+     * Do not remove this comment; it keeps typedoc from misplacing the module
+     * docs.
+     */
+
+    // TODO(justinfagnani): remove line when we get NodePart moving methods
+
+
+    // IMPORTANT: do not change the property name or the assignment expression.
+    // This line will be used in regexes to search for lit-html usage.
+    // TODO(justinfagnani): inject version number at build time
+    (window['litHtmlVersions'] || (window['litHtmlVersions'] = [])).push('1.0.0');
+    /**
+     * Interprets a template literal as an HTML template that can efficiently
+     * render to and update a container.
+     */
+    var html = function html(strings) {
+        for (var _len = arguments.length, values = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            values[_key - 1] = arguments[_key];
+        }
+
+        return new __WEBPACK_IMPORTED_MODULE_1__lib_template_result_js__["a" /* TemplateResult */](strings, values, 'html', __WEBPACK_IMPORTED_MODULE_0__lib_default_template_processor_js__["a" /* defaultTemplateProcessor */]);
+    };
+    /* unused harmony export html */
 
     /**
-     * Reparents nodes, starting from `startNode` (inclusive) to `endNode`
-     * (exclusive), into another container (could be the same container), before
-     * `beforeNode`. If `beforeNode` is null, it appends the nodes to the
-     * container.
+     * Interprets a template literal as an SVG template that can efficiently
+     * render to and update a container.
      */
-    var reparentNodes = function reparentNodes(container, start) {
-        var end = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-        var before = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-
-        var node = start;
-        while (node !== end) {
-            var n = node.nextSibling;
-            container.insertBefore(node, before);
-            node = n;
+    var svg = function svg(strings) {
+        for (var _len2 = arguments.length, values = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            values[_key2 - 1] = arguments[_key2];
         }
-    };
-    /* unused harmony export reparentNodes */
 
-    /**
-     * Removes nodes, starting from `startNode` (inclusive) to `endNode`
-     * (exclusive), from `container`.
-     */
-    var removeNodes = function removeNodes(container, startNode) {
-        var endNode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-        var node = startNode;
-        while (node !== endNode) {
-            var n = node.nextSibling;
-            container.removeChild(node);
-            node = n;
-        }
+        return new __WEBPACK_IMPORTED_MODULE_1__lib_template_result_js__["b" /* SVGTemplateResult */](strings, values, 'svg', __WEBPACK_IMPORTED_MODULE_0__lib_default_template_processor_js__["a" /* defaultTemplateProcessor */]);
     };
-    /* harmony export (immutable) */__webpack_exports__["d"] = removeNodes;
+    /* unused harmony export svg */
 
     //# sourceMappingURL=lit-html.js.map
 
     /***/
 },
-/* 5 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
-    /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    // unique global id for deduping mixins.
-    var dedupeId = 0;
-
-    /**
-     * @constructor
-     * @extends {Function}
-     * @private
-     */
-    function MixinFunction() {}
-    /** @type {(WeakMap | undefined)} */
-    MixinFunction.prototype.__mixinApplications;
-    /** @type {(Object | undefined)} */
-    MixinFunction.prototype.__mixinSet;
-
-    /* eslint-disable valid-jsdoc */
-    /**
-     * Wraps an ES6 class expression mixin such that the mixin is only applied
-     * if it has not already been applied its base argument. Also memoizes mixin
-     * applications.
-     *
-     * @template T
-     * @param {T} mixin ES6 class expression mixin to wrap
-     * @return {T}
-     * @suppress {invalidCasts}
-     */
-    var dedupingMixin = function dedupingMixin(mixin) {
-        var mixinApplications = /** @type {!MixinFunction} */mixin.__mixinApplications;
-        if (!mixinApplications) {
-            mixinApplications = new WeakMap();
-            /** @type {!MixinFunction} */mixin.__mixinApplications = mixinApplications;
-        }
-        // maintain a unique id for each mixin
-        var mixinDedupeId = dedupeId++;
-        function dedupingMixin(base) {
-            var baseSet = /** @type {!MixinFunction} */base.__mixinSet;
-            if (baseSet && baseSet[mixinDedupeId]) {
-                return base;
-            }
-            var map = mixinApplications;
-            var extended = map.get(base);
-            if (!extended) {
-                extended = /** @type {!Function} */mixin(base);
-                map.set(base, extended);
-            }
-            // copy inherited mixin set from the extended class, or the base class
-            // NOTE: we avoid use of Set here because some browser (IE11)
-            // cannot extend a base Set via the constructor.
-            var mixinSet = Object.create( /** @type {!MixinFunction} */extended.__mixinSet || baseSet || null);
-            mixinSet[mixinDedupeId] = true;
-            /** @type {!MixinFunction} */extended.__mixinSet = mixinSet;
-            return extended;
-        }
-
-        return dedupingMixin;
-    };
-    /* harmony export (immutable) */__webpack_exports__["a"] = dedupingMixin;
-
-    /* eslint-enable valid-jsdoc */
-
-    /***/
-},
-/* 6 */
+/* 10 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -1498,7 +1946,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 7 */
+/* 11 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -1513,7 +1961,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 8 */
+/* 12 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -1528,21 +1976,1151 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 9 */
+/* 13 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /**
+    @license
+    Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at
+    http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+    http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+    found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+    part of the polymer project is also subject to an additional IP rights grant
+    found at http://polymer.github.io/PATENTS.txt
+    */
+
+    var supportsAdoptingStyleSheets = 'adoptedStyleSheets' in Document.prototype && 'replace' in CSSStyleSheet.prototype;
+    /* harmony export (immutable) */__webpack_exports__["a"] = supportsAdoptingStyleSheets;
+
+    var constructionToken = Symbol();
+
+    var CSSResult = function () {
+        function CSSResult(cssText, safeToken) {
+            _classCallCheck(this, CSSResult);
+
+            if (safeToken !== constructionToken) {
+                throw new Error('CSSResult is not constructable. Use `unsafeCSS` or `css` instead.');
+            }
+            this.cssText = cssText;
+        }
+        // Note, this is a getter so that it's lazy. In practice, this means
+        // stylesheets are not created until the first element instance is made.
+
+
+        _createClass(CSSResult, [{
+            key: 'toString',
+            value: function toString() {
+                return this.cssText;
+            }
+        }, {
+            key: 'styleSheet',
+            get: function get() {
+                if (this._styleSheet === undefined) {
+                    // Note, if `adoptedStyleSheets` is supported then we assume CSSStyleSheet
+                    // is constructable.
+                    if (supportsAdoptingStyleSheets) {
+                        this._styleSheet = new CSSStyleSheet();
+                        this._styleSheet.replaceSync(this.cssText);
+                    } else {
+                        this._styleSheet = null;
+                    }
+                }
+                return this._styleSheet;
+            }
+        }]);
+
+        return CSSResult;
+    }();
+    /* unused harmony export CSSResult */
+
+    /**
+     * Wrap a value for interpolation in a css tagged template literal.
+     *
+     * This is unsafe because untrusted CSS text can be used to phone home
+     * or exfiltrate data to an attacker controlled site. Take care to only use
+     * this with trusted input.
+     */
+
+
+    var unsafeCSS = function unsafeCSS(value) {
+        return new CSSResult(String(value), constructionToken);
+    };
+    /* unused harmony export unsafeCSS */
+
+    var textFromCSSResult = function textFromCSSResult(value) {
+        if (value instanceof CSSResult) {
+            return value.cssText;
+        } else {
+            throw new Error('Value passed to \'css\' function must be a \'css\' function result: ' + value + '. Use \'unsafeCSS\' to pass non-literal values, but\n            take care to ensure page security.');
+        }
+    };
+    /**
+     * Template tag which which can be used with LitElement's `style` property to
+     * set element styles. For security reasons, only literal string values may be
+     * used. To incorporate non-literal values `unsafeCSS` may be used inside a
+     * template string part.
+     */
+    var css = function css(strings) {
+        for (var _len3 = arguments.length, values = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+            values[_key3 - 1] = arguments[_key3];
+        }
+
+        var cssText = values.reduce(function (acc, v, idx) {
+            return acc + textFromCSSResult(v) + strings[idx + 1];
+        }, strings[0]);
+        return new CSSResult(cssText, constructionToken);
+    };
+    /* unused harmony export css */
+
+    //# sourceMappingURL=css-tag.js.map
+
+    /***/
+},
+/* 14 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * When using Closure Compiler, JSCompiler_renameProperty(property, object) is
+     * replaced at compile time by the munged name for object[property]. We cannot
+     * alias this function, so we have to use a small shim that has the same
+     * behavior when not compiling.
+     */
+
+    window.JSCompiler_renameProperty = function (prop, _obj) {
+        return prop;
+    };
+    var defaultConverter = {
+        toAttribute: function toAttribute(value, type) {
+            switch (type) {
+                case Boolean:
+                    return value ? '' : null;
+                case Object:
+                case Array:
+                    // if the value is `null` or `undefined` pass this through
+                    // to allow removing/no change behavior.
+                    return value == null ? value : JSON.stringify(value);
+            }
+            return value;
+        },
+        fromAttribute: function fromAttribute(value, type) {
+            switch (type) {
+                case Boolean:
+                    return value !== null;
+                case Number:
+                    return value === null ? null : Number(value);
+                case Object:
+                case Array:
+                    return JSON.parse(value);
+            }
+            return value;
+        }
+    };
+    /* unused harmony export defaultConverter */
+
+    /**
+     * Change function that returns true if `value` is different from `oldValue`.
+     * This method is used as the default for a property's `hasChanged` function.
+     */
+    var notEqual = function notEqual(value, old) {
+        // This ensures (old==NaN, value==NaN) always returns false
+        return old !== value && (old === old || value === value);
+    };
+    /* unused harmony export notEqual */
+
+    var defaultPropertyDeclaration = {
+        attribute: true,
+        type: String,
+        converter: defaultConverter,
+        reflect: false,
+        hasChanged: notEqual
+    };
+    var microtaskPromise = Promise.resolve(true);
+    var STATE_HAS_UPDATED = 1;
+    var STATE_UPDATE_REQUESTED = 1 << 2;
+    var STATE_IS_REFLECTING_TO_ATTRIBUTE = 1 << 3;
+    var STATE_IS_REFLECTING_TO_PROPERTY = 1 << 4;
+    var STATE_HAS_CONNECTED = 1 << 5;
+    /**
+     * Base element class which manages element properties and attributes. When
+     * properties change, the `update` method is asynchronously called. This method
+     * should be supplied by subclassers to render updates as desired.
+     */
+
+    var UpdatingElement = function (_HTMLElement) {
+        _inherits(UpdatingElement, _HTMLElement);
+
+        function UpdatingElement() {
+            _classCallCheck(this, UpdatingElement);
+
+            var _this7 = _possibleConstructorReturn(this, (UpdatingElement.__proto__ || Object.getPrototypeOf(UpdatingElement)).call(this));
+
+            _this7._updateState = 0;
+            _this7._instanceProperties = undefined;
+            _this7._updatePromise = microtaskPromise;
+            _this7._hasConnectedResolver = undefined;
+            /**
+             * Map with keys for any properties that have changed since the last
+             * update cycle with previous values.
+             */
+            _this7._changedProperties = new Map();
+            /**
+             * Map with keys of properties that should be reflected when updated.
+             */
+            _this7._reflectingProperties = undefined;
+            _this7.initialize();
+            return _this7;
+        }
+        /**
+         * Returns a list of attributes corresponding to the registered properties.
+         * @nocollapse
+         */
+
+
+        _createClass(UpdatingElement, [{
+            key: 'initialize',
+
+            /**
+             * Performs element initialization. By default captures any pre-set values for
+             * registered properties.
+             */
+            value: function initialize() {
+                this._saveInstanceProperties();
+                // ensures first update will be caught by an early access of `updateComplete`
+                this._requestUpdate();
+            }
+            /**
+             * Fixes any properties set on the instance before upgrade time.
+             * Otherwise these would shadow the accessor and break these properties.
+             * The properties are stored in a Map which is played back after the
+             * constructor runs. Note, on very old versions of Safari (<=9) or Chrome
+             * (<=41), properties created for native platform properties like (`id` or
+             * `name`) may not have default values set in the element constructor. On
+             * these browsers native properties appear on instances and therefore their
+             * default value will overwrite any element default (e.g. if the element sets
+             * this.id = 'id' in the constructor, the 'id' will become '' since this is
+             * the native platform default).
+             */
+
+        }, {
+            key: '_saveInstanceProperties',
+            value: function _saveInstanceProperties() {
+                var _this8 = this;
+
+                // Use forEach so this works even if for/of loops are compiled to for loops
+                // expecting arrays
+                this.constructor._classProperties.forEach(function (_v, p) {
+                    if (_this8.hasOwnProperty(p)) {
+                        var value = _this8[p];
+                        delete _this8[p];
+                        if (!_this8._instanceProperties) {
+                            _this8._instanceProperties = new Map();
+                        }
+                        _this8._instanceProperties.set(p, value);
+                    }
+                });
+            }
+            /**
+             * Applies previously saved instance properties.
+             */
+
+        }, {
+            key: '_applyInstanceProperties',
+            value: function _applyInstanceProperties() {
+                var _this9 = this;
+
+                // Use forEach so this works even if for/of loops are compiled to for loops
+                // expecting arrays
+                // tslint:disable-next-line:no-any
+                this._instanceProperties.forEach(function (v, p) {
+                    return _this9[p] = v;
+                });
+                this._instanceProperties = undefined;
+            }
+        }, {
+            key: 'connectedCallback',
+            value: function connectedCallback() {
+                this._updateState = this._updateState | STATE_HAS_CONNECTED;
+                // Ensure first connection completes an update. Updates cannot complete before
+                // connection and if one is pending connection the `_hasConnectionResolver`
+                // will exist. If so, resolve it to complete the update, otherwise
+                // requestUpdate.
+                if (this._hasConnectedResolver) {
+                    this._hasConnectedResolver();
+                    this._hasConnectedResolver = undefined;
+                }
+            }
+            /**
+             * Allows for `super.disconnectedCallback()` in extensions while
+             * reserving the possibility of making non-breaking feature additions
+             * when disconnecting at some point in the future.
+             */
+
+        }, {
+            key: 'disconnectedCallback',
+            value: function disconnectedCallback() {}
+            /**
+             * Synchronizes property values when attributes change.
+             */
+
+        }, {
+            key: 'attributeChangedCallback',
+            value: function attributeChangedCallback(name, old, value) {
+                if (old !== value) {
+                    this._attributeToProperty(name, value);
+                }
+            }
+        }, {
+            key: '_propertyToAttribute',
+            value: function _propertyToAttribute(name, value) {
+                var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultPropertyDeclaration;
+
+                var ctor = this.constructor;
+                var attr = ctor._attributeNameForProperty(name, options);
+                if (attr !== undefined) {
+                    var attrValue = ctor._propertyValueToAttribute(value, options);
+                    // an undefined value does not change the attribute.
+                    if (attrValue === undefined) {
+                        return;
+                    }
+                    // Track if the property is being reflected to avoid
+                    // setting the property again via `attributeChangedCallback`. Note:
+                    // 1. this takes advantage of the fact that the callback is synchronous.
+                    // 2. will behave incorrectly if multiple attributes are in the reaction
+                    // stack at time of calling. However, since we process attributes
+                    // in `update` this should not be possible (or an extreme corner case
+                    // that we'd like to discover).
+                    // mark state reflecting
+                    this._updateState = this._updateState | STATE_IS_REFLECTING_TO_ATTRIBUTE;
+                    if (attrValue == null) {
+                        this.removeAttribute(attr);
+                    } else {
+                        this.setAttribute(attr, attrValue);
+                    }
+                    // mark state not reflecting
+                    this._updateState = this._updateState & ~STATE_IS_REFLECTING_TO_ATTRIBUTE;
+                }
+            }
+        }, {
+            key: '_attributeToProperty',
+            value: function _attributeToProperty(name, value) {
+                // Use tracking info to avoid deserializing attribute value if it was
+                // just set from a property setter.
+                if (this._updateState & STATE_IS_REFLECTING_TO_ATTRIBUTE) {
+                    return;
+                }
+                var ctor = this.constructor;
+                var propName = ctor._attributeToPropertyMap.get(name);
+                if (propName !== undefined) {
+                    var options = ctor._classProperties.get(propName) || defaultPropertyDeclaration;
+                    // mark state reflecting
+                    this._updateState = this._updateState | STATE_IS_REFLECTING_TO_PROPERTY;
+                    this[propName] =
+                    // tslint:disable-next-line:no-any
+                    ctor._propertyValueFromAttribute(value, options);
+                    // mark state not reflecting
+                    this._updateState = this._updateState & ~STATE_IS_REFLECTING_TO_PROPERTY;
+                }
+            }
+            /**
+             * This private version of `requestUpdate` does not access or return the
+             * `updateComplete` promise. This promise can be overridden and is therefore
+             * not free to access.
+             */
+
+        }, {
+            key: '_requestUpdate',
+            value: function _requestUpdate(name, oldValue) {
+                var shouldRequestUpdate = true;
+                // If we have a property key, perform property update steps.
+                if (name !== undefined) {
+                    var ctor = this.constructor;
+                    var options = ctor._classProperties.get(name) || defaultPropertyDeclaration;
+                    if (ctor._valueHasChanged(this[name], oldValue, options.hasChanged)) {
+                        if (!this._changedProperties.has(name)) {
+                            this._changedProperties.set(name, oldValue);
+                        }
+                        // Add to reflecting properties set.
+                        // Note, it's important that every change has a chance to add the
+                        // property to `_reflectingProperties`. This ensures setting
+                        // attribute + property reflects correctly.
+                        if (options.reflect === true && !(this._updateState & STATE_IS_REFLECTING_TO_PROPERTY)) {
+                            if (this._reflectingProperties === undefined) {
+                                this._reflectingProperties = new Map();
+                            }
+                            this._reflectingProperties.set(name, options);
+                        }
+                    } else {
+                        // Abort the request if the property should not be considered changed.
+                        shouldRequestUpdate = false;
+                    }
+                }
+                if (!this._hasRequestedUpdate && shouldRequestUpdate) {
+                    this._enqueueUpdate();
+                }
+            }
+            /**
+             * Requests an update which is processed asynchronously. This should
+             * be called when an element should update based on some state not triggered
+             * by setting a property. In this case, pass no arguments. It should also be
+             * called when manually implementing a property setter. In this case, pass the
+             * property `name` and `oldValue` to ensure that any configured property
+             * options are honored. Returns the `updateComplete` Promise which is resolved
+             * when the update completes.
+             *
+             * @param name {PropertyKey} (optional) name of requesting property
+             * @param oldValue {any} (optional) old value of requesting property
+             * @returns {Promise} A Promise that is resolved when the update completes.
+             */
+
+        }, {
+            key: 'requestUpdate',
+            value: function requestUpdate(name, oldValue) {
+                this._requestUpdate(name, oldValue);
+                return this.updateComplete;
+            }
+            /**
+             * Sets up the element to asynchronously update.
+             */
+
+        }, {
+            key: '_enqueueUpdate',
+            value: function () {
+                var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                    var _this10 = this;
+
+                    var resolve, reject, previousUpdatePromise, result;
+                    return regeneratorRuntime.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    // Mark state updating...
+                                    this._updateState = this._updateState | STATE_UPDATE_REQUESTED;
+                                    resolve = void 0;
+                                    reject = void 0;
+                                    previousUpdatePromise = this._updatePromise;
+
+                                    this._updatePromise = new Promise(function (res, rej) {
+                                        resolve = res;
+                                        reject = rej;
+                                    });
+                                    _context.prev = 5;
+                                    _context.next = 8;
+                                    return previousUpdatePromise;
+
+                                case 8:
+                                    _context.next = 12;
+                                    break;
+
+                                case 10:
+                                    _context.prev = 10;
+                                    _context.t0 = _context['catch'](5);
+
+                                case 12:
+                                    if (this._hasConnected) {
+                                        _context.next = 15;
+                                        break;
+                                    }
+
+                                    _context.next = 15;
+                                    return new Promise(function (res) {
+                                        return _this10._hasConnectedResolver = res;
+                                    });
+
+                                case 15:
+                                    _context.prev = 15;
+                                    result = this.performUpdate();
+                                    // If `performUpdate` returns a Promise, we await it. This is done to
+                                    // enable coordinating updates with a scheduler. Note, the result is
+                                    // checked to avoid delaying an additional microtask unless we need to.
+
+                                    if (!(result != null)) {
+                                        _context.next = 20;
+                                        break;
+                                    }
+
+                                    _context.next = 20;
+                                    return result;
+
+                                case 20:
+                                    _context.next = 25;
+                                    break;
+
+                                case 22:
+                                    _context.prev = 22;
+                                    _context.t1 = _context['catch'](15);
+
+                                    reject(_context.t1);
+
+                                case 25:
+                                    resolve(!this._hasRequestedUpdate);
+
+                                case 26:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, this, [[5, 10], [15, 22]]);
+                }));
+
+                function _enqueueUpdate() {
+                    return _ref.apply(this, arguments);
+                }
+
+                return _enqueueUpdate;
+            }()
+        }, {
+            key: 'performUpdate',
+
+            /**
+             * Performs an element update. Note, if an exception is thrown during the
+             * update, `firstUpdated` and `updated` will not be called.
+             *
+             * You can override this method to change the timing of updates. If this
+             * method is overridden, `super.performUpdate()` must be called.
+             *
+             * For instance, to schedule updates to occur just before the next frame:
+             *
+             * ```
+             * protected async performUpdate(): Promise<unknown> {
+             *   await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+             *   super.performUpdate();
+             * }
+             * ```
+             */
+            value: function performUpdate() {
+                // Mixin instance properties once, if they exist.
+                if (this._instanceProperties) {
+                    this._applyInstanceProperties();
+                }
+                var shouldUpdate = false;
+                var changedProperties = this._changedProperties;
+                try {
+                    shouldUpdate = this.shouldUpdate(changedProperties);
+                    if (shouldUpdate) {
+                        this.update(changedProperties);
+                    }
+                } catch (e) {
+                    // Prevent `firstUpdated` and `updated` from running when there's an
+                    // update exception.
+                    shouldUpdate = false;
+                    throw e;
+                } finally {
+                    // Ensure element can accept additional updates after an exception.
+                    this._markUpdated();
+                }
+                if (shouldUpdate) {
+                    if (!(this._updateState & STATE_HAS_UPDATED)) {
+                        this._updateState = this._updateState | STATE_HAS_UPDATED;
+                        this.firstUpdated(changedProperties);
+                    }
+                    this.updated(changedProperties);
+                }
+            }
+        }, {
+            key: '_markUpdated',
+            value: function _markUpdated() {
+                this._changedProperties = new Map();
+                this._updateState = this._updateState & ~STATE_UPDATE_REQUESTED;
+            }
+            /**
+             * Returns a Promise that resolves when the element has completed updating.
+             * The Promise value is a boolean that is `true` if the element completed the
+             * update without triggering another update. The Promise result is `false` if
+             * a property was set inside `updated()`. If the Promise is rejected, an
+             * exception was thrown during the update. This getter can be implemented to
+             * await additional state. For example, it is sometimes useful to await a
+             * rendered element before fulfilling this Promise. To do this, first await
+             * `super.updateComplete` then any subsequent state.
+             *
+             * @returns {Promise} The Promise returns a boolean that indicates if the
+             * update resolved without triggering another update.
+             */
+
+        }, {
+            key: 'shouldUpdate',
+
+            /**
+             * Controls whether or not `update` should be called when the element requests
+             * an update. By default, this method always returns `true`, but this can be
+             * customized to control when to update.
+             *
+             * * @param _changedProperties Map of changed properties with old values
+             */
+            value: function shouldUpdate(_changedProperties) {
+                return true;
+            }
+            /**
+             * Updates the element. This method reflects property values to attributes.
+             * It can be overridden to render and keep updated element DOM.
+             * Setting properties inside this method will *not* trigger
+             * another update.
+             *
+             * * @param _changedProperties Map of changed properties with old values
+             */
+
+        }, {
+            key: 'update',
+            value: function update(_changedProperties) {
+                var _this11 = this;
+
+                if (this._reflectingProperties !== undefined && this._reflectingProperties.size > 0) {
+                    // Use forEach so this works even if for/of loops are compiled to for
+                    // loops expecting arrays
+                    this._reflectingProperties.forEach(function (v, k) {
+                        return _this11._propertyToAttribute(k, _this11[k], v);
+                    });
+                    this._reflectingProperties = undefined;
+                }
+            }
+            /**
+             * Invoked whenever the element is updated. Implement to perform
+             * post-updating tasks via DOM APIs, for example, focusing an element.
+             *
+             * Setting properties inside this method will trigger the element to update
+             * again after this update cycle completes.
+             *
+             * * @param _changedProperties Map of changed properties with old values
+             */
+
+        }, {
+            key: 'updated',
+            value: function updated(_changedProperties) {}
+            /**
+             * Invoked when the element is first updated. Implement to perform one time
+             * work on the element after update.
+             *
+             * Setting properties inside this method will trigger the element to update
+             * again after this update cycle completes.
+             *
+             * * @param _changedProperties Map of changed properties with old values
+             */
+
+        }, {
+            key: 'firstUpdated',
+            value: function firstUpdated(_changedProperties) {}
+        }, {
+            key: '_hasConnected',
+            get: function get() {
+                return this._updateState & STATE_HAS_CONNECTED;
+            }
+        }, {
+            key: '_hasRequestedUpdate',
+            get: function get() {
+                return this._updateState & STATE_UPDATE_REQUESTED;
+            }
+        }, {
+            key: 'hasUpdated',
+            get: function get() {
+                return this._updateState & STATE_HAS_UPDATED;
+            }
+        }, {
+            key: 'updateComplete',
+            get: function get() {
+                return this._updatePromise;
+            }
+        }], [{
+            key: '_ensureClassProperties',
+
+            /**
+             * Ensures the private `_classProperties` property metadata is created.
+             * In addition to `finalize` this is also called in `createProperty` to
+             * ensure the `@property` decorator can add property metadata.
+             */
+            /** @nocollapse */
+            value: function _ensureClassProperties() {
+                var _this12 = this;
+
+                // ensure private storage for property declarations.
+                if (!this.hasOwnProperty(JSCompiler_renameProperty('_classProperties', this))) {
+                    this._classProperties = new Map();
+                    // NOTE: Workaround IE11 not supporting Map constructor argument.
+                    var superProperties = Object.getPrototypeOf(this)._classProperties;
+                    if (superProperties !== undefined) {
+                        superProperties.forEach(function (v, k) {
+                            return _this12._classProperties.set(k, v);
+                        });
+                    }
+                }
+            }
+            /**
+             * Creates a property accessor on the element prototype if one does not exist.
+             * The property setter calls the property's `hasChanged` property option
+             * or uses a strict identity check to determine whether or not to request
+             * an update.
+             * @nocollapse
+             */
+
+        }, {
+            key: 'createProperty',
+            value: function createProperty(name) {
+                var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultPropertyDeclaration;
+
+                // Note, since this can be called by the `@property` decorator which
+                // is called before `finalize`, we ensure storage exists for property
+                // metadata.
+                this._ensureClassProperties();
+                this._classProperties.set(name, options);
+                // Do not generate an accessor if the prototype already has one, since
+                // it would be lost otherwise and that would never be the user's intention;
+                // Instead, we expect users to call `requestUpdate` themselves from
+                // user-defined accessors. Note that if the super has an accessor we will
+                // still overwrite it
+                if (options.noAccessor || this.prototype.hasOwnProperty(name)) {
+                    return;
+                }
+                var key = (typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'symbol' ? Symbol() : '__' + name;
+                Object.defineProperty(this.prototype, name, {
+                    // tslint:disable-next-line:no-any no symbol in index
+                    get: function get() {
+                        return this[key];
+                    },
+                    set: function set(value) {
+                        // tslint:disable-next-line:no-any no symbol in index
+                        var oldValue = this[name];
+                        // tslint:disable-next-line:no-any no symbol in index
+                        this[key] = value;
+                        this._requestUpdate(name, oldValue);
+                    },
+
+                    configurable: true,
+                    enumerable: true
+                });
+            }
+            /**
+             * Creates property accessors for registered properties and ensures
+             * any superclasses are also finalized.
+             * @nocollapse
+             */
+
+        }, {
+            key: 'finalize',
+            value: function finalize() {
+                if (this.hasOwnProperty(JSCompiler_renameProperty('finalized', this)) && this.finalized) {
+                    return;
+                }
+                // finalize any superclasses
+                var superCtor = Object.getPrototypeOf(this);
+                if (typeof superCtor.finalize === 'function') {
+                    superCtor.finalize();
+                }
+                this.finalized = true;
+                this._ensureClassProperties();
+                // initialize Map populated in observedAttributes
+                this._attributeToPropertyMap = new Map();
+                // make any properties
+                // Note, only process "own" properties since this element will inherit
+                // any properties defined on the superClass, and finalization ensures
+                // the entire prototype chain is finalized.
+                if (this.hasOwnProperty(JSCompiler_renameProperty('properties', this))) {
+                    var props = this.properties;
+                    // support symbols in properties (IE11 does not support this)
+                    var propKeys = [].concat(_toConsumableArray(Object.getOwnPropertyNames(props)), _toConsumableArray(typeof Object.getOwnPropertySymbols === 'function' ? Object.getOwnPropertySymbols(props) : []));
+                    // This for/of is ok because propKeys is an array
+                    var _iteratorNormalCompletion6 = true;
+                    var _didIteratorError6 = false;
+                    var _iteratorError6 = undefined;
+
+                    try {
+                        for (var _iterator6 = propKeys[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                            var p = _step6.value;
+
+                            // note, use of `any` is due to TypeSript lack of support for symbol in
+                            // index types
+                            // tslint:disable-next-line:no-any no symbol in index
+                            this.createProperty(p, props[p]);
+                        }
+                    } catch (err) {
+                        _didIteratorError6 = true;
+                        _iteratorError6 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                                _iterator6.return();
+                            }
+                        } finally {
+                            if (_didIteratorError6) {
+                                throw _iteratorError6;
+                            }
+                        }
+                    }
+                }
+            }
+            /**
+             * Returns the property name for the given attribute `name`.
+             * @nocollapse
+             */
+
+        }, {
+            key: '_attributeNameForProperty',
+            value: function _attributeNameForProperty(name, options) {
+                var attribute = options.attribute;
+                return attribute === false ? undefined : typeof attribute === 'string' ? attribute : typeof name === 'string' ? name.toLowerCase() : undefined;
+            }
+            /**
+             * Returns true if a property should request an update.
+             * Called when a property value is set and uses the `hasChanged`
+             * option for the property if present or a strict identity check.
+             * @nocollapse
+             */
+
+        }, {
+            key: '_valueHasChanged',
+            value: function _valueHasChanged(value, old) {
+                var hasChanged = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : notEqual;
+
+                return hasChanged(value, old);
+            }
+            /**
+             * Returns the property value for the given attribute value.
+             * Called via the `attributeChangedCallback` and uses the property's
+             * `converter` or `converter.fromAttribute` property option.
+             * @nocollapse
+             */
+
+        }, {
+            key: '_propertyValueFromAttribute',
+            value: function _propertyValueFromAttribute(value, options) {
+                var type = options.type;
+                var converter = options.converter || defaultConverter;
+                var fromAttribute = typeof converter === 'function' ? converter : converter.fromAttribute;
+                return fromAttribute ? fromAttribute(value, type) : value;
+            }
+            /**
+             * Returns the attribute value for the given property value. If this
+             * returns undefined, the property will *not* be reflected to an attribute.
+             * If this returns null, the attribute will be removed, otherwise the
+             * attribute will be set to the value.
+             * This uses the property's `reflect` and `type.toAttribute` property options.
+             * @nocollapse
+             */
+
+        }, {
+            key: '_propertyValueToAttribute',
+            value: function _propertyValueToAttribute(value, options) {
+                if (options.reflect === undefined) {
+                    return;
+                }
+                var type = options.type;
+                var converter = options.converter;
+                var toAttribute = converter && converter.toAttribute || defaultConverter.toAttribute;
+                return toAttribute(value, type);
+            }
+        }, {
+            key: 'observedAttributes',
+            get: function get() {
+                var _this13 = this;
+
+                // note: piggy backing on this to ensure we're finalized.
+                this.finalize();
+                var attributes = [];
+                // Use forEach so this works even if for/of loops are compiled to for loops
+                // expecting arrays
+                this._classProperties.forEach(function (v, p) {
+                    var attr = _this13._attributeNameForProperty(p, v);
+                    if (attr !== undefined) {
+                        _this13._attributeToPropertyMap.set(attr, p);
+                        attributes.push(attr);
+                    }
+                });
+                return attributes;
+            }
+        }]);
+
+        return UpdatingElement;
+    }(HTMLElement);
+    /* harmony export (immutable) */
+
+    __webpack_exports__["a"] = UpdatingElement;
+
+    /**
+     * Marks class as having finished creating properties.
+     */
+    UpdatingElement.finalized = true;
+    //# sourceMappingURL=updating-element.js.map
+
+    /***/
+},
+/* 15 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0__parts_js__ = __webpack_require__(6);
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+
+    /**
+     * Creates Parts when a template is instantiated.
+     */
+
+    var DefaultTemplateProcessor = function () {
+        function DefaultTemplateProcessor() {
+            _classCallCheck(this, DefaultTemplateProcessor);
+        }
+
+        _createClass(DefaultTemplateProcessor, [{
+            key: 'handleAttributeExpressions',
+
+            /**
+             * Create parts for an attribute-position binding, given the event, attribute
+             * name, and string literals.
+             *
+             * @param element The element containing the binding
+             * @param name  The attribute name
+             * @param strings The string literals. There are always at least two strings,
+             *   event for fully-controlled bindings with a single expression.
+             */
+            value: function handleAttributeExpressions(element, name, strings, options) {
+                var prefix = name[0];
+                if (prefix === '.') {
+                    var _committer = new __WEBPACK_IMPORTED_MODULE_0__parts_js__["b" /* PropertyCommitter */](element, name.slice(1), strings);
+                    return _committer.parts;
+                }
+                if (prefix === '@') {
+                    return [new __WEBPACK_IMPORTED_MODULE_0__parts_js__["c" /* EventPart */](element, name.slice(1), options.eventContext)];
+                }
+                if (prefix === '?') {
+                    return [new __WEBPACK_IMPORTED_MODULE_0__parts_js__["d" /* BooleanAttributePart */](element, name.slice(1), strings)];
+                }
+                var committer = new __WEBPACK_IMPORTED_MODULE_0__parts_js__["e" /* AttributeCommitter */](element, name, strings);
+                return committer.parts;
+            }
+            /**
+             * Create parts for a text-position binding.
+             * @param templateFactory
+             */
+
+        }, {
+            key: 'handleTextExpression',
+            value: function handleTextExpression(options) {
+                return new __WEBPACK_IMPORTED_MODULE_0__parts_js__["a" /* NodePart */](options);
+            }
+        }]);
+
+        return DefaultTemplateProcessor;
+    }();
+    /* unused harmony export DefaultTemplateProcessor */
+
+    var defaultTemplateProcessor = new DefaultTemplateProcessor();
+    /* harmony export (immutable) */__webpack_exports__["a"] = defaultTemplateProcessor;
+
+    //# sourceMappingURL=default-template-processor.js.map
+
+    /***/
+},
+/* 16 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+
+    var directives = new WeakMap();
+    /**
+     * Brands a function as a directive factory function so that lit-html will call
+     * the function during template rendering, rather than passing as a value.
+     *
+     * A _directive_ is a function that takes a Part as an argument. It has the
+     * signature: `(part: Part) => void`.
+     *
+     * A directive _factory_ is a function that takes arguments for data and
+     * configuration and returns a directive. Users of directive usually refer to
+     * the directive factory as the directive. For example, "The repeat directive".
+     *
+     * Usually a template author will invoke a directive factory in their template
+     * with relevant arguments, which will then return a directive function.
+     *
+     * Here's an example of using the `repeat()` directive factory that takes an
+     * array and a function to render an item:
+     *
+     * ```js
+     * html`<ul><${repeat(items, (item) => html`<li>${item}</li>`)}</ul>`
+     * ```
+     *
+     * When `repeat` is invoked, it returns a directive function that closes over
+     * `items` and the template function. When the outer template is rendered, the
+     * return directive function is called with the Part for the expression.
+     * `repeat` then performs it's custom logic to render multiple items.
+     *
+     * @param f The directive factory function. Must be a function that returns a
+     * function of the signature `(part: Part) => void`. The returned function will
+     * be called with the part object.
+     *
+     * @example
+     *
+     * import {directive, html} from 'lit-html';
+     *
+     * const immutable = directive((v) => (part) => {
+     *   if (part.value !== v) {
+     *     part.setValue(v)
+     *   }
+     * });
+     */
+    var directive = function directive(f) {
+        return function () {
+            var d = f.apply(undefined, arguments);
+            directives.set(d, true);
+            return d;
+        };
+    };
+    /* unused harmony export directive */
+
+    var isDirective = function isDirective(o) {
+        return typeof o === 'function' && directives.has(o);
+    };
+    /* harmony export (immutable) */__webpack_exports__["a"] = isDirective;
+
+    //# sourceMappingURL=directive.js.map
+
+    /***/
+},
+/* 17 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /**
+     * @license
+     * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * A sentinel value that signals that a value was handled by a directive and
+     * should not be written to the DOM.
+     */
+
+    var noChange = {};
+    /* harmony export (immutable) */__webpack_exports__["a"] = noChange;
+
+    /**
+     * A sentinel value that signals a NodePart to fully clear its content.
+     */
+    var nothing = {};
+    /* harmony export (immutable) */__webpack_exports__["b"] = nothing;
+
+    //# sourceMappingURL=part.js.map
+
+    /***/
+},
+/* 18 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__dom_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__parts_js__ = __webpack_require__(6);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__template_factory_js__ = __webpack_require__(7);
+    /**
+     * @license
+     * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+     * This code may only be used under the BSD style license found at
+     * http://polymer.github.io/LICENSE.txt
+     * The complete set of authors may be found at
+     * http://polymer.github.io/AUTHORS.txt
+     * The complete set of contributors may be found at
+     * http://polymer.github.io/CONTRIBUTORS.txt
+     * Code distributed by Google as part of the polymer project is also
+     * subject to an additional IP rights grant found at
+     * http://polymer.github.io/PATENTS.txt
+     */
+    /**
+     * @module lit-html
+     */
+
+    var parts = new WeakMap();
+    /* harmony export (immutable) */__webpack_exports__["a"] = parts;
+
+    /**
+     * Renders a template to a container.
+     *
+     * To update a container with new values, reevaluate the template literal and
+     * call `render` with the new result.
+     *
+     * @param result a TemplateResult created by evaluating a template tag like
+     *     `html` or `svg`.
+     * @param container A DOM parent to render to. The entire contents are either
+     *     replaced, or efficiently updated if the same result type was previous
+     *     rendered there.
+     * @param options RenderOptions for the entire render tree rendered to this
+     *     container. Render options must *not* change between renders to the same
+     *     container, as those changes will not effect previously rendered DOM.
+     */
+    var render = function render(result, container, options) {
+        var part = parts.get(container);
+        if (part === undefined) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__dom_js__["a" /* removeNodes */])(container, container.firstChild);
+            parts.set(container, part = new __WEBPACK_IMPORTED_MODULE_1__parts_js__["a" /* NodePart */](Object.assign({ templateFactory: __WEBPACK_IMPORTED_MODULE_2__template_factory_js__["b" /* templateFactory */] }, options)));
+            part.appendInto(container);
+        }
+        part.setValue(result);
+        part.commit();
+    };
+    /* harmony export (immutable) */__webpack_exports__["b"] = render;
+
+    //# sourceMappingURL=render.js.map
+
+    /***/
+},
+/* 19 */
+/***/function (module, __webpack_exports__, __webpack_require__) {
+
+    "use strict";
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0_lit_element__ = __webpack_require__(3);
 
     var util = __webpack_require__(1);
-    var featureTemplate = __webpack_require__(28);
+    var featureTemplate = __webpack_require__(34);
 
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    var ByuCalendarFeatureColumn = function (_WEBPACK_IMPORTED_MO) {
-        _inherits(ByuCalendarFeatureColumn, _WEBPACK_IMPORTED_MO);
+    var ByuCalendarFeatureColumn = function (_WEBPACK_IMPORTED_MO2) {
+        _inherits(ByuCalendarFeatureColumn, _WEBPACK_IMPORTED_MO2);
 
         function ByuCalendarFeatureColumn() {
             _classCallCheck(this, ByuCalendarFeatureColumn);
@@ -1557,23 +3135,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref) {
-                _objectDestructuringEmpty(_ref);
+            value: function _render(_ref2) {
+                _objectDestructuringEmpty(_ref2);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this6 = this;
+                var _this15 = this;
 
                 _get(ByuCalendarFeatureColumn.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarFeatureColumn.prototype), 'connectedCallback', this).call(this);
                 util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, function () {
-                    var dateOb = _this6.date;
+                    var dateOb = _this15.date;
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
                     var monthName = months[dateOb.getMonth()];
 
-                    _this6.shadowRoot.querySelector('#weekday').innerHTML = weekday;
-                    _this6.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                    _this15.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+                    _this15.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
                 });
             }
         }, {
@@ -1590,25 +3168,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendarFeatureColumn;
-    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar-feature-column', ByuCalendarFeatureColumn);
     window.ByuCalendarFeatureColumn = ByuCalendarFeatureColumn;
 
     /***/
 },
-/* 10 */
+/* 20 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0_lit_element__ = __webpack_require__(3);
 
     var util = __webpack_require__(1);
-    var linksTemplate = __webpack_require__(29);
+    var linksTemplate = __webpack_require__(35);
 
-    var ByuCalendarFeatureLinks = function (_WEBPACK_IMPORTED_MO2) {
-        _inherits(ByuCalendarFeatureLinks, _WEBPACK_IMPORTED_MO2);
+    var ByuCalendarFeatureLinks = function (_WEBPACK_IMPORTED_MO3) {
+        _inherits(ByuCalendarFeatureLinks, _WEBPACK_IMPORTED_MO3);
 
         function ByuCalendarFeatureLinks() {
             _classCallCheck(this, ByuCalendarFeatureLinks);
@@ -1623,8 +3201,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref2) {
-                _objectDestructuringEmpty(_ref2);
+            value: function _render(_ref3) {
+                _objectDestructuringEmpty(_ref3);
             }
         }, {
             key: 'connectedCallback',
@@ -1635,27 +3213,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendarFeatureLinks;
-    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar-feature-links', ByuCalendarFeatureLinks);
     window.ByuCalendarFeatureLinks = ByuCalendarFeatureLinks;
 
     /***/
 },
-/* 11 */
+/* 21 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0_lit_element__ = __webpack_require__(3);
 
     var util = __webpack_require__(1);
-    var minimalTemplate = __webpack_require__(30);
+    var minimalTemplate = __webpack_require__(36);
 
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    var ByuCalendarMinimalTile = function (_WEBPACK_IMPORTED_MO3) {
-        _inherits(ByuCalendarMinimalTile, _WEBPACK_IMPORTED_MO3);
+    var ByuCalendarMinimalTile = function (_WEBPACK_IMPORTED_MO4) {
+        _inherits(ByuCalendarMinimalTile, _WEBPACK_IMPORTED_MO4);
 
         function ByuCalendarMinimalTile() {
             _classCallCheck(this, ByuCalendarMinimalTile);
@@ -1670,20 +3248,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref3) {
-                _objectDestructuringEmpty(_ref3);
+            value: function _render(_ref4) {
+                _objectDestructuringEmpty(_ref4);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this9 = this;
+                var _this18 = this;
 
                 _get(ByuCalendarMinimalTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile.prototype), 'connectedCallback', this).call(this);
                 util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
-                    var dateOb = _this9.date;
+                    var dateOb = _this18.date;
                     var day = dateOb.getDate();
                     var monthName = months[dateOb.getMonth()];
-                    _this9.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+                    _this18.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
                 });
             }
         }, {
@@ -1700,31 +3278,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendarMinimalTile;
-    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
     window.ByuCalendarMinimalTile = ByuCalendarMinimalTile;
 
     /***/
 },
-/* 12 */
+/* 22 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0_lit_element__ = __webpack_require__(3);
 
     var util = __webpack_require__(1);
-    var tileTemplate = __webpack_require__(32);
-    var imageTemplate = __webpack_require__(31);
+    var tileTemplate = __webpack_require__(38);
+    var imageTemplate = __webpack_require__(37);
 
     var ATTR_IMAGE_ROW = 'image-row';
 
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    var ByuCalendarRow = function (_WEBPACK_IMPORTED_MO4) {
-        _inherits(ByuCalendarRow, _WEBPACK_IMPORTED_MO4);
+    var ByuCalendarRow = function (_WEBPACK_IMPORTED_MO5) {
+        _inherits(ByuCalendarRow, _WEBPACK_IMPORTED_MO5);
 
         function ByuCalendarRow() {
             _classCallCheck(this, ByuCalendarRow);
@@ -1739,27 +3317,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref4) {
-                _objectDestructuringEmpty(_ref4);
+            value: function _render(_ref5) {
+                _objectDestructuringEmpty(_ref5);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this11 = this;
+                var _this20 = this;
 
                 _get(ByuCalendarRow.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarRow.prototype), 'connectedCallback', this).call(this);
                 var template = this.imageRow ? imageTemplate : tileTemplate;
                 util.applyTemplate(this, 'byu-calendar-row', template, function () {
-                    if (!_this11.imageRow) {
-                        var dateOb = _this11.date;
+                    if (!_this20.imageRow) {
+                        var dateOb = _this20.date;
                         var day = dateOb.getDate();
                         var weekday = weekdays[dateOb.getDay()];
                         var monthName = months[dateOb.getMonth()];
                         var year = dateOb.getFullYear();
 
-                        _this11.shadowRoot.querySelector('#day-number').innerHTML = day;
-                        _this11.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this11.shadowRoot.querySelector('#year').innerHTML = year;
+                        _this20.shadowRoot.querySelector('#day-number').innerHTML = day;
+                        _this20.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this20.shadowRoot.querySelector('#year').innerHTML = year;
                     }
                 });
             }
@@ -1789,30 +3367,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendarRow;
-    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar-row', ByuCalendarRow);
     window.ByuCalendarRow = ByuCalendarRow;
 
     /***/
 },
-/* 13 */
+/* 23 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__ = __webpack_require__(0);
+    var __WEBPACK_IMPORTED_MODULE_0_lit_element__ = __webpack_require__(3);
 
     var util = __webpack_require__(1);
-    var verticalTemplate = __webpack_require__(34);
-    var horizontalTemplate = __webpack_require__(33);
+    var verticalTemplate = __webpack_require__(40);
+    var horizontalTemplate = __webpack_require__(39);
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-    var ByuCalendarTile = function (_WEBPACK_IMPORTED_MO5) {
-        _inherits(ByuCalendarTile, _WEBPACK_IMPORTED_MO5);
+    var ByuCalendarTile = function (_WEBPACK_IMPORTED_MO6) {
+        _inherits(ByuCalendarTile, _WEBPACK_IMPORTED_MO6);
 
         function ByuCalendarTile() {
             _classCallCheck(this, ByuCalendarTile);
@@ -1827,29 +3405,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref5) {
-                _objectDestructuringEmpty(_ref5);
+            value: function _render(_ref6) {
+                _objectDestructuringEmpty(_ref6);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this13 = this;
+                var _this22 = this;
 
                 _get(ByuCalendarTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarTile.prototype), 'connectedCallback', this).call(this);
                 var template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
                 util.applyTemplate(this, 'byu-calendar-tile', template, function () {
-                    var dateOb = _this13.date;
+                    var dateOb = _this22.date;
                     var monthName = months[dateOb.getMonth()];
                     var monthAbb = monthAbbs[dateOb.getMonth()];
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
-                    if (_this13.layout == 'horizontal') {
-                        _this13.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+                    if (_this22.layout == 'horizontal') {
+                        _this22.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
                     } else {
-                        _this13.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-                        _this13.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+                        _this22.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this22.shadowRoot.querySelector('#weekday').innerHTML = weekday;
                     }
-                    _this13.shadowRoot.querySelector('#day-number').innerHTML = day;
+                    _this22.shadowRoot.querySelector('#day-number').innerHTML = day;
                 });
             }
         }, {
@@ -1878,22 +3456,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendarTile;
-    }(__WEBPACK_IMPORTED_MODULE_0__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar-tile', ByuCalendarTile);
     window.ByuCalendarTile = ByuCalendarTile;
 
     /***/
 },
-/* 14 */
+/* 24 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(35);
+    var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__ = __webpack_require__(41);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html__);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__ = __webpack_require__(1);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__ = __webpack_require__(0);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2_lit_element__ = __webpack_require__(3);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -1926,8 +3504,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var DEFAULT_DAYS = '14';
     var DEFAULT_DISPLAY = 4;
 
-    var ByuCalendar = function (_WEBPACK_IMPORTED_MO6) {
-        _inherits(ByuCalendar, _WEBPACK_IMPORTED_MO6);
+    var ByuCalendar = function (_WEBPACK_IMPORTED_MO7) {
+        _inherits(ByuCalendar, _WEBPACK_IMPORTED_MO7);
 
         function ByuCalendar() {
             _classCallCheck(this, ByuCalendar);
@@ -1942,18 +3520,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: '_render',
-            value: function _render(_ref6) {
-                _objectDestructuringEmpty(_ref6);
+            value: function _render(_ref7) {
+                _objectDestructuringEmpty(_ref7);
             }
         }, {
             key: 'connectedCallback',
             value: function connectedCallback() {
-                var _this15 = this;
+                var _this24 = this;
 
                 _get(ByuCalendar.prototype.__proto__ || Object.getPrototypeOf(ByuCalendar.prototype), 'connectedCallback', this).call(this);
                 //This will stamp our template for us, then let us perform actions on the stamped DOM.
                 __WEBPACK_IMPORTED_MODULE_1_byu_web_component_utils__["applyTemplate"](this, 'byu-calendar', __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a, function () {
-                    getCalendarData(_this15);
+                    getCalendarData(_this24);
                 });
             }
         }, {
@@ -2053,7 +3631,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]);
 
         return ByuCalendar;
-    }(__WEBPACK_IMPORTED_MODULE_2__polymer_lit_element__["a" /* LitElement */]);
+    }(__WEBPACK_IMPORTED_MODULE_2_lit_element__["a" /* LitElement */]);
 
     window.customElements.define('byu-calendar', ByuCalendar);
     window.ByuCalendar = ByuCalendar;
@@ -2436,18 +4014,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 15 */
+/* 25 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
 
     Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(14);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(12);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(13);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_feature_column_byu_calendar_feature_column_js__ = __webpack_require__(9);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__byu_calendar_feature_links_byu_calendar_feature_links_js__ = __webpack_require__(10);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(11);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__byu_calendar_byu_calendar_js__ = __webpack_require__(24);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__byu_calendar_row_byu_calendar_row_js__ = __webpack_require__(22);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__byu_calendar_tile_byu_calendar_tile_js__ = __webpack_require__(23);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__byu_calendar_feature_column_byu_calendar_feature_column_js__ = __webpack_require__(19);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__byu_calendar_feature_links_byu_calendar_feature_links_js__ = __webpack_require__(20);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__byu_calendar_minimal_tile_byu_calendar_minimal_tile_js__ = __webpack_require__(21);
     /**
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -2467,1192 +4045,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 16 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
-    /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__utils_async_js__ = __webpack_require__(18);
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    /** @const {!AsyncInterface} */
-    var microtask = __WEBPACK_IMPORTED_MODULE_2__utils_async_js__["a" /* microTask */];
-
-    /**
-     * Element class mixin that provides basic meta-programming for creating one
-     * or more property accessors (getter/setter pair) that enqueue an async
-     * (batched) `_propertiesChanged` callback.
-     *
-     * For basic usage of this mixin, call `MyClass.createProperties(props)`
-     * once at class definition time to create property accessors for properties
-     * named in props, implement `_propertiesChanged` to react as desired to
-     * property changes, and implement `static get observedAttributes()` and
-     * include lowercase versions of any property names that should be set from
-     * attributes. Last, call `this._enableProperties()` in the element's
-     * `connectedCallback` to enable the accessors.
-     *
-     * @mixinFunction
-     * @polymer
-     * @summary Element class mixin for reacting to property changes from
-     *   generated property accessors.
-     */
-    var PropertiesChanged = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(
-    /**
-     * @template T
-     * @param {function(new:T)} superClass Class to apply mixin to.
-     * @return {function(new:T)} superClass with mixin applied.
-     */
-    function (superClass) {
-
-        /**
-         * @polymer
-         * @mixinClass
-         * @implements {Polymer_PropertiesChanged}
-         * @unrestricted
-         */
-        var PropertiesChanged = function (_superClass) {
-            _inherits(PropertiesChanged, _superClass);
-
-            _createClass(PropertiesChanged, [{
-                key: '_createPropertyAccessor',
-                //eslint-disable-line no-unused-vars
-
-                /**
-                 * Creates a setter/getter pair for the named property with its own
-                 * local storage.  The getter returns the value in the local storage,
-                 * and the setter calls `_setProperty`, which updates the local storage
-                 * for the property and enqueues a `_propertiesChanged` callback.
-                 *
-                 * This method may be called on a prototype or an instance.  Calling
-                 * this method may overwrite a property value that already exists on
-                 * the prototype/instance by creating the accessor.
-                 *
-                 * @param {string} property Name of the property
-                 * @param {boolean=} readOnly When true, no setter is created; the
-                 *   protected `_setProperty` function must be used to set the property
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-                value: function _createPropertyAccessor(property, readOnly) {
-                    this._addPropertyToAttributeMap(property);
-                    if (!this.hasOwnProperty('__dataHasAccessor')) {
-                        this.__dataHasAccessor = Object.assign({}, this.__dataHasAccessor);
-                    }
-                    if (!this.__dataHasAccessor[property]) {
-                        this.__dataHasAccessor[property] = true;
-                        this._definePropertyAccessor(property, readOnly);
-                    }
-                }
-
-                /**
-                 * Adds the given `property` to a map matching attribute names
-                 * to property names, using `attributeNameForProperty`. This map is
-                 * used when deserializing attribute values to properties.
-                 *
-                 * @param {string} property Name of the property
-                 * @override
-                 */
-
-            }, {
-                key: '_addPropertyToAttributeMap',
-                value: function _addPropertyToAttributeMap(property) {
-                    if (!this.hasOwnProperty('__dataAttributes')) {
-                        this.__dataAttributes = Object.assign({}, this.__dataAttributes);
-                    }
-                    if (!this.__dataAttributes[property]) {
-                        var attr = this.constructor.attributeNameForProperty(property);
-                        this.__dataAttributes[attr] = property;
-                    }
-                }
-
-                /**
-                 * Defines a property accessor for the given property.
-                 * @param {string} property Name of the property
-                 * @param {boolean=} readOnly When true, no setter is created
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: '_definePropertyAccessor',
-                value: function _definePropertyAccessor(property, readOnly) {
-                    Object.defineProperty(this, property, {
-                        /* eslint-disable valid-jsdoc */
-                        /** @this {PropertiesChanged} */
-                        get: function get() {
-                            return this._getProperty(property);
-                        },
-
-                        /** @this {PropertiesChanged} */
-                        set: readOnly ? function () {} : function (value) {
-                            this._setProperty(property, value);
-                        }
-                        /* eslint-enable */
-                    });
-                }
-            }], [{
-                key: 'createProperties',
-
-
-                /**
-                 * Creates property accessors for the given property names.
-                 * @param {!Object} props Object whose keys are names of accessors.
-                 * @return {void}
-                 * @protected
-                 */
-                value: function createProperties(props) {
-                    var proto = this.prototype;
-                    for (var prop in props) {
-                        // don't stomp an existing accessor
-                        if (!(prop in proto)) {
-                            proto._createPropertyAccessor(prop);
-                        }
-                    }
-                }
-
-                /**
-                 * Returns an attribute name that corresponds to the given property.
-                 * The attribute name is the lowercased property name. Override to
-                 * customize this mapping.
-                 * @param {string} property Property to convert
-                 * @return {string} Attribute name corresponding to the given property.
-                 *
-                 * @protected
-                 */
-
-            }, {
-                key: 'attributeNameForProperty',
-                value: function attributeNameForProperty(property) {
-                    return property.toLowerCase();
-                }
-
-                /**
-                 * Override point to provide a type to which to deserialize a value to
-                 * a given property.
-                 * @param {string} name Name of property
-                 *
-                 * @protected
-                 */
-
-            }, {
-                key: 'typeForProperty',
-                value: function typeForProperty(name) {}
-            }]);
-
-            function PropertiesChanged() {
-                _classCallCheck(this, PropertiesChanged);
-
-                var _this16 = _possibleConstructorReturn(this, (PropertiesChanged.__proto__ || Object.getPrototypeOf(PropertiesChanged)).call(this));
-
-                _this16.__dataEnabled = false;
-                _this16.__dataReady = false;
-                _this16.__dataInvalid = false;
-                _this16.__data = {};
-                _this16.__dataPending = null;
-                _this16.__dataOld = null;
-                _this16.__dataInstanceProps = null;
-                _this16.__serializing = false;
-                _this16._initializeProperties();
-                return _this16;
-            }
-
-            /**
-             * Lifecycle callback called when properties are enabled via
-             * `_enableProperties`.
-             *
-             * Users may override this function to implement behavior that is
-             * dependent on the element having its property data initialized, e.g.
-             * from defaults (initialized from `constructor`, `_initializeProperties`),
-             * `attributeChangedCallback`, or values propagated from host e.g. via
-             * bindings.  `super.ready()` must be called to ensure the data system
-             * becomes enabled.
-             *
-             * @return {void}
-             * @public
-             * @override
-             */
-
-
-            _createClass(PropertiesChanged, [{
-                key: 'ready',
-                value: function ready() {
-                    this.__dataReady = true;
-                    this._flushProperties();
-                }
-
-                /**
-                 * Initializes the local storage for property accessors.
-                 *
-                 * Provided as an override point for performing any setup work prior
-                 * to initializing the property accessor system.
-                 *
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_initializeProperties',
-                value: function _initializeProperties() {
-                    // Capture instance properties; these will be set into accessors
-                    // during first flush. Don't set them here, since we want
-                    // these to overwrite defaults/constructor assignments
-                    for (var p in this.__dataHasAccessor) {
-                        if (this.hasOwnProperty(p)) {
-                            this.__dataInstanceProps = this.__dataInstanceProps || {};
-                            this.__dataInstanceProps[p] = this[p];
-                            delete this[p];
-                        }
-                    }
-                }
-
-                /**
-                 * Called at ready time with bag of instance properties that overwrote
-                 * accessors when the element upgraded.
-                 *
-                 * The default implementation sets these properties back into the
-                 * setter at ready time.  This method is provided as an override
-                 * point for customizing or providing more efficient initialization.
-                 *
-                 * @param {Object} props Bag of property values that were overwritten
-                 *   when creating property accessors.
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_initializeInstanceProperties',
-                value: function _initializeInstanceProperties(props) {
-                    Object.assign(this, props);
-                }
-
-                /**
-                 * Updates the local storage for a property (via `_setPendingProperty`)
-                 * and enqueues a `_proeprtiesChanged` callback.
-                 *
-                 * @param {string} property Name of the property
-                 * @param {*} value Value to set
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_setProperty',
-                value: function _setProperty(property, value) {
-                    if (this._setPendingProperty(property, value)) {
-                        this._invalidateProperties();
-                    }
-                }
-
-                /**
-                 * Returns the value for the given property.
-                 * @param {string} property Name of property
-                 * @return {*} Value for the given property
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_getProperty',
-                value: function _getProperty(property) {
-                    return this.__data[property];
-                }
-
-                /* eslint-disable no-unused-vars */
-                /**
-                 * Updates the local storage for a property, records the previous value,
-                 * and adds it to the set of "pending changes" that will be passed to the
-                 * `_propertiesChanged` callback.  This method does not enqueue the
-                 * `_propertiesChanged` callback.
-                 *
-                 * @param {string} property Name of the property
-                 * @param {*} value Value to set
-                 * @param {boolean=} ext Not used here; affordance for closure
-                 * @return {boolean} Returns true if the property changed
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_setPendingProperty',
-                value: function _setPendingProperty(property, value, ext) {
-                    var old = this.__data[property];
-                    var changed = this._shouldPropertyChange(property, value, old);
-                    if (changed) {
-                        if (!this.__dataPending) {
-                            this.__dataPending = {};
-                            this.__dataOld = {};
-                        }
-                        // Ensure old is captured from the last turn
-                        if (this.__dataOld && !(property in this.__dataOld)) {
-                            this.__dataOld[property] = old;
-                        }
-                        this.__data[property] = value;
-                        this.__dataPending[property] = value;
-                    }
-                    return changed;
-                }
-                /* eslint-enable */
-
-                /**
-                 * Marks the properties as invalid, and enqueues an async
-                 * `_propertiesChanged` callback.
-                 *
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_invalidateProperties',
-                value: function _invalidateProperties() {
-                    var _this17 = this;
-
-                    if (!this.__dataInvalid && this.__dataReady) {
-                        this.__dataInvalid = true;
-                        microtask.run(function () {
-                            if (_this17.__dataInvalid) {
-                                _this17.__dataInvalid = false;
-                                _this17._flushProperties();
-                            }
-                        });
-                    }
-                }
-
-                /**
-                 * Call to enable property accessor processing. Before this method is
-                 * called accessor values will be set but side effects are
-                 * queued. When called, any pending side effects occur immediately.
-                 * For elements, generally `connectedCallback` is a normal spot to do so.
-                 * It is safe to call this method multiple times as it only turns on
-                 * property accessors once.
-                 *
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_enableProperties',
-                value: function _enableProperties() {
-                    if (!this.__dataEnabled) {
-                        this.__dataEnabled = true;
-                        if (this.__dataInstanceProps) {
-                            this._initializeInstanceProperties(this.__dataInstanceProps);
-                            this.__dataInstanceProps = null;
-                        }
-                        this.ready();
-                    }
-                }
-
-                /**
-                 * Calls the `_propertiesChanged` callback with the current set of
-                 * pending changes (and old values recorded when pending changes were
-                 * set), and resets the pending set of changes. Generally, this method
-                 * should not be called in user code.
-                 *
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_flushProperties',
-                value: function _flushProperties() {
-                    var props = this.__data;
-                    var changedProps = this.__dataPending;
-                    var old = this.__dataOld;
-                    if (this._shouldPropertiesChange(props, changedProps, old)) {
-                        this.__dataPending = null;
-                        this.__dataOld = null;
-                        this._propertiesChanged(props, changedProps, old);
-                    }
-                }
-
-                /**
-                 * Called in `_flushProperties` to determine if `_propertiesChanged`
-                 * should be called. The default implementation returns true if
-                 * properties are pending. Override to customize when
-                 * `_propertiesChanged` is called.
-                 * @param {!Object} currentProps Bag of all current accessor values
-                 * @param {?Object} changedProps Bag of properties changed since the last
-                 *   call to `_propertiesChanged`
-                 * @param {?Object} oldProps Bag of previous values for each property
-                 *   in `changedProps`
-                 * @return {boolean} true if changedProps is truthy
-                 * @override
-                 */
-
-            }, {
-                key: '_shouldPropertiesChange',
-                value: function _shouldPropertiesChange(currentProps, changedProps, oldProps) {
-                    // eslint-disable-line no-unused-vars
-                    return Boolean(changedProps);
-                }
-
-                /**
-                 * Callback called when any properties with accessors created via
-                 * `_createPropertyAccessor` have been set.
-                 *
-                 * @param {!Object} currentProps Bag of all current accessor values
-                 * @param {?Object} changedProps Bag of properties changed since the last
-                 *   call to `_propertiesChanged`
-                 * @param {?Object} oldProps Bag of previous values for each property
-                 *   in `changedProps`
-                 * @return {void}
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_propertiesChanged',
-                value: function _propertiesChanged(currentProps, changedProps, oldProps) {} // eslint-disable-line no-unused-vars
-
-
-                /**
-                 * Method called to determine whether a property value should be
-                 * considered as a change and cause the `_propertiesChanged` callback
-                 * to be enqueued.
-                 *
-                 * The default implementation returns `true` if a strict equality
-                 * check fails. The method always returns false for `NaN`.
-                 *
-                 * Override this method to e.g. provide stricter checking for
-                 * Objects/Arrays when using immutable patterns.
-                 *
-                 * @param {string} property Property name
-                 * @param {*} value New property value
-                 * @param {*} old Previous property value
-                 * @return {boolean} Whether the property should be considered a change
-                 *   and enqueue a `_proeprtiesChanged` callback
-                 * @protected
-                 * @override
-                 */
-
-            }, {
-                key: '_shouldPropertyChange',
-                value: function _shouldPropertyChange(property, value, old) {
-                    return (
-                        // Strict equality check
-                        old !== value && (
-                        // This ensures (old==NaN, value==NaN) always returns false
-                        old === old || value === value)
-                    );
-                }
-
-                /**
-                 * Implements native Custom Elements `attributeChangedCallback` to
-                 * set an attribute value to a property via `_attributeToProperty`.
-                 *
-                 * @param {string} name Name of attribute that changed
-                 * @param {?string} old Old attribute value
-                 * @param {?string} value New attribute value
-                 * @param {?string} namespace Attribute namespace.
-                 * @return {void}
-                 * @suppress {missingProperties} Super may or may not implement the callback
-                 * @override
-                 */
-
-            }, {
-                key: 'attributeChangedCallback',
-                value: function attributeChangedCallback(name, old, value, namespace) {
-                    if (old !== value) {
-                        this._attributeToProperty(name, value);
-                    }
-                    if (_get(PropertiesChanged.prototype.__proto__ || Object.getPrototypeOf(PropertiesChanged.prototype), 'attributeChangedCallback', this)) {
-                        _get(PropertiesChanged.prototype.__proto__ || Object.getPrototypeOf(PropertiesChanged.prototype), 'attributeChangedCallback', this).call(this, name, old, value, namespace);
-                    }
-                }
-
-                /**
-                 * Deserializes an attribute to its associated property.
-                 *
-                 * This method calls the `_deserializeValue` method to convert the string to
-                 * a typed value.
-                 *
-                 * @param {string} attribute Name of attribute to deserialize.
-                 * @param {?string} value of the attribute.
-                 * @param {*=} type type to deserialize to, defaults to the value
-                 * returned from `typeForProperty`
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: '_attributeToProperty',
-                value: function _attributeToProperty(attribute, value, type) {
-                    if (!this.__serializing) {
-                        var map = this.__dataAttributes;
-                        var property = map && map[attribute] || attribute;
-                        this[property] = this._deserializeValue(value, type || this.constructor.typeForProperty(property));
-                    }
-                }
-
-                /**
-                 * Serializes a property to its associated attribute.
-                 *
-                 * @suppress {invalidCasts} Closure can't figure out `this` is an element.
-                 *
-                 * @param {string} property Property name to reflect.
-                 * @param {string=} attribute Attribute name to reflect to.
-                 * @param {*=} value Property value to refect.
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: '_propertyToAttribute',
-                value: function _propertyToAttribute(property, attribute, value) {
-                    this.__serializing = true;
-                    value = arguments.length < 3 ? this[property] : value;
-                    this._valueToNodeAttribute( /** @type {!HTMLElement} */this, value, attribute || this.constructor.attributeNameForProperty(property));
-                    this.__serializing = false;
-                }
-
-                /**
-                 * Sets a typed value to an HTML attribute on a node.
-                 *
-                 * This method calls the `_serializeValue` method to convert the typed
-                 * value to a string.  If the `_serializeValue` method returns `undefined`,
-                 * the attribute will be removed (this is the default for boolean
-                 * type `false`).
-                 *
-                 * @param {Element} node Element to set attribute to.
-                 * @param {*} value Value to serialize.
-                 * @param {string} attribute Attribute name to serialize to.
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: '_valueToNodeAttribute',
-                value: function _valueToNodeAttribute(node, value, attribute) {
-                    var str = this._serializeValue(value);
-                    if (str === undefined) {
-                        node.removeAttribute(attribute);
-                    } else {
-                        node.setAttribute(attribute, str);
-                    }
-                }
-
-                /**
-                 * Converts a typed JavaScript value to a string.
-                 *
-                 * This method is called when setting JS property values to
-                 * HTML attributes.  Users may override this method to provide
-                 * serialization for custom types.
-                 *
-                 * @param {*} value Property value to serialize.
-                 * @return {string | undefined} String serialized from the provided
-                 * property  value.
-                 * @override
-                 */
-
-            }, {
-                key: '_serializeValue',
-                value: function _serializeValue(value) {
-                    switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
-                        case 'boolean':
-                            return value ? '' : undefined;
-                        default:
-                            return value != null ? value.toString() : undefined;
-                    }
-                }
-
-                /**
-                 * Converts a string to a typed JavaScript value.
-                 *
-                 * This method is called when reading HTML attribute values to
-                 * JS properties.  Users may override this method to provide
-                 * deserialization for custom `type`s. Types for `Boolean`, `String`,
-                 * and `Number` convert attributes to the expected types.
-                 *
-                 * @param {?string} value Value to deserialize.
-                 * @param {*=} type Type to deserialize the string to.
-                 * @return {*} Typed value deserialized from the provided string.
-                 * @override
-                 */
-
-            }, {
-                key: '_deserializeValue',
-                value: function _deserializeValue(value, type) {
-                    switch (type) {
-                        case Boolean:
-                            return value !== null;
-                        case Number:
-                            return Number(value);
-                        default:
-                            return value;
-                    }
-                }
-            }]);
-
-            return PropertiesChanged;
-        }(superClass);
-
-        return PropertiesChanged;
-    });
-    /* harmony export (immutable) */__webpack_exports__["a"] = PropertiesChanged;
-
-    /***/
-},
-/* 17 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
-    /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__utils_boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utils_boot_js__);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__ = __webpack_require__(5);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__properties_changed_js__ = __webpack_require__(16);
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    /**
-     * Creates a copy of `props` with each property normalized such that
-     * upgraded it is an object with at least a type property { type: Type}.
-     *
-     * @param {Object} props Properties to normalize
-     * @return {Object} Copy of input `props` with normalized properties that
-     * are in the form {type: Type}
-     * @private
-     */
-    function normalizeProperties(props) {
-        var output = {};
-        for (var p in props) {
-            var o = props[p];
-            output[p] = typeof o === 'function' ? { type: o } : o;
-        }
-        return output;
-    }
-
-    /**
-     * Mixin that provides a minimal starting point to using the PropertiesChanged
-     * mixin by providing a mechanism to declare properties in a static
-     * getter (e.g. static get properties() { return { foo: String } }). Changes
-     * are reported via the `_propertiesChanged` method.
-     *
-     * This mixin provides no specific support for rendering. Users are expected
-     * to create a ShadowRoot and put content into it and update it in whatever
-     * way makes sense. This can be done in reaction to properties changing by
-     * implementing `_propertiesChanged`.
-     *
-     * @mixinFunction
-     * @polymer
-     * @appliesMixin PropertiesChanged
-     * @summary Mixin that provides a minimal starting point for using
-     * the PropertiesChanged mixin by providing a declarative `properties` object.
-     */
-    var PropertiesMixin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_mixin_js__["a" /* dedupingMixin */])(function (superClass) {
-
-        /**
-         * @constructor
-         * @implements {Polymer_PropertiesChanged}
-         * @private
-         */
-        var base = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__properties_changed_js__["a" /* PropertiesChanged */])(superClass);
-
-        /**
-         * Returns the super class constructor for the given class, if it is an
-         * instance of the PropertiesMixin.
-         *
-         * @param {!PropertiesMixinConstructor} constructor PropertiesMixin constructor
-         * @return {?PropertiesMixinConstructor} Super class constructor
-         */
-        function superPropertiesClass(constructor) {
-            var superCtor = Object.getPrototypeOf(constructor);
-
-            // Note, the `PropertiesMixin` class below only refers to the class
-            // generated by this call to the mixin; the instanceof test only works
-            // because the mixin is deduped and guaranteed only to apply once, hence
-            // all constructors in a proto chain will see the same `PropertiesMixin`
-            return superCtor.prototype instanceof PropertiesMixin ?
-            /** @type {!PropertiesMixinConstructor} */superCtor : null;
-        }
-
-        /**
-         * Returns a memoized version of the `properties` object for the
-         * given class. Properties not in object format are converted to at
-         * least {type}.
-         *
-         * @param {PropertiesMixinConstructor} constructor PropertiesMixin constructor
-         * @return {Object} Memoized properties object
-         */
-        function ownProperties(constructor) {
-            if (!constructor.hasOwnProperty(JSCompiler_renameProperty('__ownProperties', constructor))) {
-                var props = null;
-
-                if (constructor.hasOwnProperty(JSCompiler_renameProperty('properties', constructor)) && constructor.properties) {
-                    props = normalizeProperties(constructor.properties);
-                }
-
-                constructor.__ownProperties = props;
-            }
-            return constructor.__ownProperties;
-        }
-
-        /**
-         * @polymer
-         * @mixinClass
-         * @extends {base}
-         * @implements {Polymer_PropertiesMixin}
-         * @unrestricted
-         */
-
-        var PropertiesMixin = function (_base) {
-            _inherits(PropertiesMixin, _base);
-
-            function PropertiesMixin() {
-                _classCallCheck(this, PropertiesMixin);
-
-                return _possibleConstructorReturn(this, (PropertiesMixin.__proto__ || Object.getPrototypeOf(PropertiesMixin)).apply(this, arguments));
-            }
-
-            _createClass(PropertiesMixin, [{
-                key: '_initializeProperties',
-
-
-                /**
-                 * Overrides `PropertiesChanged` method and adds a call to
-                 * `finalize` which lazily configures the element's property accessors.
-                 * @override
-                 * @return {void}
-                 */
-                value: function _initializeProperties() {
-                    this.constructor.finalize();
-                    _get(PropertiesMixin.prototype.__proto__ || Object.getPrototypeOf(PropertiesMixin.prototype), '_initializeProperties', this).call(this);
-                }
-
-                /**
-                 * Called when the element is added to a document.
-                 * Calls `_enableProperties` to turn on property system from
-                 * `PropertiesChanged`.
-                 * @suppress {missingProperties} Super may or may not implement the callback
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: 'connectedCallback',
-                value: function connectedCallback() {
-                    if (_get(PropertiesMixin.prototype.__proto__ || Object.getPrototypeOf(PropertiesMixin.prototype), 'connectedCallback', this)) {
-                        _get(PropertiesMixin.prototype.__proto__ || Object.getPrototypeOf(PropertiesMixin.prototype), 'connectedCallback', this).call(this);
-                    }
-                    this._enableProperties();
-                }
-
-                /**
-                 * Called when the element is removed from a document
-                 * @suppress {missingProperties} Super may or may not implement the callback
-                 * @return {void}
-                 * @override
-                 */
-
-            }, {
-                key: 'disconnectedCallback',
-                value: function disconnectedCallback() {
-                    if (_get(PropertiesMixin.prototype.__proto__ || Object.getPrototypeOf(PropertiesMixin.prototype), 'disconnectedCallback', this)) {
-                        _get(PropertiesMixin.prototype.__proto__ || Object.getPrototypeOf(PropertiesMixin.prototype), 'disconnectedCallback', this).call(this);
-                    }
-                }
-            }], [{
-                key: 'finalize',
-
-
-                /**
-                 * Finalizes an element definition, including ensuring any super classes
-                 * are also finalized. This includes ensuring property
-                 * accessors exist on the element prototype. This method calls
-                 * `_finalizeClass` to finalize each constructor in the prototype chain.
-                 * @return {void}
-                 */
-                value: function finalize() {
-                    if (!this.hasOwnProperty(JSCompiler_renameProperty('__finalized', this))) {
-                        var superCtor = superPropertiesClass( /** @type {!PropertiesMixinConstructor} */this);
-                        if (superCtor) {
-                            superCtor.finalize();
-                        }
-                        this.__finalized = true;
-                        this._finalizeClass();
-                    }
-                }
-
-                /**
-                 * Finalize an element class. This includes ensuring property
-                 * accessors exist on the element prototype. This method is called by
-                 * `finalize` and finalizes the class constructor.
-                 *
-                 * @protected
-                 */
-
-            }, {
-                key: '_finalizeClass',
-                value: function _finalizeClass() {
-                    var props = ownProperties( /** @type {!PropertiesMixinConstructor} */this);
-                    if (props) {
-                        this.createProperties(props);
-                    }
-                }
-
-                /**
-                 * Returns a memoized version of all properties, including those inherited
-                 * from super classes. Properties not in object format are converted to
-                 * at least {type}.
-                 *
-                 * @return {Object} Object containing properties for this class
-                 * @protected
-                 */
-
-            }, {
-                key: 'typeForProperty',
-
-
-                /**
-                 * Overrides `PropertiesChanged` method to return type specified in the
-                 * static `properties` object for the given property.
-                 * @param {string} name Name of property
-                 * @return {*} Type to which to deserialize attribute
-                 *
-                 * @protected
-                 */
-                value: function typeForProperty(name) {
-                    var info = this._properties[name];
-                    return info && info.type;
-                }
-            }, {
-                key: 'observedAttributes',
-
-
-                /**
-                 * Implements standard custom elements getter to observes the attributes
-                 * listed in `properties`.
-                 * @suppress {missingProperties} Interfaces in closure do not inherit statics, but classes do
-                 */
-                get: function get() {
-                    var _this19 = this;
-
-                    var props = this._properties;
-                    return props ? Object.keys(props).map(function (p) {
-                        return _this19.attributeNameForProperty(p);
-                    }) : [];
-                }
-            }, {
-                key: '_properties',
-                get: function get() {
-                    if (!this.hasOwnProperty(JSCompiler_renameProperty('__properties', this))) {
-                        var superCtor = superPropertiesClass( /** @type {!PropertiesMixinConstructor} */this);
-                        this.__properties = Object.assign({}, superCtor && superCtor._properties, ownProperties( /** @type {PropertiesMixinConstructor} */this));
-                    }
-                    return this.__properties;
-                }
-            }]);
-
-            return PropertiesMixin;
-        }(base);
-
-        return PropertiesMixin;
-    });
-    /* harmony export (immutable) */__webpack_exports__["a"] = PropertiesMixin;
-
-    /***/
-},
-/* 18 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
-    /* unused harmony export timeOut */
-    /* unused harmony export animationFrame */
-    /* unused harmony export idlePeriod */
-    /* harmony export (binding) */
-    __webpack_require__.d(__webpack_exports__, "a", function () {
-        return microTask;
-    });
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    /**
-     * @fileoverview
-     *
-     * This module provides a number of strategies for enqueuing asynchronous
-     * tasks. Each sub-module provides a standard `run(fn)` interface that returns a
-     * handle, and a `cancel(handle)` interface for canceling async tasks before
-     * they run.
-     *
-     * @summary Module that provides a number of strategies for enqueuing
-     * asynchronous tasks.
-     */
-
-    // Microtask implemented using Mutation Observer
-    var microtaskCurrHandle = 0;
-    var microtaskLastHandle = 0;
-    var microtaskCallbacks = [];
-    var microtaskNodeContent = 0;
-    var microtaskNode = document.createTextNode('');
-    new window.MutationObserver(microtaskFlush).observe(microtaskNode, { characterData: true });
-
-    function microtaskFlush() {
-        var len = microtaskCallbacks.length;
-        for (var i = 0; i < len; i++) {
-            var cb = microtaskCallbacks[i];
-            if (cb) {
-                try {
-                    cb();
-                } catch (e) {
-                    setTimeout(function () {
-                        throw e;
-                    });
-                }
-            }
-        }
-        microtaskCallbacks.splice(0, len);
-        microtaskLastHandle += len;
-    }
-
-    /**
-     * Async interface wrapper around `setTimeout`.
-     *
-     * @namespace
-     * @summary Async interface wrapper around `setTimeout`.
-     */
-    var timeOut = {
-        /**
-         * Returns a sub-module with the async interface providing the provided
-         * delay.
-         *
-         * @memberof timeOut
-         * @param {number=} delay Time to wait before calling callbacks in ms
-         * @return {!AsyncInterface} An async timeout interface
-         */
-        after: function after(delay) {
-            return {
-                run: function run(fn) {
-                    return window.setTimeout(fn, delay);
-                },
-                cancel: function cancel(handle) {
-                    window.clearTimeout(handle);
-                }
-            };
-        },
-
-        /**
-         * Enqueues a function called in the next task.
-         *
-         * @memberof timeOut
-         * @param {!Function} fn Callback to run
-         * @param {number=} delay Delay in milliseconds
-         * @return {number} Handle used for canceling task
-         */
-        run: function run(fn, delay) {
-            return window.setTimeout(fn, delay);
-        },
-
-        /**
-         * Cancels a previously enqueued `timeOut` callback.
-         *
-         * @memberof timeOut
-         * @param {number} handle Handle returned from `run` of callback to cancel
-         * @return {void}
-         */
-        cancel: function cancel(handle) {
-            window.clearTimeout(handle);
-        }
-    };
-
-    /**
-     * Async interface wrapper around `requestAnimationFrame`.
-     *
-     * @namespace
-     * @summary Async interface wrapper around `requestAnimationFrame`.
-     */
-    var animationFrame = {
-        /**
-         * Enqueues a function called at `requestAnimationFrame` timing.
-         *
-         * @memberof animationFrame
-         * @param {function(number):void} fn Callback to run
-         * @return {number} Handle used for canceling task
-         */
-        run: function run(fn) {
-            return window.requestAnimationFrame(fn);
-        },
-
-        /**
-         * Cancels a previously enqueued `animationFrame` callback.
-         *
-         * @memberof animationFrame
-         * @param {number} handle Handle returned from `run` of callback to cancel
-         * @return {void}
-         */
-        cancel: function cancel(handle) {
-            window.cancelAnimationFrame(handle);
-        }
-    };
-
-    /**
-     * Async interface wrapper around `requestIdleCallback`.  Falls back to
-     * `setTimeout` on browsers that do not support `requestIdleCallback`.
-     *
-     * @namespace
-     * @summary Async interface wrapper around `requestIdleCallback`.
-     */
-    var idlePeriod = {
-        /**
-         * Enqueues a function called at `requestIdleCallback` timing.
-         *
-         * @memberof idlePeriod
-         * @param {function(!IdleDeadline):void} fn Callback to run
-         * @return {number} Handle used for canceling task
-         */
-        run: function run(fn) {
-            return window.requestIdleCallback ? window.requestIdleCallback(fn) : window.setTimeout(fn, 16);
-        },
-
-        /**
-         * Cancels a previously enqueued `idlePeriod` callback.
-         *
-         * @memberof idlePeriod
-         * @param {number} handle Handle returned from `run` of callback to cancel
-         * @return {void}
-         */
-        cancel: function cancel(handle) {
-            window.cancelIdleCallback ? window.cancelIdleCallback(handle) : window.clearTimeout(handle);
-        }
-    };
-
-    /**
-     * Async interface for enqueuing callbacks that run at microtask timing.
-     *
-     * Note that microtask timing is achieved via a single `MutationObserver`,
-     * and thus callbacks enqueued with this API will all run in a single
-     * batch, and not interleaved with other microtasks such as promises.
-     * Promises are avoided as an implementation choice for the time being
-     * due to Safari bugs that cause Promises to lack microtask guarantees.
-     *
-     * @namespace
-     * @summary Async interface for enqueuing callbacks that run at microtask
-     *   timing.
-     */
-    var microTask = {
-
-        /**
-         * Enqueues a function called at microtask timing.
-         *
-         * @memberof microTask
-         * @param {!Function=} callback Callback to run
-         * @return {number} Handle used for canceling task
-         */
-        run: function run(callback) {
-            microtaskNode.textContent = microtaskNodeContent++;
-            microtaskCallbacks.push(callback);
-            return microtaskCurrHandle++;
-        },
-
-
-        /**
-         * Cancels a previously enqueued `microTask` callback.
-         *
-         * @memberof microTask
-         * @param {number} handle Handle returned from `run` of callback to cancel
-         * @return {void}
-         */
-        cancel: function cancel(handle) {
-            var idx = handle - microtaskLastHandle;
-            if (idx >= 0) {
-                if (!microtaskCallbacks[idx]) {
-                    throw new Error('invalid async handle: ' + handle);
-                }
-                microtaskCallbacks[idx] = null;
-            }
-        }
-    };
-
-    /***/
-},
-/* 19 */
-/***/function (module, __webpack_exports__, __webpack_require__) {
-
-    "use strict";
-    /* unused harmony export dashToCamelCase */
-    /* harmony export (immutable) */
-    __webpack_exports__["a"] = camelToDashCase;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js__ = __webpack_require__(3);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__boot_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__boot_js__);
-    /**
-    @license
-    Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-    */
-
-    var caseMap = {};
-    var DASH_TO_CAMEL = /-[a-z]/g;
-    var CAMEL_TO_DASH = /([A-Z])/g;
-
-    /**
-     * @fileoverview Module with utilities for converting between "dash-case" and
-     * "camelCase" identifiers.
-     */
-
-    /**
-     * Converts "dash-case" identifier (e.g. `foo-bar-baz`) to "camelCase"
-     * (e.g. `fooBarBaz`).
-     *
-     * @param {string} dash Dash-case identifier
-     * @return {string} Camel-case representation of the identifier
-     */
-    function dashToCamelCase(dash) {
-        return caseMap[dash] || (caseMap[dash] = dash.indexOf('-') < 0 ? dash : dash.replace(DASH_TO_CAMEL, function (m) {
-            return m[1].toUpperCase();
-        }));
-    }
-
-    /**
-     * Converts "camelCase" identifier (e.g. `fooBarBaz`) to "dash-case"
-     * (e.g. `foo-bar-baz`).
-     *
-     * @param {string} camel Camel-case identifier
-     * @return {string} Dash-case representation of the identifier
-     */
-    function camelToDashCase(camel) {
-        return caseMap[camel] || (caseMap[camel] = camel.replace(CAMEL_TO_DASH, '-$1').toLowerCase());
-    }
-
-    /***/
-},
-/* 20 */
+/* 26 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
@@ -3686,13 +4079,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 21 */
+/* 27 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = querySelectorSlot;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__matchesSelector_js__ = __webpack_require__(6);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__matchesSelector_js__ = __webpack_require__(10);
     /*
      *  @license
      *    Copyright 2017 Brigham Young University
@@ -3730,13 +4123,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 22 */
+/* 28 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = applyTemplate;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(27);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum__ = __webpack_require__(33);
     /* harmony import */var __WEBPACK_IMPORTED_MODULE_0_hash_sum___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hash_sum__);
     /*
      *  @license
@@ -3818,7 +4211,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 23 */
+/* 29 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -3833,7 +4226,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 24 */
+/* 30 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -3848,7 +4241,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 25 */
+/* 31 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -3863,7 +4256,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 26 */
+/* 32 */
 /***/function (module, exports, __webpack_require__) {
 
     exports = module.exports = __webpack_require__(2)();
@@ -3878,7 +4271,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 27 */
+/* 33 */
 /***/function (module, exports, __webpack_require__) {
 
     "use strict";
@@ -3942,69 +4335,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 28 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(23) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"weekday\" class=\"content\"></div> <div id=\"month-and-day\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title-0\" class=\"content\"><slot name=\"title-0\"></slot></div> <div id=\"location-0\" class=\"content\"><slot name=\"location-0\"></slot></div> <div id=\"time-0\" class=\"content\"><slot name=\"time-0\"></slot></div> </div> <div id=\"divider\" class=\"content\"><slot name=\"divider\"></slot></div> <div class=\"section-third\"> <div id=\"title-1\" class=\"content\"><slot name=\"title-1\"></slot></div> <div id=\"location-1\" class=\"content\"><slot name=\"location-1\"></slot></div> <div id=\"time-1\" class=\"content\"><slot name=\"time-1\"></slot></div> </div>";
-
-    /***/
-},
-/* 29 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(24) + "</style> <a href=\"https://calendar.byu.edu\" class=\"full-link\" id=\"full-events-area\"> <div class=\"full-events\"> <div class=\"full-events-text\"> FULL<div class=\"larger\">EVENTS</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a> <a href=\"https://registrar.byu.edu/academic-calendar\" class=\"academic-link\" id=\"academic-area\"> <div class=\"academic-calendar-wrapper\"> <div class=\"academic-calendar-text\"> <div class=\"larger\">ACADEMIC</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a>";
-
-    /***/
-},
-/* 30 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(25) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
-
-    /***/
-},
-/* 31 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-    /***/
-},
-/* 32 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(7) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
-
-    /***/
-},
-/* 33 */
-/***/function (module, exports, __webpack_require__) {
-
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
-
-    /***/
-},
 /* 34 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(8) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(29) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"weekday\" class=\"content\"></div> <div id=\"month-and-day\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title-0\" class=\"content\"><slot name=\"title-0\"></slot></div> <div id=\"location-0\" class=\"content\"><slot name=\"location-0\"></slot></div> <div id=\"time-0\" class=\"content\"><slot name=\"time-0\"></slot></div> </div> <div id=\"divider\" class=\"content\"><slot name=\"divider\"></slot></div> <div class=\"section-third\"> <div id=\"title-1\" class=\"content\"><slot name=\"title-1\"></slot></div> <div id=\"location-1\" class=\"content\"><slot name=\"location-1\"></slot></div> <div id=\"time-1\" class=\"content\"><slot name=\"time-1\"></slot></div> </div>";
 
     /***/
 },
 /* 35 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(26) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items... </div>";
+    module.exports = "<style>" + __webpack_require__(30) + "</style> <a href=\"https://calendar.byu.edu\" class=\"full-link\" id=\"full-events-area\"> <div class=\"full-events\"> <div class=\"full-events-text\"> FULL<div class=\"larger\">EVENTS</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a> <a href=\"https://registrar.byu.edu/academic-calendar\" class=\"academic-link\" id=\"academic-area\"> <div class=\"academic-calendar-wrapper\"> <div class=\"academic-calendar-text\"> <div class=\"larger\">ACADEMIC</div>CALENDAR </div> <div class=\"events-button white bold centered-text\">View &gt;&gt;</div> </div> </a>";
 
     /***/
 },
 /* 36 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(31) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-and-day\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+    /***/
+},
+/* 37 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(11) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"><slot id=\"image\" name=\"image\"></slot></div> <div class=\"section-second\"> <div id=\"title\"><slot class=\"content\" name=\"title\"></slot></div> <div id=\"time\"><slot class=\"content\" name=\"time\"></slot></div> <div id=\"location\"><slot class=\"content\" name=\"location\"></slot></div> <div id=\"price\"><slot class=\"content\" name=\"price\"></slot></div> <div id=\"link\"><slot class=\"content\" name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+
+    /***/
+},
+/* 38 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(11) + "</style> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"year\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"price\" class=\"content\"><slot name=\"price\"></slot></div> <div id=\"link\" class=\"content\"><slot name=\"link\"></slot></div> </div> <div class=\"section-third\"> <div id=\"tickets-link\"><slot id=\"tickets-link\" class=\"content\" name=\"tickets-link\"></slot></div> </div>";
+
+    /***/
+},
+/* 39 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-abb\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> <div id=\"description\"><slot class=\"content\" name=\"description\"></slot></div> </div>";
+
+    /***/
+},
+/* 40 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+
+    /***/
+},
+/* 41 */
+/***/function (module, exports, __webpack_require__) {
+
+    module.exports = "<style>" + __webpack_require__(32) + "</style> <div class=\"root block-calendar-widget-block\" id=\"calendar-root\"> Loading Calendar Items... </div>";
+
+    /***/
+},
+/* 42 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
-    /* harmony import */
-    var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
-    /* unused harmony reexport render */
+    /* unused harmony export property */
+    /* unused harmony export query */
+    /* unused harmony export queryAll */
     /**
      * @license
      * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -4019,203 +4412,214 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      * http://polymer.github.io/PATENTS.txt
      */
 
-    /**
-     * Interprets a template literal as a lit-extended HTML template.
-     */
-    var html = function html(strings) {
-        for (var _len3 = arguments.length, values = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-            values[_key3 - 1] = arguments[_key3];
-        }
-
-        return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
+    var legacyCustomElement = function legacyCustomElement(tagName, clazz) {
+        window.customElements.define(tagName, clazz);
+        // Cast as any because TS doesn't recognize the return type as being a
+        // subtype of the decorated class when clazz is typed as
+        // `Constructor<HTMLElement>` for some reason.
+        // `Constructor<HTMLElement>` is helpful to make sure the decorator is
+        // applied to elements however.
+        // tslint:disable-next-line:no-any
+        return clazz;
     };
-    /* unused harmony export html */
+    var standardCustomElement = function standardCustomElement(tagName, descriptor) {
+        var kind = descriptor.kind,
+            elements = descriptor.elements;
 
-    /**
-     * Interprets a template literal as a lit-extended SVG template.
-     */
-    var svg = function svg(strings) {
-        for (var _len4 = arguments.length, values = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-            values[_key4 - 1] = arguments[_key4];
-        }
-
-        return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* SVGTemplateResult */](strings, values, 'svg', extendedPartCallback);
+        return {
+            kind: kind,
+            elements: elements,
+            // This callback is called once the class is otherwise fully defined
+            finisher: function finisher(clazz) {
+                window.customElements.define(tagName, clazz);
+            }
+        };
     };
-    /* unused harmony export svg */
-
     /**
-     * A PartCallback which allows templates to set properties and declarative
-     * event handlers.
+     * Class decorator factory that defines the decorated class as a custom element.
      *
-     * Properties are set by default, instead of attributes. Attribute names in
-     * lit-html templates preserve case, so properties are case sensitive. If an
-     * expression takes up an entire attribute value, then the property is set to
-     * that value. If an expression is interpolated with a string or other
-     * expressions then the property is set to the string result of the
-     * interpolation.
-     *
-     * To set an attribute instead of a property, append a `$` suffix to the
-     * attribute name.
-     *
-     * Example:
-     *
-     *     html`<button class$="primary">Buy Now</button>`
-     *
-     * To set an event handler, prefix the attribute name with `on-`:
-     *
-     * Example:
-     *
-     *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
-     *
+     * @param tagName the name of the custom element to define
      */
-    var extendedPartCallback = function extendedPartCallback(instance, templatePart, node) {
-        if (templatePart.type === 'attribute') {
-            if (templatePart.rawName.substr(0, 3) === 'on-') {
-                var eventName = templatePart.rawName.slice(3);
-                return new EventPart(instance, node, eventName);
-            }
-            var lastChar = templatePart.name.substr(templatePart.name.length - 1);
-            if (lastChar === '$') {
-                var name = templatePart.name.slice(0, -1);
-                return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */](instance, node, name, templatePart.strings);
-            }
-            if (lastChar === '?') {
-                var _name = templatePart.name.slice(0, -1);
-                return new BooleanAttributePart(instance, node, _name, templatePart.strings);
-            }
-            return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
-        }
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* defaultPartCallback */])(instance, templatePart, node);
+    var customElement = function customElement(tagName) {
+        return function (classOrDescriptor) {
+            return typeof classOrDescriptor === 'function' ? legacyCustomElement(tagName, classOrDescriptor) : standardCustomElement(tagName, classOrDescriptor);
+        };
     };
-    /* unused harmony export extendedPartCallback */
+    /* unused harmony export customElement */
 
-    /**
-     * Implements a boolean attribute, roughly as defined in the HTML
-     * specification.
-     *
-     * If the value is truthy, then the attribute is present with a value of
-     * ''. If the value is falsey, the attribute is removed.
-     */
-
-    var BooleanAttributePart = function (_WEBPACK_IMPORTED_MO7) {
-        _inherits(BooleanAttributePart, _WEBPACK_IMPORTED_MO7);
-
-        function BooleanAttributePart() {
-            _classCallCheck(this, BooleanAttributePart);
-
-            return _possibleConstructorReturn(this, (BooleanAttributePart.__proto__ || Object.getPrototypeOf(BooleanAttributePart)).apply(this, arguments));
-        }
-
-        _createClass(BooleanAttributePart, [{
-            key: 'setValue',
-            value: function setValue(values, startIndex) {
-                var s = this.strings;
-                if (s.length === 2 && s[0] === '' && s[1] === '') {
-                    var value = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["j" /* getValue */])(this, values[startIndex]);
-                    if (value === __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["k" /* noChange */]) {
-                        return;
+    var standardProperty = function standardProperty(options, element) {
+        // When decorating an accessor, pass it through and add property metadata.
+        // Note, the `hasOwnProperty` check in `createProperty` ensures we don't
+        // stomp over the user's accessor.
+        if (element.kind === 'method' && element.descriptor && !('value' in element.descriptor)) {
+            return Object.assign({}, element, {
+                finisher: function finisher(clazz) {
+                    clazz.createProperty(element.key, options);
+                }
+            });
+        } else {
+            // createProperty() takes care of defining the property, but we still
+            // must return some kind of descriptor, so return a descriptor for an
+            // unused prototype field. The finisher calls createProperty().
+            return {
+                kind: 'field',
+                key: Symbol(),
+                placement: 'own',
+                descriptor: {},
+                // When @babel/plugin-proposal-decorators implements initializers,
+                // do this instead of the initializer below. See:
+                // https://github.com/babel/babel/issues/9260 extras: [
+                //   {
+                //     kind: 'initializer',
+                //     placement: 'own',
+                //     initializer: descriptor.initializer,
+                //   }
+                // ],
+                // tslint:disable-next-line:no-any decorator
+                initializer: function initializer() {
+                    if (typeof element.initializer === 'function') {
+                        this[element.key] = element.initializer.call(this);
                     }
-                    if (value) {
-                        this.element.setAttribute(this.name, '');
-                    } else {
-                        this.element.removeAttribute(this.name);
-                    }
-                } else {
-                    throw new Error('boolean attributes can only contain a single expression');
+                },
+                finisher: function finisher(clazz) {
+                    clazz.createProperty(element.key, options);
                 }
-            }
-        }]);
-
-        return BooleanAttributePart;
-    }(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */]);
-    /* unused harmony export BooleanAttributePart */
-
-    var PropertyPart = function (_WEBPACK_IMPORTED_MO8) {
-        _inherits(PropertyPart, _WEBPACK_IMPORTED_MO8);
-
-        function PropertyPart() {
-            _classCallCheck(this, PropertyPart);
-
-            return _possibleConstructorReturn(this, (PropertyPart.__proto__ || Object.getPrototypeOf(PropertyPart)).apply(this, arguments));
+            };
         }
+    };
+    var legacyProperty = function legacyProperty(options, proto, name) {
+        proto.constructor.createProperty(name, options);
+    };
+    /**
+     * A property decorator which creates a LitElement property which reflects a
+     * corresponding attribute value. A `PropertyDeclaration` may optionally be
+     * supplied to configure property features.
+     *
+     * @ExportDecoratedItems
+     */
+    function property(options) {
+        // tslint:disable-next-line:no-any decorator
+        return function (protoOrDescriptor, name) {
+            return name !== undefined ? legacyProperty(options, protoOrDescriptor, name) : standardProperty(options, protoOrDescriptor);
+        };
+    }
+    /**
+     * A property decorator that converts a class property into a getter that
+     * executes a querySelector on the element's renderRoot.
+     *
+     * @ExportDecoratedItems
+     */
+    function query(selector) {
+        return function (protoOrDescriptor,
+        // tslint:disable-next-line:no-any decorator
+        name) {
+            var descriptor = {
+                get: function get() {
+                    return this.renderRoot.querySelector(selector);
+                },
 
-        _createClass(PropertyPart, [{
-            key: 'setValue',
-            value: function setValue(values, startIndex) {
-                var s = this.strings;
-                var value = void 0;
-                if (this._equalToPreviousValues(values, startIndex)) {
-                    return;
-                }
-                if (s.length === 2 && s[0] === '' && s[1] === '') {
-                    // An expression that occupies the whole attribute value will leave
-                    // leading and trailing empty strings.
-                    value = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["j" /* getValue */])(this, values[startIndex]);
-                } else {
-                    // Interpolation, so interpolate
-                    value = this._interpolate(values, startIndex);
-                }
-                if (value !== __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["k" /* noChange */]) {
-                    this.element[this.name] = value;
-                }
-                this._previousValues = values;
+                enumerable: true,
+                configurable: true
+            };
+            return name !== undefined ? legacyQuery(descriptor, protoOrDescriptor, name) : standardQuery(descriptor, protoOrDescriptor);
+        };
+    }
+    /**
+     * A property decorator that converts a class property into a getter
+     * that executes a querySelectorAll on the element's renderRoot.
+     *
+     * @ExportDecoratedItems
+     */
+    function queryAll(selector) {
+        return function (protoOrDescriptor,
+        // tslint:disable-next-line:no-any decorator
+        name) {
+            var descriptor = {
+                get: function get() {
+                    return this.renderRoot.querySelectorAll(selector);
+                },
+
+                enumerable: true,
+                configurable: true
+            };
+            return name !== undefined ? legacyQuery(descriptor, protoOrDescriptor, name) : standardQuery(descriptor, protoOrDescriptor);
+        };
+    }
+    var legacyQuery = function legacyQuery(descriptor, proto, name) {
+        Object.defineProperty(proto, name, descriptor);
+    };
+    var standardQuery = function standardQuery(descriptor, element) {
+        return {
+            kind: 'method',
+            placement: 'prototype',
+            key: element.key,
+            descriptor: descriptor
+        };
+    };
+    var standardEventOptions = function standardEventOptions(options, element) {
+        return Object.assign({}, element, {
+            finisher: function finisher(clazz) {
+                Object.assign(clazz.prototype[element.key], options);
             }
-        }]);
-
-        return PropertyPart;
-    }(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* AttributePart */]);
-    /* unused harmony export PropertyPart */
-
-    var EventPart = function () {
-        function EventPart(instance, element, eventName) {
-            _classCallCheck(this, EventPart);
-
-            this.instance = instance;
-            this.element = element;
-            this.eventName = eventName;
-        }
-
-        _createClass(EventPart, [{
-            key: 'setValue',
-            value: function setValue(value) {
-                var listener = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["j" /* getValue */])(this, value);
-                if (listener === this._listener) {
-                    return;
-                }
-                if (listener == null) {
-                    this.element.removeEventListener(this.eventName, this);
-                } else if (this._listener == null) {
-                    this.element.addEventListener(this.eventName, this);
-                }
-                this._listener = listener;
+        });
+    };
+    var legacyEventOptions =
+    // tslint:disable-next-line:no-any legacy decorator
+    function legacyEventOptions(options, proto, name) {
+        Object.assign(proto[name], options);
+    };
+    /**
+     * Adds event listener options to a method used as an event listener in a
+     * lit-html template.
+     *
+     * @param options An object that specifis event listener options as accepted by
+     * `EventTarget#addEventListener` and `EventTarget#removeEventListener`.
+     *
+     * Current browsers support the `capture`, `passive`, and `once` options. See:
+     * https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters
+     *
+     * @example
+     *
+     *     class MyElement {
+     *
+     *       clicked = false;
+     *
+     *       render() {
+     *         return html`<div @click=${this._onClick}`><button></button></div>`;
+     *       }
+     *
+     *       @eventOptions({capture: true})
+     *       _onClick(e) {
+     *         this.clicked = true;
+     *       }
+     *     }
+     */
+    var eventOptions = function eventOptions(options) {
+        return (
+            // Return value typed as any to prevent TypeScript from complaining that
+            // standard decorator function signature does not match TypeScript decorator
+            // signature
+            // TODO(kschaaf): unclear why it was only failing on this decorator and not
+            // the others
+            function (protoOrDescriptor, name) {
+                return name !== undefined ? legacyEventOptions(options, protoOrDescriptor, name) : standardEventOptions(options, protoOrDescriptor);
             }
-        }, {
-            key: 'handleEvent',
-            value: function handleEvent(event) {
-                if (typeof this._listener === 'function') {
-                    this._listener.call(this.element, event);
-                } else if (typeof this._listener.handleEvent === 'function') {
-                    this._listener.handleEvent(event);
-                }
-            }
-        }]);
+        );
+    };
+    /* unused harmony export eventOptions */
 
-        return EventPart;
-    }();
-    /* unused harmony export EventPart */
-
-    //# sourceMappingURL=lit-extended.js.map
+    //# sourceMappingURL=decorators.js.map
 
     /***/
 },
-/* 37 */
+/* 43 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
     /* harmony export (immutable) */
     __webpack_exports__["a"] = removeNodesFromTemplate;
     /* harmony export (immutable) */__webpack_exports__["b"] = insertNodeIntoTemplate;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__template_js__ = __webpack_require__(0);
     /**
      * @license
      * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -4229,8 +4633,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      * subject to an additional IP rights grant found at
      * http://polymer.github.io/PATENTS.txt
      */
+    /**
+     * @module shady-render
+     */
 
-    var walkerNodeFilter = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT;
+    var walkerNodeFilter = 133 /* NodeFilter.SHOW_{ELEMENT|COMMENT|TEXT} */;
     /**
      * Removes the list of nodes from a Template safely. In addition to removing
      * nodes from the Template, the Template part indices are updated to match
@@ -4244,15 +4651,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      *     div
      *       div#2 (remove)  <-- continue removing (removing node is still div#1)
      *         div
-     * div <-- stop removing since previous sibling is the removing node (div#1, removed 4 nodes)
+     * div <-- stop removing since previous sibling is the removing node (div#1,
+     * removed 4 nodes)
      */
     function removeNodesFromTemplate(template, nodesToRemove) {
         var content = template.element.content,
             parts = template.parts;
 
         var walker = document.createTreeWalker(content, walkerNodeFilter, null, false);
-        var partIndex = 0;
-        var part = parts[0];
+        var partIndex = nextActiveIndexInTemplateParts(parts);
+        var part = parts[partIndex];
         var nodeIndex = -1;
         var removeCount = 0;
         var nodesToRemoveInTemplate = [];
@@ -4280,7 +4688,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 // If part is in a removed node deactivate it by setting index to -1 or
                 // adjust the index as needed.
                 part.index = currentRemovingNode !== null ? -1 : part.index - removeCount;
-                part = parts[++partIndex];
+                // go to the next active part.
+                partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
+                part = parts[partIndex];
             }
         }
         nodesToRemoveInTemplate.forEach(function (n) {
@@ -4288,7 +4698,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         });
     }
     var countNodes = function countNodes(node) {
-        var count = 1;
+        var count = node.nodeType === 11 /* Node.DOCUMENT_FRAGMENT_NODE */ ? 0 : 1;
         var walker = document.createTreeWalker(node, walkerNodeFilter, null, false);
         while (walker.nextNode()) {
             count++;
@@ -4300,7 +4710,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         for (var i = startIndex + 1; i < parts.length; i++) {
             var part = parts[i];
-            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* isTemplatePartActive */])(part)) {
+            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__template_js__["c" /* isTemplatePartActive */])(part)) {
                 return i;
             }
         }
@@ -4330,8 +4740,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             walkerIndex++;
             var walkerNode = walker.currentNode;
             if (walkerNode === refNode) {
-                refNode.parentNode.insertBefore(node, refNode);
                 insertCount = countNodes(node);
+                refNode.parentNode.insertBefore(node, refNode);
             }
             while (partIndex !== -1 && parts[partIndex].index === walkerIndex) {
                 // If we've inserted the node, simply adjust all subsequent parts
@@ -4350,14 +4760,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     /***/
 },
-/* 38 */
+/* 44 */
 /***/function (module, __webpack_exports__, __webpack_require__) {
 
     "use strict";
-    /* harmony export (immutable) */
-    __webpack_exports__["a"] = render;
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(4);
-    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(37);
+    /* harmony import */
+    var __WEBPACK_IMPORTED_MODULE_0__dom_js__ = __webpack_require__(4);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_1__modify_template_js__ = __webpack_require__(43);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_2__render_js__ = __webpack_require__(18);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_3__template_factory_js__ = __webpack_require__(7);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_4__template_instance_js__ = __webpack_require__(8);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_5__template_result_js__ = __webpack_require__(5);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_6__template_js__ = __webpack_require__(0);
+    /* harmony import */var __WEBPACK_IMPORTED_MODULE_7__lit_html_js__ = __webpack_require__(9);
     /* unused harmony reexport html */
     /* unused harmony reexport svg */
     /* unused harmony reexport TemplateResult */
@@ -4374,11 +4789,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      * subject to an additional IP rights grant found at
      * http://polymer.github.io/PATENTS.txt
      */
+    /**
+     * Module to add shady DOM/shady CSS polyfill support to lit-html template
+     * rendering. See the [[render]] method for details.
+     *
+     * @module shady-render
+     * @preferred
+     */
+    /**
+     * Do not remove this comment; it keeps typedoc from misplacing the module
+     * docs.
+     */
 
     // Get a key to lookup in `templateCaches`.
     var getTemplateCacheKey = function getTemplateCacheKey(type, scopeName) {
         return type + '--' + scopeName;
     };
+    var compatibleShadyCSSVersion = true;
+    if (typeof window.ShadyCSS === 'undefined') {
+        compatibleShadyCSSVersion = false;
+    } else if (typeof window.ShadyCSS.prepareTemplateDom === 'undefined') {
+        console.warn('Incompatible ShadyCSS version detected. ' + 'Please update to at least @webcomponents/webcomponentsjs@2.0.2 and ' + '@webcomponents/shadycss@1.3.1.');
+        compatibleShadyCSSVersion = false;
+    }
     /**
      * Template factory which scopes template DOM using ShadyCSS.
      * @param scopeName {string}
@@ -4386,20 +4819,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var shadyTemplateFactory = function shadyTemplateFactory(scopeName) {
         return function (result) {
             var cacheKey = getTemplateCacheKey(result.type, scopeName);
-            var templateCache = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* templateCaches */].get(cacheKey);
+            var templateCache = __WEBPACK_IMPORTED_MODULE_3__template_factory_js__["a" /* templateCaches */].get(cacheKey);
             if (templateCache === undefined) {
-                templateCache = new Map();
-                __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* templateCaches */].set(cacheKey, templateCache);
+                templateCache = {
+                    stringsArray: new WeakMap(),
+                    keyString: new Map()
+                };
+                __WEBPACK_IMPORTED_MODULE_3__template_factory_js__["a" /* templateCaches */].set(cacheKey, templateCache);
             }
-            var template = templateCache.get(result.strings);
+            var template = templateCache.stringsArray.get(result.strings);
+            if (template !== undefined) {
+                return template;
+            }
+            var key = result.strings.join(__WEBPACK_IMPORTED_MODULE_6__template_js__["a" /* marker */]);
+            template = templateCache.keyString.get(key);
             if (template === undefined) {
                 var element = result.getTemplateElement();
-                if (_typeof(window.ShadyCSS) === 'object') {
+                if (compatibleShadyCSSVersion) {
                     window.ShadyCSS.prepareTemplateDom(element, scopeName);
                 }
-                template = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* Template */](result, element);
-                templateCache.set(result.strings, template);
+                template = new __WEBPACK_IMPORTED_MODULE_6__template_js__["b" /* Template */](result, element);
+                templateCache.keyString.set(key, template);
             }
+            templateCache.stringsArray.set(result.strings, template);
             return template;
         };
     };
@@ -4407,19 +4849,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     /**
      * Removes all style elements from Templates for the given scopeName.
      */
-    function removeStylesFromLitTemplates(scopeName) {
+    var removeStylesFromLitTemplates = function removeStylesFromLitTemplates(scopeName) {
         TEMPLATE_TYPES.forEach(function (type) {
-            var templates = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* templateCaches */].get(getTemplateCacheKey(type, scopeName));
+            var templates = __WEBPACK_IMPORTED_MODULE_3__template_factory_js__["a" /* templateCaches */].get(getTemplateCacheKey(type, scopeName));
             if (templates !== undefined) {
-                templates.forEach(function (template) {
+                templates.keyString.forEach(function (template) {
                     var content = template.element.content;
+                    // IE 11 doesn't support the iterable param Set constructor
 
-                    var styles = content.querySelectorAll('style');
-                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modify_template_js__["a" /* removeNodesFromTemplate */])(template, new Set(Array.from(styles)));
+                    var styles = new Set();
+                    Array.from(content.querySelectorAll('style')).forEach(function (s) {
+                        styles.add(s);
+                    });
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modify_template_js__["a" /* removeNodesFromTemplate */])(template, styles);
                 });
             }
         });
-    }
+    };
     var shadyRenderSet = new Set();
     /**
      * For the given scope name, ensures that ShadyCSS style scoping is performed.
@@ -4432,61 +4878,161 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
      * Note, <style> elements can only be placed into templates for the
      * initial rendering of the scope. If <style> elements are included in templates
      * dynamically rendered to the scope (after the first scope render), they will
-     * not be scoped and the <style> will be left in the template and rendered output.
+     * not be scoped and the <style> will be left in the template and rendered
+     * output.
      */
-    var ensureStylesScoped = function ensureStylesScoped(fragment, template, scopeName) {
-        // only scope element template once per scope name
-        if (!shadyRenderSet.has(scopeName)) {
-            shadyRenderSet.add(scopeName);
-            var styleTemplate = document.createElement('template');
-            Array.from(fragment.querySelectorAll('style')).forEach(function (s) {
-                styleTemplate.content.appendChild(s);
-            });
-            window.ShadyCSS.prepareTemplateStyles(styleTemplate, scopeName);
-            // Fix templates: note the expectation here is that the given `fragment`
-            // has been generated from the given `template` which contains
-            // the set of templates rendered into this scope.
-            // It is only from this set of initial templates from which styles
-            // will be scoped and removed.
-            removeStylesFromLitTemplates(scopeName);
-            // ApplyShim case
-            if (window.ShadyCSS.nativeShadow) {
-                var style = styleTemplate.content.querySelector('style');
-                if (style !== null) {
-                    // Insert style into rendered fragment
-                    fragment.insertBefore(style, fragment.firstChild);
-                    // Insert into lit-template (for subsequent renders)
-                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modify_template_js__["b" /* insertNodeIntoTemplate */])(template, style.cloneNode(true), template.element.content.firstChild);
-                }
-            }
-        }
-    };
-    // NOTE: We're copying code from lit-html's `render` method here.
-    // We're doing this explicitly because the API for rendering templates is likely
-    // to change in the near term.
-    function render(result, container, scopeName) {
-        var templateFactory = shadyTemplateFactory(scopeName);
-        var template = templateFactory(result);
-        var instance = container.__templateInstance;
-        // Repeat render, just call update()
-        if (instance !== undefined && instance.template === template && instance._partCallback === result.partCallback) {
-            instance.update(result.values);
+    var prepareTemplateStyles = function prepareTemplateStyles(renderedDOM, template, scopeName) {
+        shadyRenderSet.add(scopeName);
+        // Move styles out of rendered DOM and store.
+        var styles = renderedDOM.querySelectorAll('style');
+        var length = styles.length;
+        // If there are no styles, skip unnecessary work
+
+        if (length === 0) {
+            // Ensure prepareTemplateStyles is called to support adding
+            // styles via `prepareAdoptedCssText` since that requires that
+            // `prepareTemplateStyles` is called.
+            window.ShadyCSS.prepareTemplateStyles(template.element, scopeName);
             return;
         }
-        // First render, create a new TemplateInstance and append it
-        instance = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* TemplateInstance */](template, result.partCallback, templateFactory);
-        container.__templateInstance = instance;
-        var fragment = instance._clone();
-        instance.update(result.values);
-        var host = container instanceof ShadowRoot ? container.host : undefined;
-        // If there's a shadow host, do ShadyCSS scoping...
-        if (host !== undefined && _typeof(window.ShadyCSS) === 'object') {
-            ensureStylesScoped(fragment, template, scopeName);
-            window.ShadyCSS.styleElement(host);
+        var condensedStyle = document.createElement('style');
+        // Collect styles into a single style. This helps us make sure ShadyCSS
+        // manipulations will not prevent us from being able to fix up template
+        // part indices.
+        // NOTE: collecting styles is inefficient for browsers but ShadyCSS
+        // currently does this anyway. When it does not, this should be changed.
+        for (var i = 0; i < length; i++) {
+            var _style = styles[i];
+            _style.parentNode.removeChild(_style);
+            condensedStyle.textContent += _style.textContent;
         }
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d" /* removeNodes */])(container, container.firstChild);
-        container.appendChild(fragment);
-    }
+        // Remove styles from nested templates in this scope.
+        removeStylesFromLitTemplates(scopeName);
+        // And then put the condensed style into the "root" template passed in as
+        // `template`.
+        var content = template.element.content;
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modify_template_js__["b" /* insertNodeIntoTemplate */])(template, condensedStyle, content.firstChild);
+        // Note, it's important that ShadyCSS gets the template that `lit-html`
+        // will actually render so that it can update the style inside when
+        // needed (e.g. @apply native Shadow DOM case).
+        window.ShadyCSS.prepareTemplateStyles(template.element, scopeName);
+        var style = content.querySelector('style');
+        if (window.ShadyCSS.nativeShadow && style !== null) {
+            // When in native Shadow DOM, ensure the style created by ShadyCSS is
+            // included in initially rendered output (`renderedDOM`).
+            renderedDOM.insertBefore(style.cloneNode(true), renderedDOM.firstChild);
+        } else {
+            // When no style is left in the template, parts will be broken as a
+            // result. To fix this, we put back the style node ShadyCSS removed
+            // and then tell lit to remove that node from the template.
+            // There can be no style in the template in 2 cases (1) when Shady DOM
+            // is in use, ShadyCSS removes all styles, (2) when native Shadow DOM
+            // is in use ShadyCSS removes the style if it contains no content.
+            // NOTE, ShadyCSS creates its own style so we can safely add/remove
+            // `condensedStyle` here.
+            content.insertBefore(condensedStyle, content.firstChild);
+            var removes = new Set();
+            removes.add(condensedStyle);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modify_template_js__["a" /* removeNodesFromTemplate */])(template, removes);
+        }
+    };
+    /**
+     * Extension to the standard `render` method which supports rendering
+     * to ShadowRoots when the ShadyDOM (https://github.com/webcomponents/shadydom)
+     * and ShadyCSS (https://github.com/webcomponents/shadycss) polyfills are used
+     * or when the webcomponentsjs
+     * (https://github.com/webcomponents/webcomponentsjs) polyfill is used.
+     *
+     * Adds a `scopeName` option which is used to scope element DOM and stylesheets
+     * when native ShadowDOM is unavailable. The `scopeName` will be added to
+     * the class attribute of all rendered DOM. In addition, any style elements will
+     * be automatically re-written with this `scopeName` selector and moved out
+     * of the rendered DOM and into the document `<head>`.
+     *
+     * It is common to use this render method in conjunction with a custom element
+     * which renders a shadowRoot. When this is done, typically the element's
+     * `localName` should be used as the `scopeName`.
+     *
+     * In addition to DOM scoping, ShadyCSS also supports a basic shim for css
+     * custom properties (needed only on older browsers like IE11) and a shim for
+     * a deprecated feature called `@apply` that supports applying a set of css
+     * custom properties to a given location.
+     *
+     * Usage considerations:
+     *
+     * * Part values in `<style>` elements are only applied the first time a given
+     * `scopeName` renders. Subsequent changes to parts in style elements will have
+     * no effect. Because of this, parts in style elements should only be used for
+     * values that will never change, for example parts that set scope-wide theme
+     * values or parts which render shared style elements.
+     *
+     * * Note, due to a limitation of the ShadyDOM polyfill, rendering in a
+     * custom element's `constructor` is not supported. Instead rendering should
+     * either done asynchronously, for example at microtask timing (for example
+     * `Promise.resolve()`), or be deferred until the first time the element's
+     * `connectedCallback` runs.
+     *
+     * Usage considerations when using shimmed custom properties or `@apply`:
+     *
+     * * Whenever any dynamic changes are made which affect
+     * css custom properties, `ShadyCSS.styleElement(element)` must be called
+     * to update the element. There are two cases when this is needed:
+     * (1) the element is connected to a new parent, (2) a class is added to the
+     * element that causes it to match different custom properties.
+     * To address the first case when rendering a custom element, `styleElement`
+     * should be called in the element's `connectedCallback`.
+     *
+     * * Shimmed custom properties may only be defined either for an entire
+     * shadowRoot (for example, in a `:host` rule) or via a rule that directly
+     * matches an element with a shadowRoot. In other words, instead of flowing from
+     * parent to child as do native css custom properties, shimmed custom properties
+     * flow only from shadowRoots to nested shadowRoots.
+     *
+     * * When using `@apply` mixing css shorthand property names with
+     * non-shorthand names (for example `border` and `border-width`) is not
+     * supported.
+     */
+    var render = function render(result, container, options) {
+        var scopeName = options.scopeName;
+        var hasRendered = __WEBPACK_IMPORTED_MODULE_2__render_js__["a" /* parts */].has(container);
+        var needsScoping = compatibleShadyCSSVersion && container.nodeType === 11 /* Node.DOCUMENT_FRAGMENT_NODE */ && !!container.host && result instanceof __WEBPACK_IMPORTED_MODULE_5__template_result_js__["a" /* TemplateResult */];
+        // Handle first render to a scope specially...
+        var firstScopeRender = needsScoping && !shadyRenderSet.has(scopeName);
+        // On first scope render, render into a fragment; this cannot be a single
+        // fragment that is reused since nested renders can occur synchronously.
+        var renderContainer = firstScopeRender ? document.createDocumentFragment() : container;
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__render_js__["b" /* render */])(result, renderContainer, Object.assign({ templateFactory: shadyTemplateFactory(scopeName) }, options));
+        // When performing first scope render,
+        // (1) We've rendered into a fragment so that there's a chance to
+        // `prepareTemplateStyles` before sub-elements hit the DOM
+        // (which might cause them to render based on a common pattern of
+        // rendering in a custom element's `connectedCallback`);
+        // (2) Scope the template with ShadyCSS one time only for this scope.
+        // (3) Render the fragment into the container and make sure the
+        // container knows its `part` is the one we just rendered. This ensures
+        // DOM will be re-used on subsequent renders.
+        if (firstScopeRender) {
+            var part = __WEBPACK_IMPORTED_MODULE_2__render_js__["a" /* parts */].get(renderContainer);
+            __WEBPACK_IMPORTED_MODULE_2__render_js__["a" /* parts */].delete(renderContainer);
+            if (part.value instanceof __WEBPACK_IMPORTED_MODULE_4__template_instance_js__["a" /* TemplateInstance */]) {
+                prepareTemplateStyles(renderContainer, part.value.template, scopeName);
+            }
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__dom_js__["a" /* removeNodes */])(container, container.firstChild);
+            container.appendChild(renderContainer);
+            __WEBPACK_IMPORTED_MODULE_2__render_js__["a" /* parts */].set(container, part);
+        }
+        // After elements have hit the DOM, update styling if this is the
+        // initial render to this container.
+        // This is needed whenever dynamic changes are made so it would be
+        // safest to do every render; however, this would regress performance
+        // so we leave it up to the user to call `ShadyCSSS.styleElement`
+        // for dynamic changes.
+        if (!hasRendered && needsScoping) {
+            window.ShadyCSS.styleElement(container.host);
+        }
+    };
+    /* harmony export (immutable) */__webpack_exports__["a"] = render;
+
     //# sourceMappingURL=shady-render.js.map
 
     /***/
