@@ -2881,7 +2881,7 @@ class ByuCalendar extends __WEBPACK_IMPORTED_MODULE_2_lit_element__["a" /* LitEl
 
   render() {
     return __WEBPACK_IMPORTED_MODULE_2_lit_element__["b" /* html */]`
-     <h1>Some content</h1>
+     ${__WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a}
     `;
   }
 

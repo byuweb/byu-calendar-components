@@ -38,7 +38,7 @@ class ByuCalendar extends LitElement {
 
   render() {
     return html`
-     <h1>Some content</h1>
+     ${template}
     `;
   }
 

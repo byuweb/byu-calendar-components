@@ -9,7 +9,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _templateObject = _taggedTemplateLiteral(['\n     <h1>Some content</h1>\n    '], ['\n     <h1>Some content</h1>\n    ']);
+var _templateObject = _taggedTemplateLiteral(['\n     ', '\n    '], ['\n     ', '\n    ']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -3522,7 +3522,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _createClass(ByuCalendar, [{
             key: 'render',
             value: function render() {
-                return __WEBPACK_IMPORTED_MODULE_2_lit_element__["b" /* html */](_templateObject);
+                return __WEBPACK_IMPORTED_MODULE_2_lit_element__["b" /* html */](_templateObject, __WEBPACK_IMPORTED_MODULE_0__byu_calendar_html___default.a);
             }
 
             // _createRoot() {
