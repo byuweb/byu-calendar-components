@@ -9,8 +9,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -3129,21 +3127,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(ByuCalendarFeatureColumn, [{
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-        }, {
-            key: '_render',
-            value: function _render(_ref2) {
-                _objectDestructuringEmpty(_ref2);
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
+            key: 'render',
+            value: function render() {
                 var _this15 = this;
 
-                _get(ByuCalendarFeatureColumn.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarFeatureColumn.prototype), 'connectedCallback', this).call(this);
                 util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, function () {
                     var dateOb = _this15.date;
                     var day = dateOb.getDate();
@@ -3195,19 +3182,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(ByuCalendarFeatureLinks, [{
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-        }, {
-            key: '_render',
-            value: function _render(_ref3) {
-                _objectDestructuringEmpty(_ref3);
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
-                _get(ByuCalendarFeatureLinks.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarFeatureLinks.prototype), 'connectedCallback', this).call(this);
+            key: 'render',
+            value: function render() {
                 util.applyTemplate(this, 'byu-calendar-feature-links', linksTemplate);
             }
         }]);
@@ -3242,21 +3218,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(ByuCalendarMinimalTile, [{
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-        }, {
-            key: '_render',
-            value: function _render(_ref4) {
-                _objectDestructuringEmpty(_ref4);
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
+            key: 'render',
+            value: function render() {
                 var _this18 = this;
 
-                _get(ByuCalendarMinimalTile.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarMinimalTile.prototype), 'connectedCallback', this).call(this);
                 util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, function () {
                     var dateOb = _this18.date;
                     var day = dateOb.getDate();
@@ -3311,21 +3276,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(ByuCalendarRow, [{
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-        }, {
-            key: '_render',
-            value: function _render(_ref5) {
-                _objectDestructuringEmpty(_ref5);
-            }
-        }, {
-            key: 'connectedCallback',
-            value: function connectedCallback() {
+            key: 'render',
+            value: function render() {
                 var _this20 = this;
 
-                _get(ByuCalendarRow.prototype.__proto__ || Object.getPrototypeOf(ByuCalendarRow.prototype), 'connectedCallback', this).call(this);
                 var template = this.imageRow ? imageTemplate : tileTemplate;
                 util.applyTemplate(this, 'byu-calendar-row', template, function () {
                     if (!_this20.imageRow) {
@@ -3399,11 +3353,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(ByuCalendarTile, [{
-            key: '_createRoot',
-            value: function _createRoot() {
-                return this.attachShadow({ mode: 'open' });
-            }
-        }, {
             key: 'render',
             value: function render() {
                 var _this22 = this;
@@ -3424,26 +3373,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     _this22.shadowRoot.querySelector('#day-number').innerHTML = day;
                 });
             }
-
-            // connectedCallback() {
-            //     super.connectedCallback();
-            //     let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
-            //     util.applyTemplate(this, 'byu-calendar-tile', template, () => {
-            //         var dateOb = this.date;
-            //         var monthName = months[dateOb.getMonth()];
-            //         var monthAbb = monthAbbs[dateOb.getMonth()];
-            //         var day = dateOb.getDate();
-            //         var weekday = weekdays[dateOb.getDay()];
-            //         if (this.layout == 'horizontal') {
-            //             this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
-            //         } else {
-            //             this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-            //             this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
-            //         }
-            //         this.shadowRoot.querySelector('#day-number').innerHTML = day;
-            //     });
-            // }
-
         }, {
             key: 'layout',
             get: function get() {
@@ -3536,40 +3465,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     getCalendarData(_this24);
                 });
             }
-
-            // _createRoot() {
-            //   // return this.attachShadow({ mode: 'open' });
-            // }
-            //
-            // connectedCallback() {
-            //   // super.connectedCallback();
-            //   //This will stamp our template for us, then let us perform actions on the stamped DOM.
-            //   // util.applyTemplate(this, 'byu-calendar', template, () => {
-            //   //   getCalendarData(this);
-            //   // });
-            // }
-            //
-            // disconnectedCallback() {
-            //
-            // }
-            //
-            // static get observedAttributes() {
-            //   return [ATTR_TITLE, ATTR_CATEGORIES, ATTR_DAYS, ATTR_PRICE, ATTR_DISPLAY, ATTR_LIMIT];
-            // }
-            //
-            // attributeChangedCallback(attr, oldValue, newValue) {
-            //   // This just makes unnecessary calls after connectedCallback inits the calendar data
-            //   switch (attr) {
-            //     case ATTR_TITLE:
-            //     case ATTR_CATEGORIES:
-            //     case ATTR_DAYS:
-            //     case ATTR_PRICE:
-            //     case ATTR_DISPLAY:
-            //     case ATTR_LIMIT:
-            //       //getCalendarData(this);
-            //       break;
-            //   }
-            // }
 
             // Attributes
 
@@ -4393,7 +4288,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* 40 */
 /***/function (module, exports, __webpack_require__) {
 
-    module.exports = "<style>" + __webpack_require__(12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"><slot id=\"month-val\" name=\"month-name\"></slot></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+    module.exports = "<style>" + __webpack_require__(12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
     /***/
 },

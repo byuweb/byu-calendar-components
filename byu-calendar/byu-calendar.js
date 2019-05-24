@@ -18,7 +18,7 @@
 
 import template from './byu-calendar.html';
 import * as util from 'byu-web-component-utils';
-import {LitElement, html} from 'lit-element';
+import {LitElement} from 'lit-element';
 // Why do we need this? This breaks the code
 // import { currentId } from 'async_hooks';
 
@@ -41,40 +41,6 @@ class ByuCalendar extends LitElement {
       getCalendarData(this);
     });
   }
-
-  // _createRoot() {
-  //   // return this.attachShadow({ mode: 'open' });
-  // }
-  //
-  // connectedCallback() {
-  //   // super.connectedCallback();
-  //   //This will stamp our template for us, then let us perform actions on the stamped DOM.
-  //   // util.applyTemplate(this, 'byu-calendar', template, () => {
-  //   //   getCalendarData(this);
-  //   // });
-  // }
-  //
-  // disconnectedCallback() {
-  //
-  // }
-  //
-  // static get observedAttributes() {
-  //   return [ATTR_TITLE, ATTR_CATEGORIES, ATTR_DAYS, ATTR_PRICE, ATTR_DISPLAY, ATTR_LIMIT];
-  // }
-  //
-  // attributeChangedCallback(attr, oldValue, newValue) {
-  //   // This just makes unnecessary calls after connectedCallback inits the calendar data
-  //   switch (attr) {
-  //     case ATTR_TITLE:
-  //     case ATTR_CATEGORIES:
-  //     case ATTR_DAYS:
-  //     case ATTR_PRICE:
-  //     case ATTR_DISPLAY:
-  //     case ATTR_LIMIT:
-  //       //getCalendarData(this);
-  //       break;
-  //   }
-  // }
 
   // Attributes
   set title(value) {

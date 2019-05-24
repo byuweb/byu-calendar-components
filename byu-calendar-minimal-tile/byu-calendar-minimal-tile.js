@@ -7,10 +7,6 @@ var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oc
 
 class ByuCalendarMinimalTile extends LitElement {
 
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
-
   get date() {
     let dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
     if (dates.length) {
@@ -21,19 +17,14 @@ class ByuCalendarMinimalTile extends LitElement {
     }
   }
 
-  _render({}) {
-
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
+  render() {
     util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, () => {
       let dateOb = this.date;
       let day = dateOb.getDate();
       let monthName = months[dateOb.getMonth()];
       this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
     });
-  };
+  }
 }
 
 window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);

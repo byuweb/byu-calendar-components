@@ -8,12 +8,16 @@ var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
 
 class ByuCalendarFeatureColumn extends LitElement {
 
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
+  render() {
+    util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
+      var dateOb = this.date;
+      var day = dateOb.getDate();
+      var weekday = weekdays[dateOb.getDay()];
+      var monthName = months[dateOb.getMonth()];
 
-  _render({}) {
-
+      this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+      this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+    });
   }
 
   get date() {
@@ -26,18 +30,6 @@ class ByuCalendarFeatureColumn extends LitElement {
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
-      var dateOb = this.date;
-      var day = dateOb.getDate();
-      var weekday = weekdays[dateOb.getDay()];
-      var monthName = months[dateOb.getMonth()];
-
-      this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
-      this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
-    });
-  }
 }
 
 window.customElements.define('byu-calendar-feature-column', ByuCalendarFeatureColumn);

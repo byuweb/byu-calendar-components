@@ -11,10 +11,6 @@ var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
 
 class ByuCalendarRow extends LitElement {
 
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
-
     get imageRow() {
         return this.hasAttribute(ATTR_IMAGE_ROW);
     }
@@ -37,12 +33,7 @@ class ByuCalendarRow extends LitElement {
         }
     }
 
-    _render({}) {
-
-    }
-    
-    connectedCallback(){
-        super.connectedCallback();
+    render() {
         let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
             if (!this.imageRow) {
@@ -57,6 +48,7 @@ class ByuCalendarRow extends LitElement {
                 this.shadowRoot.querySelector('#year').innerHTML = year;
             }
         });
+
     }
 }
 

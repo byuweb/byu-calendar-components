@@ -2579,12 +2579,16 @@ var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
 
 class ByuCalendarFeatureColumn extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */] {
 
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
+  render() {
+    util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
+      var dateOb = this.date;
+      var day = dateOb.getDate();
+      var weekday = weekdays[dateOb.getDay()];
+      var monthName = months[dateOb.getMonth()];
 
-  _render({}) {
-
+      this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+      this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
+    });
   }
 
   get date() {
@@ -2597,18 +2601,6 @@ class ByuCalendarFeatureColumn extends __WEBPACK_IMPORTED_MODULE_0_lit_element__
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    util.applyTemplate(this, 'byu-calendar-feature-column', featureTemplate, () => {
-      var dateOb = this.date;
-      var day = dateOb.getDate();
-      var weekday = weekdays[dateOb.getDay()];
-      var monthName = months[dateOb.getMonth()];
-
-      this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
-      this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
-    });
-  }
 }
 
 window.customElements.define('byu-calendar-feature-column', ByuCalendarFeatureColumn);
@@ -2626,18 +2618,11 @@ const util = __webpack_require__(1);
 const linksTemplate = __webpack_require__(35);
 
 class ByuCalendarFeatureLinks extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */] {
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
 
-  _render({}) {
-
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
+  render() {
     util.applyTemplate(this, 'byu-calendar-feature-links', linksTemplate);
   }
+
 }
 
 window.customElements.define('byu-calendar-feature-links', ByuCalendarFeatureLinks);
@@ -2658,10 +2643,6 @@ var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oc
 
 class ByuCalendarMinimalTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */] {
 
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
-
   get date() {
     let dates = this.shadowRoot.querySelector('#date-val').assignedNodes();
     if (dates.length) {
@@ -2672,19 +2653,14 @@ class ByuCalendarMinimalTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["
     }
   }
 
-  _render({}) {
-
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
+  render() {
     util.applyTemplate(this, 'byu-calendar-minimal-tile', minimalTemplate, () => {
       let dateOb = this.date;
       let day = dateOb.getDate();
       let monthName = months[dateOb.getMonth()];
       this.shadowRoot.querySelector('#month-and-day').innerHTML = monthName + ' ' + day;
     });
-  };
+  }
 }
 
 window.customElements.define('byu-calendar-minimal-tile', ByuCalendarMinimalTile);
@@ -2709,10 +2685,6 @@ var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
 
 class ByuCalendarRow extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */] {
 
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
-
     get imageRow() {
         return this.hasAttribute(ATTR_IMAGE_ROW);
     }
@@ -2735,12 +2707,7 @@ class ByuCalendarRow extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* Li
         }
     }
 
-    _render({}) {
-
-    }
-    
-    connectedCallback(){
-        super.connectedCallback();
+    render() {
         let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
             if (!this.imageRow) {
@@ -2755,6 +2722,7 @@ class ByuCalendarRow extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* Li
                 this.shadowRoot.querySelector('#year').innerHTML = year;
             }
         });
+
     }
 }
 
@@ -2778,10 +2746,6 @@ var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Se
 var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"];
 
 class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* LitElement */] {
-
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
 
     get layout() {
         return this.getAttribute('layout');
@@ -2822,25 +2786,6 @@ class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* L
             this.shadowRoot.querySelector('#day-number').innerHTML = day;
         });
     }
-
-    // connectedCallback() {
-    //     super.connectedCallback();
-    //     let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
-    //     util.applyTemplate(this, 'byu-calendar-tile', template, () => {
-    //         var dateOb = this.date;
-    //         var monthName = months[dateOb.getMonth()];
-    //         var monthAbb = monthAbbs[dateOb.getMonth()];
-    //         var day = dateOb.getDate();
-    //         var weekday = weekdays[dateOb.getDay()];
-    //         if (this.layout == 'horizontal') {
-    //             this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
-    //         } else {
-    //             this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
-    //             this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
-    //         }
-    //         this.shadowRoot.querySelector('#day-number').innerHTML = day;
-    //     });
-    // }
 }
 
 window.customElements.define('byu-calendar-tile', ByuCalendarTile);
@@ -2898,40 +2843,6 @@ class ByuCalendar extends __WEBPACK_IMPORTED_MODULE_2_lit_element__["a" /* LitEl
       getCalendarData(this);
     });
   }
-
-  // _createRoot() {
-  //   // return this.attachShadow({ mode: 'open' });
-  // }
-  //
-  // connectedCallback() {
-  //   // super.connectedCallback();
-  //   //This will stamp our template for us, then let us perform actions on the stamped DOM.
-  //   // util.applyTemplate(this, 'byu-calendar', template, () => {
-  //   //   getCalendarData(this);
-  //   // });
-  // }
-  //
-  // disconnectedCallback() {
-  //
-  // }
-  //
-  // static get observedAttributes() {
-  //   return [ATTR_TITLE, ATTR_CATEGORIES, ATTR_DAYS, ATTR_PRICE, ATTR_DISPLAY, ATTR_LIMIT];
-  // }
-  //
-  // attributeChangedCallback(attr, oldValue, newValue) {
-  //   // This just makes unnecessary calls after connectedCallback inits the calendar data
-  //   switch (attr) {
-  //     case ATTR_TITLE:
-  //     case ATTR_CATEGORIES:
-  //     case ATTR_DAYS:
-  //     case ATTR_PRICE:
-  //     case ATTR_DISPLAY:
-  //     case ATTR_LIMIT:
-  //       //getCalendarData(this);
-  //       break;
-  //   }
-  // }
 
   // Attributes
   set title(value) {
@@ -3750,7 +3661,7 @@ module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"t
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"><slot id=\"month-val\" name=\"month-name\"></slot></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
 /***/ }),
 /* 41 */
