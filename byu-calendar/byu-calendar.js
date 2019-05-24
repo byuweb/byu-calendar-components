@@ -489,7 +489,6 @@ function formatTime(date) {
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
 }
-}
 
 function stringToISO(dateString) {
   var dateArray = dateString.split(" ");
