@@ -2805,12 +2805,7 @@ class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* L
         }
     }
 
-    _render({}) {
-
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
+    render() {
         let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
@@ -2821,12 +2816,31 @@ class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* L
             if (this.layout == 'horizontal') {
                 this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
             } else {
-                this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                // this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
                 this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
             }
             this.shadowRoot.querySelector('#day-number').innerHTML = day;
         });
     }
+
+    // connectedCallback() {
+    //     super.connectedCallback();
+    //     let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
+    //     util.applyTemplate(this, 'byu-calendar-tile', template, () => {
+    //         var dateOb = this.date;
+    //         var monthName = months[dateOb.getMonth()];
+    //         var monthAbb = monthAbbs[dateOb.getMonth()];
+    //         var day = dateOb.getDate();
+    //         var weekday = weekdays[dateOb.getDay()];
+    //         if (this.layout == 'horizontal') {
+    //             this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+    //         } else {
+    //             this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+    //             this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+    //         }
+    //         this.shadowRoot.querySelector('#day-number').innerHTML = day;
+    //     });
+    // }
 }
 
 window.customElements.define('byu-calendar-tile', ByuCalendarTile);
@@ -3130,6 +3144,7 @@ function vertical_tiles(jsonArr) {
     html += '<byu-calendar-tile layout="vertical">';
     let start = new Date(item.StartDateTime.trim());
     html += '<p slot="date">' + item.StartDateTime + '</p>';
+    html += '<span slot="month-name">' + shortMonths[start.getMonth()] + '</span>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -3736,7 +3751,7 @@ module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"t
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
+module.exports = "<style>" + __webpack_require__ (12) + "</style> <link type=\"text/css\" rel=\"stylesheet\" href=\"https://cloud.typography.com/75214/6517752/css/fonts.css\" media=\"all\"> <div class=\"section-first\"> <div id=\"date\"><slot id=\"date-val\" name=\"date\"></slot></div> <div id=\"month-name\" class=\"content\"><slot id=\"month-val\" name=\"month-name\"></slot></div> <div id=\"day-number\" class=\"content\"></div> <div id=\"weekday\" class=\"content\"></div> </div> <div class=\"section-second\"> <div id=\"title\" class=\"content\"><slot name=\"title\"></slot></div> <div id=\"time\" class=\"content\"><slot name=\"time\"></slot></div> <div id=\"location\" class=\"content\"><slot name=\"location\"></slot></div> </div>";
 
 /***/ }),
 /* 41 */

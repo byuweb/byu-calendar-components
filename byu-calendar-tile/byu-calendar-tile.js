@@ -36,12 +36,7 @@ class ByuCalendarTile extends LitElement {
         }
     }
 
-    _render({}) {
-
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
+    render() {
         let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
@@ -52,12 +47,31 @@ class ByuCalendarTile extends LitElement {
             if (this.layout == 'horizontal') {
                 this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
             } else {
-                this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                // this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
                 this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
             }
             this.shadowRoot.querySelector('#day-number').innerHTML = day;
         });
     }
+
+    // connectedCallback() {
+    //     super.connectedCallback();
+    //     let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
+    //     util.applyTemplate(this, 'byu-calendar-tile', template, () => {
+    //         var dateOb = this.date;
+    //         var monthName = months[dateOb.getMonth()];
+    //         var monthAbb = monthAbbs[dateOb.getMonth()];
+    //         var day = dateOb.getDate();
+    //         var weekday = weekdays[dateOb.getDay()];
+    //         if (this.layout == 'horizontal') {
+    //             this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
+    //         } else {
+    //             this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+    //             this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
+    //         }
+    //         this.shadowRoot.querySelector('#day-number').innerHTML = day;
+    //     });
+    // }
 }
 
 window.customElements.define('byu-calendar-tile', ByuCalendarTile);
