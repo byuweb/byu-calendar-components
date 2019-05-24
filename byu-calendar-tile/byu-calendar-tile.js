@@ -47,7 +47,7 @@ class ByuCalendarTile extends LitElement {
             if (this.layout == 'horizontal') {
                 this.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
             } else {
-                // this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
                 this.shadowRoot.querySelector('#weekday').innerHTML = weekday;
             }
             this.shadowRoot.querySelector('#day-number').innerHTML = day;

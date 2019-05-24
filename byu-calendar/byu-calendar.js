@@ -286,8 +286,7 @@ function vertical_tiles(jsonArr) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
     let start = new Date(item.StartDateTime.trim());
-    html += '<p slot="date">' + item.StartDateTime + '</p>';
-    html += '<span slot="month-name">' + shortMonths[4] + '</span>';
+    html += '<p slot="date">' + start.toISOString() + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';

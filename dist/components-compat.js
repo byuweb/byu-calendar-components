@@ -3418,7 +3418,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     if (_this22.layout == 'horizontal') {
                         _this22.shadowRoot.querySelector('#month-abb').innerHTML = monthAbb;
                     } else {
-                        // this.shadowRoot.querySelector('#month-name').innerHTML = monthName;
+                        _this22.shadowRoot.querySelector('#month-name').innerHTML = monthName;
                         _this22.shadowRoot.querySelector('#weekday').innerHTML = weekday;
                     }
                     _this22.shadowRoot.querySelector('#day-number').innerHTML = day;
@@ -3789,8 +3789,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var item = jsonArr[i];
             html += '<byu-calendar-tile layout="vertical">';
             var start = new Date(item.StartDateTime.trim());
-            html += '<p slot="date">' + item.StartDateTime + '</p>';
-            html += '<span slot="month-name">' + shortMonths[4] + '</span>';
+            html += '<p slot="date">' + start.toISOString() + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
                 html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
