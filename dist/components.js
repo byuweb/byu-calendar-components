@@ -3055,10 +3055,10 @@ function vertical_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(item.StartDateTime);
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
-    if (item.AllDay === 'false'){
+    if (item.AllDay === 'false') {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
     } else {
       html += '<div class="time" slot="time">All Day</div>';
