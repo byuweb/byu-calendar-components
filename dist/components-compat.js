@@ -3686,7 +3686,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var item = jsonArr[i];
             html += '<byu-calendar-tile layout="vertical">';
             var start = new Date(stringToISO(item.StartDateTime.trim()));
-            html += '<p slot="date">' + stringToISO(item.StartDateTime.trim()) + '</p>';
+            html += '<p slot="date">' + start + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
                 html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -3924,7 +3924,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     function stringToISO(dateString) {
         var dateArray = dateString.split(" ");
-        return dateArray[0] + 'T' + dateArray[1];
+        var isoString = dateArray[0] + 'T' + dateArray[1] + 'Z';
+        var date = new Date(isoString);
+        var offsetHours = (date.getTimezoneOffset() - date.getTimezoneOffset() % 60) / 60;
+        var offsetPrefix = offsetHours < 0 ? '+' : '-';
+        offsetHours = offsetHours < 0 ? offsetHours * -1 : offsetHours;
+        offsetHours = offsetHours < 10 ? '0' + offsetHours : offsetHours;
+        var offsetMinutes = date.getTimezoneOffset() % 60;
+        offsetMinutes = offsetMinutes < 10 ? '0' + offsetMinutes : offsetMinutes;
+        return dateArray[0] + 'T' + dateArray[1] + offsetPrefix + offsetHours + ':' + offsetMinutes;
     }
 
     /***/
