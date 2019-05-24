@@ -3685,7 +3685,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
             html += '<byu-calendar-tile layout="vertical">';
-            var start = new Date(item.StartDateTime);
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             html += '<p slot="date">' + start + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
@@ -3920,6 +3920,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
+    }
+
+    function stringToISO(dateString) {
+        var dateArray = dateString.split(" ");
+        return dateArray[0] + 'T' + dateArray[1] + 'Z';
     }
 
     /***/
