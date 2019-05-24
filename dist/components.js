@@ -2763,7 +2763,8 @@ class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* L
         var dates = this.shadowRoot.querySelector("#date-val").assignedNodes();
         if (dates.length) {
             var date = this.shadowRoot.querySelector("#date-val").assignedNodes()[0];
-            return new Date(date.innerText.trim());
+            return date;
+            // return new Date(date.innerText.trim());
         } else {
             return null;
         }
@@ -2775,6 +2776,7 @@ class ByuCalendarTile extends __WEBPACK_IMPORTED_MODULE_0_lit_element__["a" /* L
             var dateOb = this.date;
             var monthName = months[dateOb.getMonth()];
             var monthAbb = monthAbbs[dateOb.getMonth()];
+            // var monthAbb = dateOb;
             var day = dateOb.getDate();
             var weekday = weekdays[dateOb.getDay()];
             if (this.layout == 'horizontal') {

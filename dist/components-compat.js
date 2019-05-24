@@ -3362,6 +3362,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     var dateOb = _this22.date;
                     var monthName = months[dateOb.getMonth()];
                     var monthAbb = monthAbbs[dateOb.getMonth()];
+                    // var monthAbb = dateOb;
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
                     if (_this22.layout == 'horizontal') {
@@ -3391,7 +3392,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var dates = this.shadowRoot.querySelector("#date-val").assignedNodes();
                 if (dates.length) {
                     var date = this.shadowRoot.querySelector("#date-val").assignedNodes()[0];
-                    return new Date(date.innerText.trim());
+                    return date;
+                    // return new Date(date.innerText.trim());
                 } else {
                     return null;
                 }

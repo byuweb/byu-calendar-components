@@ -26,6 +26,7 @@ class ByuCalendarTile extends LitElement {
         var dates = this.shadowRoot.querySelector("#date-val").assignedNodes();
         if (dates.length) {
             var date = this.shadowRoot.querySelector("#date-val").assignedNodes()[0];
+            // return date;
             return new Date(date.innerText.trim());
         } else {
             return null;
@@ -37,7 +38,8 @@ class ByuCalendarTile extends LitElement {
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
             var monthName = months[dateOb.getMonth()];
-            var monthAbb = monthAbbs[dateOb.getMonth()];
+            // var monthAbb = monthAbbs[dateOb.getMonth()];
+            var monthAbb = dateOb;
             var day = dateOb.getDate();
             var weekday = weekdays[dateOb.getDay()];
             if (this.layout == 'horizontal') {
