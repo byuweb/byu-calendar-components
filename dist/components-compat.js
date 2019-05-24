@@ -3707,7 +3707,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
             html += '<byu-calendar-tile layout="horizontal">';
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             html += '<p slot="date">' + start + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
@@ -3732,7 +3732,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
             html += '<byu-calendar-row>';
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             html += '<p slot="date">' + start + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
@@ -3771,7 +3771,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var current = new Date();
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             var diff = dateDiff(current, start);
             if (i === 0 || diff !== 0) {
                 html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
@@ -3818,7 +3818,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var columnCount = 0;
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             var diff = dateDiff(current, start);
             if (i === 0 || diff !== 0) {
                 if (i !== 0) {
@@ -3863,7 +3863,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
             html += '<byu-calendar-minimal-tile>';
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             html += '<p slot="date">' + start + '</p>';
             if (item.AllDay === 'false') {
                 html += '<div slot="time">' + formatTime(start) + '</div>';
@@ -3885,7 +3885,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var current = new Date();
         for (var i = 0; i < jsonArr.length; i++) {
             var item = jsonArr[i];
-            var start = new Date(item.StartDateTime.trim());
+            var start = new Date(stringToISO(item.StartDateTime.trim()));
             var diff = dateDiff(current, start);
             if (i === 0 || diff !== 0) {
                 html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';

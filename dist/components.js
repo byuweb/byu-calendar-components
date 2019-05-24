@@ -3077,7 +3077,7 @@ function horizontal_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="horizontal">';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -3102,7 +3102,7 @@ function fullpage_rows(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-row>';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -3141,7 +3141,7 @@ function fullpage_imgrows(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
@@ -3188,7 +3188,7 @@ function feature_columns(jsonArr) {
   let columnCount = 0;
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0 ) {
       if (i !== 0) {
@@ -3234,7 +3234,7 @@ function minimal_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-minimal-tile>';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     if (item.AllDay === 'false') {
       html += '<div slot="time">' + formatTime(start) + '</div>';
@@ -3257,7 +3257,7 @@ function list_format(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';
