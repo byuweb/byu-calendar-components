@@ -3361,8 +3361,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 util.applyTemplate(this, 'byu-calendar-tile', template, function () {
                     var dateOb = _this22.date;
                     var monthName = months[dateOb.getMonth()];
-                    // var monthAbb = monthAbbs[dateOb.getMonth()];
-                    var monthAbb = dateOb;
+                    var monthAbb = monthAbbs[dateOb.getMonth()];
+                    // var monthAbb = dateOb;
                     var day = dateOb.getDate();
                     var weekday = weekdays[dateOb.getDay()];
                     if (_this22.layout == 'horizontal') {
@@ -3686,7 +3686,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var item = jsonArr[i];
             html += '<byu-calendar-tile layout="vertical">';
             var start = new Date(item.StartDateTime.trim());
-            html += '<p slot="date">' + start.toISOString() + '</p>';
+            html += '<p slot="date">' + start + '</p>';
             html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
             if (item.AllDay === 'false') {
                 html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
