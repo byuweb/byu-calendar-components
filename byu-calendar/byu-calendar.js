@@ -252,7 +252,7 @@ function vertical_tiles(jsonArr) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
     let start = new Date(stringToISO(item.StartDateTime.trim()));
-    html += '<p slot="date">' + start + '</p>';
+    html += '<p slot="date">' + stringToISO(item.StartDateTime.trim()) + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false') {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -489,8 +489,9 @@ function formatTime(date) {
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
 }
+}
 
 function stringToISO(dateString) {
   var dateArray = dateString.split(" ");
-  return dateArray[0] + 'T' + dateArray[1] + 'Z';
+  return dateArray[0] + 'T' + dateArray[1];
 }

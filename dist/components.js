@@ -3055,8 +3055,9 @@ function vertical_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
+    let dateTime = splitDate(item.StartDateTime.trim());
     let start = new Date(stringToISO(item.StartDateTime.trim()));
-    html += '<p slot="date">' + start + '</p>';
+    html += '<p slot="date">' + stringToISO(item.StartDateTime.trim()) + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false') {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
@@ -3294,9 +3295,29 @@ function formatTime(date) {
   return strTime;
 }
 
+function splitDate(dateString) {
+    return dateString.split(" ");
+}
+
+function newFormatTime(time) {
+    var timeArray = time.split(":");
+    var hours = timeArray[0];
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    var minutes = timeArray[1];
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 && !minutes ? '0' + minutes : minutes;
+    return hours + ':' + minutes + ' ' + ampm;
+}
+
+function getTime(dateString) {
+  var dateArray = dateString.split(" ");
+  return dateArray[1];
+}
+
 function stringToISO(dateString) {
   var dateArray = dateString.split(" ");
-  return dateArray[0] + 'T' + dateArray[1] + 'Z';
+  return dateArray[0] + 'T' + dateArray[1];
 }
 
 /***/ }),
