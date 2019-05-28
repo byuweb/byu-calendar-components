@@ -1,5 +1,5 @@
 'use strict';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 const util = require('byu-web-component-utils');
 const verticalTemplate = require('./byu-calendar-vtile.html');
 const horizontalTemplate = require('./byu-calendar-htile.html');
@@ -9,10 +9,6 @@ var monthAbbs = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Se
 var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"];
 
 class ByuCalendarTile extends LitElement {
-
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
 
     get layout() {
         return this.getAttribute('layout');
@@ -30,23 +26,20 @@ class ByuCalendarTile extends LitElement {
         var dates = this.shadowRoot.querySelector("#date-val").assignedNodes();
         if (dates.length) {
             var date = this.shadowRoot.querySelector("#date-val").assignedNodes()[0];
+            // return date;
             return new Date(date.innerText.trim());
         } else {
             return null;
         }
     }
 
-    _render({}) {
-
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
+    render() {
         let template = this.layout === 'horizontal' ? horizontalTemplate : verticalTemplate;
         util.applyTemplate(this, 'byu-calendar-tile', template, () => {
             var dateOb = this.date;
             var monthName = months[dateOb.getMonth()];
             var monthAbb = monthAbbs[dateOb.getMonth()];
+            // var monthAbb = dateOb;
             var day = dateOb.getDate();
             var weekday = weekdays[dateOb.getDay()];
             if (this.layout == 'horizontal') {

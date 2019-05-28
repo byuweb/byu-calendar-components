@@ -18,7 +18,7 @@
 
 import template from './byu-calendar.html';
 import * as util from 'byu-web-component-utils';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 // Why do we need this? This breaks the code
 // import { currentId } from 'async_hooks';
 
@@ -36,42 +36,10 @@ const DEFAULT_DISPLAY = 4;
 
 class ByuCalendar extends LitElement {
 
-  _createRoot() {
-    return this.attachShadow({ mode: 'open' });
-  }
-
-  _render({}) {
-
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    //This will stamp our template for us, then let us perform actions on the stamped DOM.
+  render() {
     util.applyTemplate(this, 'byu-calendar', template, () => {
       getCalendarData(this);
     });
-  }
-
-  disconnectedCallback() {
-
-  }
-
-  static get observedAttributes() {
-    return [ATTR_TITLE, ATTR_CATEGORIES, ATTR_DAYS, ATTR_PRICE, ATTR_DISPLAY, ATTR_LIMIT];
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    // This just makes unnecessary calls after connectedCallback inits the calendar data
-    switch (attr) {
-      case ATTR_TITLE:
-      case ATTR_CATEGORIES:
-      case ATTR_DAYS:
-      case ATTR_PRICE:
-      case ATTR_DISPLAY:
-      case ATTR_LIMIT:
-        //getCalendarData(this);
-        break;
-    }
   }
 
   // Attributes
@@ -210,7 +178,7 @@ function getCalendarData(component) {
     * Note that tile displays will wrap to the next line if the number of events returned can't all fit in one row. */
     limit: component.limit,  // no limit is the default. This will show however many events there are for the above criteria.
   };
-  
+
   // if no limit is specified, limit to 3
   if (!data.limit) data.limit = 3;
 
@@ -283,10 +251,10 @@ function vertical_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="vertical">';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
-    if (item.AllDay === 'false'){
+    if (item.AllDay === 'false') {
       html += '<div class="time" slot="time">' + formatTime(start) + ' ' + item.Timezone + '</div>';
     } else {
       html += '<div class="time" slot="time">All Day</div>';
@@ -305,7 +273,7 @@ function horizontal_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-tile layout="horizontal">';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -320,7 +288,7 @@ function horizontal_tiles(jsonArr) {
       html += '<div class="location" slot="location">' + item.LocationName + '</div>';
     }
     html += '</byu-calendar-tile>';
-  }  
+  }
   html += '</div>';
   return html;
 }
@@ -330,7 +298,7 @@ function fullpage_rows(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-row>';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     html += '<a href="' + item.FullUrl + ' " slot="title" target="_blank"><div class="title">' + item.Title + '</div></a>';
     if (item.AllDay === 'false'){
@@ -369,7 +337,7 @@ function fullpage_imgrows(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="fullpage-date-wrapper"><div class="fullpage-date-weekday">' + days[start.getDay()] + ' | ' + '</div><div class="fullpage-date-text">' + months[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear() + '</div></div>';
@@ -416,7 +384,7 @@ function feature_columns(jsonArr) {
   let columnCount = 0;
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0 ) {
       if (i !== 0) {
@@ -462,7 +430,7 @@ function minimal_tiles(jsonArr) {
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
     html += '<byu-calendar-minimal-tile>';
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     html += '<p slot="date">' + start + '</p>';
     if (item.AllDay === 'false') {
       html += '<div slot="time">' + formatTime(start) + '</div>';
@@ -485,7 +453,7 @@ function list_format(jsonArr) {
   let current = new Date();
   for (let i = 0; i < jsonArr.length; i++) {
     let item = jsonArr[i];
-    let start = new Date(item.StartDateTime.trim());
+    let start = new Date(stringToISO(item.StartDateTime.trim()));
     let diff = dateDiff(current, start);
     if (i === 0 || diff !== 0) {
       html += '<div class="date-wrapper"><div class="date-day-number">' + start.getDate() + '</div><div class="date-text">' + shortMonths[start.getMonth()] + ', ' + days[start.getDay()] + '</div></div>';
@@ -520,4 +488,17 @@ function formatTime(date) {
   minutes = minutes < 10 ? '0' + minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
+}
+
+function stringToISO(dateString) {
+  var dateArray = dateString.split(" ");
+  var isoString =  dateArray[0] + 'T' + dateArray[1] + 'Z';
+  var date = new Date(isoString);
+  var offsetHours = (date.getTimezoneOffset() - (date.getTimezoneOffset() % 60)) / 60;
+  var offsetPrefix = offsetHours < 0 ? '+' : '-';
+  offsetHours = offsetHours < 0 ? offsetHours * -1 : offsetHours;
+  offsetHours = offsetHours < 10 ? '0' + offsetHours : offsetHours;
+  var offsetMinutes = date.getTimezoneOffset() % 60;
+  offsetMinutes = offsetMinutes < 10 ? '0' + offsetMinutes : offsetMinutes;
+  return dateArray[0] + 'T' + dateArray[1] + offsetPrefix + offsetHours + ':' + offsetMinutes;
 }

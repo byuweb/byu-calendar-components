@@ -1,5 +1,5 @@
 'use strict';
-import {LitElement} from '@polymer/lit-element';
+import {LitElement} from 'lit-element';
 const util = require('byu-web-component-utils');
 const tileTemplate = require('./byu-calendar-tile-row.html');
 const imageTemplate = require('./byu-calendar-image-row.html');
@@ -10,10 +10,6 @@ var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'A
 var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 class ByuCalendarRow extends LitElement {
-
-    _createRoot() {
-        return this.attachShadow({ mode: 'open' });
-    }
 
     get imageRow() {
         return this.hasAttribute(ATTR_IMAGE_ROW);
@@ -37,12 +33,7 @@ class ByuCalendarRow extends LitElement {
         }
     }
 
-    _render({}) {
-
-    }
-    
-    connectedCallback(){
-        super.connectedCallback();
+    render() {
         let template = this.imageRow ? imageTemplate : tileTemplate;
         util.applyTemplate(this, 'byu-calendar-row', template, () => {
             if (!this.imageRow) {
@@ -57,6 +48,7 @@ class ByuCalendarRow extends LitElement {
                 this.shadowRoot.querySelector('#year').innerHTML = year;
             }
         });
+
     }
 }
 
