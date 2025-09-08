@@ -14,7 +14,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import 'byu-calendar-common';
 
 // This component is unique, we could keep this scss here or put it in byu-calendar-extras.scss. let's keep it here for now but we'll improve comments
@@ -30,17 +30,17 @@ a:hover, a:focus {
 }
 
 .calendar-block-title {
-    font-family: "HCo Ringside Narrow SSm";
+    font-family: "IBM Plex Sans";
 }
 
 /* ----------- List format -------- */
 .block-calendar-widget-block {
     // width: 289px;
-    
+
     div {
-        font-family: "HCo Ringside Narrow SSm";
+        font-family: "IBM Plex Sans";
     }
-    
+
     h2 {
         color: #002e5d; // navy
         border-bottom: 1px solid #e5e5e5;
@@ -54,7 +54,7 @@ a:hover, a:focus {
     }
 
     .date-day-number {
-        font-family: "HCo Ringside Narrow SSm";
+        font-family: "IBM Plex Sans";
         font-weight: bold;
         font-size: 23px;
         padding-top: 4px;

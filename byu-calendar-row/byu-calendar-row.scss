@@ -1,5 +1,6 @@
 //import fonts
 //@import "https://cloud.typography.com/75214/6517752/css/fonts.css";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 $weight: bold;
 
 // colors
@@ -30,11 +31,11 @@ $ticket-region-width: 250px;
 
 :host .content {
 	width: 100%;
-	font-family: "HCo Ringside Narrow SSm";
+	font-family: "IBM Plex Sans";
 }
 
 :host ::slotted(*){
-	font-family: "HCo Ringside Narrow SSm";
+	font-family: "IBM Plex Sans";
 }
 
 // general sections styling
@@ -139,7 +140,7 @@ $ticket-region-width: 250px;
 		display: block;
 		background: $lightgray;
         margin-bottom: 15px;
-        
+
 		.content {
 			width: 120px;
 			display: flex;
@@ -158,13 +159,13 @@ $ticket-region-width: 250px;
 		margin-bottom: 0px;
 		font-weight: 500;
     }
-    
+
 	#day-number {
 		font-size: 48px;
 		margin-bottom: 5px;
 		font-weight: bold;
     }
-    
+
 	#title ::slotted(*) {
 		color: $navy !important;
 		font-size: 18px;
@@ -172,17 +173,17 @@ $ticket-region-width: 250px;
 		// text-align: center;
 		padding: 0px 0px 5px;
     }
-    
+
 	#time ::slotted(*) {
 		font-size: 14px;
     }
-    
+
 	#location ::slotted(*){
 		color: $medgray;
 		font-weight: 500;
 		padding:  4px 0px;
     }
-    
+
 	#link ::slotted(*) {
 		color: $navy;
 		padding: 4px 0px;
@@ -204,9 +205,9 @@ $ticket-region-width: 250px;
 }
 
 p, div, a {
-  font-family: "HCo Ringside Narrow SSm", serif;
+  font-family: "IBM Plex Sans", serif;
 }
 
 h1, h2, h3, h4 {
-	font-family: "HCo Ringside Narrow SSm", serif;
+	font-family: "IBM Plex Sans", serif;
 }
