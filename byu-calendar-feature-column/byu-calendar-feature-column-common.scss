@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 // Delete variables and use @import statements when shared-styles is merged
 $teal: #32538d;
 $navy: #002e5d;
 $white: #fff;
 $gray: #666;
-$sentinel: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
-$vitesse: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
-$ringside: "HCo Ringside Narrow SSm", Arial, Helvetica, sans-serif;
+$sentinel: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+$vitesse: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+$ringside: "IBM Plex Sans", Arial, Helvetica, sans-serif;
 
 // Replace this function with mixins from shared-styles when merged
 

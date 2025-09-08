@@ -31,6 +31,9 @@
   <script async src="https://cdn.byu.edu/byu-theme-components/latest/byu-theme-components.min.js"></script>
   <script src="../components.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
   <style>
     html {
@@ -53,7 +56,7 @@
     }
 
     .subheader {
-      font-family: "HCo Ringside Narrow SSm", serif;
+      font-family: "IBM Plex Sans", serif;
       background-color: #666666;
       color: #ffffff;
       padding: 16px;
@@ -68,9 +71,9 @@
     <h1 slot="site-title">Calendar Component Demo</h1>
   </byu-header>
   <div class="page-content">
-    
+
     <h1 class="subheader">List View</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"
@@ -81,7 +84,7 @@
     <hr>
 
     <h1 class="subheader">Vertical Tiles</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"
@@ -92,7 +95,7 @@
     <hr>
 
     <h1 class="subheader">Horizontal Tiles</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"
@@ -101,9 +104,9 @@
       limit="4">
     </byu-calendar>
     <hr>
-    
+
     <h1 class="subheader">Horizontal Tiles (No limit)</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"
@@ -113,7 +116,7 @@
     <hr>
 
     <h1 class="subheader">Full Page Rows</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"
@@ -124,7 +127,7 @@
     <hr>
 
     <h1 class="subheader">Full Page Image Rows</h1>
-    <byu-calendar 
+    <byu-calendar
       title="Upcoming Events"
       categories="3+4+5"
       days="7"

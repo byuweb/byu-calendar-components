@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 $weight: bold;
 
 // colors
@@ -27,11 +28,11 @@ $lightgray: #e6e6e6;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	font-family: "HCo Ringside Narrow SSm";
+	font-family: "IBM Plex Sans";
 }
 
 :host ::slotted(*){
-	font-family: "HCo Ringside Narrow SSm";
+	font-family: "IBM Plex Sans";
 }
 
 // general sections styling
@@ -57,7 +58,7 @@ $lightgray: #e6e6e6;
 }
 
 #title ::slotted(*), #description ::slotted(*) {
-	font-family: "HCo Ringside Narrow SSm", serif;
+	font-family: "IBM Plex Sans", serif;
 	line-height: 1.2;
 }
 
@@ -87,7 +88,7 @@ $lightgray: #e6e6e6;
 	justify-content: flex-start;
     margin: 15px 8px;
 	background-color: var(--byu-calendar-tile-background, #FFF);
-    
+
 	.section-first {
 		height: 160px;
 		width: 170px;
@@ -95,7 +96,7 @@ $lightgray: #e6e6e6;
 		flex-wrap: wrap;
 		justify-content: center;
     }
-    
+
 	.section-second{
 		height: 190px;
 		padding: 15px 0px;
@@ -106,24 +107,24 @@ $lightgray: #e6e6e6;
 		align-self: flex-start;
 
     }
-    
+
 	.section-second ::slotted(*) {
 		justify-content: center;
     }
-    
+
 	#month-name {
 		padding: 10px;
 		font-size: 22px;
 		text-transform: uppercase;
 		margin-bottom: 0px;
     }
-    
+
 	#day-number {
 		font-size: 60px;
 		margin-bottom: 10px;
 		font-weight: bold;
     }
-    
+
 	#title ::slotted(*) {
 		color: $navy!important;
 		font-size: 18px;
@@ -137,7 +138,7 @@ $lightgray: #e6e6e6;
 		font-size: 14px;
 		padding: 8px 0px!important;
     }
-    
+
 	#location ::slotted(*){
 		color: $medgray;
 		text-align: center;
@@ -150,12 +151,12 @@ $lightgray: #e6e6e6;
 	margin: 10px 15px;
     display: flex;
 	background-color: var(--byu-calendar-tile-background, #FFF);
-    
+
 	.section-first {
 		width: 130px;
 		min-height: 130px!important;
     }
-    
+
 	.section-second {
 		width: 300px;
 		align-items: space-between;
@@ -163,27 +164,27 @@ $lightgray: #e6e6e6;
 	.section-second ::slotted(*) {
 		width: 290px;
     }
-    
+
 	&.extra-wide .section-second ::slotted(*) {
 		width: 360px;
     }
-    
+
 	#month-abb {
 		padding: 10px 0px;
 		font-size: 22px;
 		text-transform: uppercase;
 		margin-bottom: 0px;
     }
-    
+
 	#day-number {
 		font-size: 48px;
 		font-weight: bold;
     }
-    
+
 	#time {
 		padding: 10px 0px 10px;
     }
-    
+
 	#time ::slotted(*){
 		color: #fff;
 		padding: 5px 0px 10px;
@@ -196,7 +197,7 @@ $lightgray: #e6e6e6;
 		width: 100%;
 		overflow: hidden;
     }
-    
+
 	#location ::slotted(*) {
 		padding-top: 8px;
 		white-space: nowrap;
@@ -220,9 +221,9 @@ $lightgray: #e6e6e6;
 }
 
 p, div, a {
-	font-family: "HCo Ringside Narrow SSm", serif;
+	font-family: "IBM Plex Sans", serif;
 }
 
 h1, h2, h3, h4 {
-	font-family: "HCo Ringside Narrow SSm", serif;
+	font-family: "IBM Plex Sans", serif;
 }
